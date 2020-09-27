@@ -1,12 +1,14 @@
 import React, {useState} from 'react'
 import { Button, View, Text} from 'react-native'
 
-export default function Paciente({nombre, domicilio, dni, navigation}){
+export default function Paciente({ navigation, route}){
+    
+    const { dni } = route.params
+
     return(
         <View>
-            <Text>{nombre}</Text>
-            <Text>{dni}</Text>
-            <Text>{domicilio}</Text>
+            <Text>{JSON.stringify(dni)}</Text>
+            <Text>{"JRMNCOS"}</Text>
             <Button
         title="Volver al Home"
         onPress={() => navigation.popToTop()}
