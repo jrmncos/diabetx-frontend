@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 
-import React from 'react';
+import React, {useState} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -15,9 +15,12 @@ const Stack = createStackNavigator()
 
 
 export default function App() {
+
+  const [isLoggin, setIsLoggin] = useState(false)
+
   return (
     <NavigationContainer>    
-    <Stack.Navigator initialRouteName="Login"       screenOptions={{
+    <Stack.Navigator initialRouteName={isLoggin ? 'Home': 'Login'} screenOptions={{
         headerStyle: {
           backgroundColor: '#f4511e',
         },

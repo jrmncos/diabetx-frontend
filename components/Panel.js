@@ -4,9 +4,6 @@ import { StatusBar } from 'expo-status-bar';
 
 const pacientesBackend = [{dni: '40861249'}, {dni: '40861248'}]
 
-
-
-
 export default function Panel({navigation}){
 
     const [pacientes, setPacientes] = useState(pacientesBackend)

@@ -1,0 +1,38 @@
+{
+  "expo": {
+    "name": "seguimiento-medico-frontend",
+    "slug": "seguimiento-medico-frontend",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "bundleIdentifier": "com.seguimientomedico.frontend",
+      "supportsTablet": true,
+      "config": {
+        "googleMapsApiKey": "AIzaSyC3_-lZ0DPjSQe2guyJnbXKypVHFgLLSyk"
+      }
+    },
+    "android":{
+      "package": "com.seguimientomedico.frontend",
+      "config": {
+        "googleMaps": {
+            "apiKey": "AIzaSyBEpm2bPuxViIUOn-RPznx4udm91qPtovY"
+        }
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}
