@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { Button, StyleSheet, Text, View, Dimensions } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import MapView from 'react-native-maps';
-import Geocoder from 'react-native-geocoding';
 
-Geocoder.init("AIzaSyDFZlvMAtiN5FKA1dhJ7K5xG7Yy9MhZOhA");
+// Geocoder.init("AIzaSyDFZlvMAtiN5FKA1dhJ7K5xG7Yy9MhZOhA");
 
 const pacientesBackend = [
   {direccion: "Irigoin 4182, San Miguel", ecnt: "Diabetico"},
@@ -17,16 +16,16 @@ export default function Geolocalizacion({navigation}){
 
     const [pacientes, setPacientes] = useState('')
 
-    useEffect(() => {
-      pacientesBackend.map((paciente)=>{
-        Geocoder.from(paciente.direccion)
-        .then(json => {
-          var location = json.results[0].geometry.location;
-          console.log(location);
-        })
-        .catch(error => console.warn(error));
-          })
-    }, [])
+    // useEffect(() => {
+    //   pacientesBackend.map((paciente)=>{
+    //     Geocoder.from(paciente.direccion)
+    //     .then(json => {
+    //       var location = json.results[0].geometry.location;
+    //       console.log(location);
+    //     })
+    //     .catch(error => console.warn(error));
+    //       })
+    // }, [])
 
     return(
       <View style={styles.container}>

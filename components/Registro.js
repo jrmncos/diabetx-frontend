@@ -4,7 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 
 import { Button, Input, Icon, Header } from 'react-native-elements';
 
-export default function Login({navigation}){
+export default function Registro({navigation}){
 
     return(
       
@@ -17,9 +17,8 @@ export default function Login({navigation}){
           justifyContent: 'space-around',
         }}
         />
-        <Text>Sistema de seguimiento de Enfermdades Cronicas no transmisibles</Text>
 
-        <Text h2 style={styles.ingresar}>INGRESAR------------------------</Text> 
+        <Text h2 style={styles.ingresar}>Registrarse------------------------</Text> 
         
         <Input
           placeholder='DNI' 
@@ -67,7 +66,7 @@ export default function Login({navigation}){
               justifyContent: 'space-evenly',
             }}
               title="Registrarse" 
-              onPress={()=> navigation.navigate('Registro')}/> 
+              onPress={()=> navigation.navigate('Registrarse')}/> 
 
             <Button 
             titleStyle={{
