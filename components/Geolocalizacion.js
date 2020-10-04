@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { Button, StyleSheet, Text, View, Dimensions } from 'react-native';
+import { Button, StyleSheet, Text, View, Dimensions, Image } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import MapView,{  Marker } from 'react-native-maps';
+import MapView, { Circle } from 'react-native-maps';
 
 // Geocoder.init("AIzaSyDFZlvMAtiN5FKA1dhJ7K5xG7Yy9MhZOhA");
 
@@ -38,13 +38,17 @@ export default function Geolocalizacion({navigation}){
           longitudeDelta: 0.015,
       }}
       >
-      <Marker
-      coordinate={{
-        latitude: -34.784509,
-        longitude: -58.834529,}}
-      title={"Hospital Municipal Dr. Héctor J. D'Agnillo"}
-      description={"Descripcion corte piola"}
-      />
+        <Circle
+                
+                center = {{
+                  latitude: -34.784509,
+                  longitude: -58.834529}}
+                radius = { 50 }
+                strokeWidth = { 1 }
+                strokeColor = { '#1a66ff' }
+                fillColor = { 'rgba(230,238,255,0.5)' }
+        />
+
       </MapView>
 
       </View>
