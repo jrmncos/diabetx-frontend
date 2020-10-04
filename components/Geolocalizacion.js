@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Button, StyleSheet, Text, View, Dimensions } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import MapView from 'react-native-maps';
+import MapView,{  Marker } from 'react-native-maps';
 
 // Geocoder.init("AIzaSyDFZlvMAtiN5FKA1dhJ7K5xG7Yy9MhZOhA");
 
@@ -29,10 +29,29 @@ export default function Geolocalizacion({navigation}){
 
     return(
       <View style={styles.container}>
-        <MapView style={styles.mapStyle} />
+
+        <MapView style={styles.mapStyle} 
+        initialRegion={{
+          latitude: -34.784509,
+          longitude: -58.834529,
+          latitudeDelta: 0.015,
+          longitudeDelta: 0.015,
+      }}
+      >
+      <Marker
+      coordinate={{
+        latitude: -34.784509,
+        longitude: -58.834529,}}
+      title={"Hospital Municipal Dr. Héctor J. D'Agnillo"}
+      description={"Descripcion corte piola"}
+      />
+      </MapView>
+
       </View>
     )
-}
+
+  }
+  
 
 const styles = StyleSheet.create({
     container: {
