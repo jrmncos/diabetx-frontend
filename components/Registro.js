@@ -10,6 +10,9 @@ export default function Registro({ navigation }) {
   const onSubmit = (data) => {
     Alert.alert("Form data", JSON.stringify(data));
     //navigation.navigate('AsignarECNT')
+    fetch('http://192.168.1.38:8000/hospital/users/')
+    .then(response => response.json())
+    .then(data => console.log(data))
   };
 
   console.log(errors);
