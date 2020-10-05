@@ -1,32 +1,43 @@
 import React, { useEffect, useState } from 'react'
-import { Button, StyleSheet, Text, View, Dimensions, Image } from 'react-native';
+import { Button, StyleSheet, Text, View, Dimensions, Image, Alert } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import MapView, { Circle } from 'react-native-maps';
 
 // Geocoder.init("AIzaSyDFZlvMAtiN5FKA1dhJ7K5xG7Yy9MhZOhA");
 
-const pacientesBackend = [
-  {direccion: "Irigoin 4182, San Miguel", ecnt: "Diabetico"},
-  {direccion: "Benito juarez 4182, San Miguel", ecnt: "Hipertension"},
-  {direccion: "Defensa 2252, San Miguel", ecnt: "Diabetico"},
-]
 
+import * as Location from 'expo-location';
+import * as Permissions from 'expo-permissions';
 
 export default function Geolocalizacion({navigation}){
 
-    const [pacientes, setPacientes] = useState('')
+    const [pacientes, setPacientes] = useState([])
 
-    // useEffect(() => {
-    //   pacientesBackend.map((paciente)=>{
-    //     Geocoder.from(paciente.direccion)
-    //     .then(json => {
-    //       var location = json.results[0].geometry.location;
-    //       console.log(location);
-    //     })
-    //     .catch(error => console.warn(error));
-    //       })
-    // }, [])
+    const[locationsGeodecoding, setLocationsGeodecoding] = useState(() => () => console.log("default ooops"));
 
+
+    useEffect(()=>{
+      fetch('http://192.168.1.38:8000/hospital/users/')
+      .then(response => response.json())
+      .then(data => {
+        setPacientes(data)
+        setLocationsGeodecoding((pacientes) => { pacientes.map(paciente =>{
+            return Location.geocodeAsync(paciente.location)
+          })}
+        )
+        
+      })
+      //getLocationPermissions()
+    }, [])
+    
+
+    useEffect(()=>{
+      Promise.all(locationsGeodecoding(pacientes)).then((results) => {
+        console.log("Results")
+        console.log(results)
+      })
+    }, [pacientes])
+  
     return(
       <View style={styles.container}>
 

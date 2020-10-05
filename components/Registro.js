@@ -4,18 +4,69 @@ import { StatusBar } from "expo-status-bar";
 
 import { Button, Input, Icon, Header, Divider } from "react-native-elements";
 import { useForm, Controller } from "react-hook-form";
+import * as Location from 'expo-location';
+
+
+
+
 export default function Registro({ navigation }) {
   const { control, handleSubmit, errors } = useForm();
 
   const onSubmit = (data) => {
-    Alert.alert("Form data", JSON.stringify(data));
-    //navigation.navigate('AsignarECNT')
-    fetch('http://192.168.1.38:8000/hospital/users/')
-    .then(response => response.json())
-    .then(data => console.log(data))
-  };
 
-  console.log(errors);
+    /*
+    http://api.positionstack.com/v1/forward
+    ? access_key = YOUR_ACCESS_KEY
+    & query = 1600 Pennsylvania Ave NW, Washington DC
+    */
+    
+    console.log(('https://nominatim.openstreetmap.org/?addressdetails=1&q='+ data.location.replace(/\s/g, "+") +'&format=json&limit=1'))
+    fetch('https://nominatim.openstreetmap.org/?addressdetails=1&q='+ data.location.replace(/\s/g, "+") +'&format=json&limit=1')
+    .then(response =>  response.json())
+    .then( resJson => {
+      console.log(resJson)
+      console.log(resJson[0].lat)
+      console.log(resJson[0].lon)
+      data.latitude = parseFloat(resJson[0].lat)
+      data.longitude = parseFloat(resJson[0].lon)
+      return data
+    })
+    .then( (usuario) => fetch('http://192.168.1.38:8000/hospital/users/',{
+      method: 'POST',
+      headers:{
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(usuario)
+    }) )
+  
+  }
+    //.then(response => Alert.alert("Respuesta: ",response.json())))
+
+
+    /*
+    Location.geocodeAsync(data.location).then(response => {
+      console.log(response)
+      data.latitude = response.latitude
+      data.longitude = response.longitude
+      return data
+    })/*
+    .then( (usuario) => fetch('http://192.168.1.38:8000/hospital/users/',{
+      method: 'POST',
+      headers:{
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(usuario)
+    })
+    .then(response => Alert.alert("Respuesta: ",response.json())))
+*/
+    //console.log(location.location)
+    /*
+    
+    */
+
+  //console.log(errors);
   /*
     useEffect(()=>{
       register("nombre")
