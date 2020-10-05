@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { Button, StyleSheet, Text, View, Dimensions, Image, Alert } from 'react-native';
+import { Button, StyleSheet, Text, View, Dimensions, Image, Alert, ScrollView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import MapView, { Circle } from 'react-native-maps';
-
+import CheckBox from '@react-native-community/checkbox';
 // Geocoder.init("AIzaSyDFZlvMAtiN5FKA1dhJ7K5xG7Yy9MhZOhA");
 
 
@@ -10,16 +10,35 @@ import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 
 
-const ecnt = ['diabetes', 'epoc', 'hipertension']
+//const ecnt = ['diabetes', 'epoc', 'hipertension']
+
+const ecnt = ['diabetes', 'hipertension', 'epoc']
+
+
 
 export default function Geolocalizacion({navigation}){
 
     const [pacientes, setPacientes] = useState([])
 
-    const[locationsGeodecoding, setLocationsGeodecoding] = useState(() => () => console.log("default ooops"));
+    const [checkDiabetes, setCheckDiabetes] = useState(false)
 
+    const [checkEpoc, setCheckEpoc] = useState(false)
 
+    const [checkHipertension, setCheckHipertension] = useState(false)
 
+    const checks = [checkEpoc, checkHipertension, checkDiabetes]
+
+    let  filterEcnt = new Map();
+    // asignando valores
+    filterEcnt.set('diabetes', checkDiabetes);
+    filterEcnt.set('epoc', checkEpoc);
+    filterEcnt.set('hipertension', checkHipertension);
+
+    let colores = new Map();
+    colores.set('diabetes', '#50DC22');
+    colores.set('epoc', '#DC4D22');
+    colores.set('hipertension', '#D922DC');
+    
     useEffect(()=>{
       fetch('http://192.168.1.38:8000/hospital/users/')
       .then(response => response.json())
@@ -46,8 +65,8 @@ export default function Geolocalizacion({navigation}){
 
         <MapView style={styles.mapStyle} 
         initialRegion={{
-          latitude: -34.784509,
-          longitude: -58.834529,
+          latitude: -34.558654,
+          longitude: -58.744867,
           latitudeDelta: 0.015,
           longitudeDelta: 0.015,
       }}
@@ -58,10 +77,11 @@ export default function Geolocalizacion({navigation}){
           return (<Circle
                   key={paciente.dni}
                   center = {{latitude: parseFloat(paciente.latitude), longitude: parseFloat(paciente.longitude)}}
-                  radius = { 50 }
+                  radius = { 150 }
                   strokeWidth = { 1 }
-                  strokeColor = { '#1a66ff' }
-                  fillColor = { 'rgba(230,238,255,0.5)' }
+                  strokeColor = { '#0000' }
+                  fillColor = { filterEcnt.get(paciente.ecnt) ? colores.get(paciente.ecnt) : 'rgba(0,0,0,0)'  }
+                  
                   />
             )  
         })}
@@ -69,6 +89,28 @@ export default function Geolocalizacion({navigation}){
       
       </MapView>
 
+      <View
+        style={{ flexDirection: "row", alignSelf: "baseline", width: "50%" }}
+      >
+        <Text>Diabetes</Text>
+        <CheckBox
+          disabled={false}
+          value={checkDiabetes}
+          onValueChange={(newValue) => setCheckDiabetes(newValue)}
+        />
+        <Text>Epoc</Text>
+        <CheckBox
+          disabled={false}
+          value={checkEpoc}
+          onValueChange={(newValue) => setCheckEpoc(newValue)}
+        />
+        <Text>Hipertension</Text>
+        <CheckBox
+          disabled={false}
+          value={checkHipertension}
+          onValueChange={(newValue) => setCheckHipertension(newValue)}
+        />
+      </View>
       </View>
     )
 
@@ -84,7 +126,7 @@ const styles = StyleSheet.create({
     },
     mapStyle: {
       width: Dimensions.get('window').width,
-      height: Dimensions.get('window').height,
+      height: Dimensions.get('window').height -80,
     },
   });
   
