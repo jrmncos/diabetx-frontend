@@ -9,6 +9,9 @@ import MapView, { Circle } from 'react-native-maps';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 
+
+const ecnt = ['diabetes', 'epoc', 'hipertension']
+
 export default function Geolocalizacion({navigation}){
 
     const [pacientes, setPacientes] = useState([])
@@ -16,27 +19,27 @@ export default function Geolocalizacion({navigation}){
     const[locationsGeodecoding, setLocationsGeodecoding] = useState(() => () => console.log("default ooops"));
 
 
+
     useEffect(()=>{
       fetch('http://192.168.1.38:8000/hospital/users/')
       .then(response => response.json())
       .then(data => {
-        setPacientes(data)
-        setLocationsGeodecoding((pacientes) => { pacientes.map(paciente =>{
-            return Location.geocodeAsync(paciente.location)
-          })}
-        )
-        
+        //console.log(data)
+        //console.log(parseFloat(data[0].latitude))
+        //console.log({latitude: parseFloat(data[0].latitude), longitude: parseFloat(data[0].longitude)})
+        //console.log({latitude: -34.784509, longitude: -58.834529})
+        //Hardcoding de ECNT
+        let pacientesBackend = data.map((paciente) => {
+          paciente.ecnt = ecnt[Math.floor(Math.random() * ecnt.length)] 
+          return paciente
+        })
+
+        setPacientes(pacientesBackend)
+        console.log(pacientes)
       })
       //getLocationPermissions()
     }, [])
-    
 
-    useEffect(()=>{
-      Promise.all(locationsGeodecoding(pacientes)).then((results) => {
-        console.log("Results")
-        console.log(results)
-      })
-    }, [pacientes])
   
     return(
       <View style={styles.container}>
@@ -49,17 +52,21 @@ export default function Geolocalizacion({navigation}){
           longitudeDelta: 0.015,
       }}
       >
-        <Circle
-                
-                center = {{
-                  latitude: -34.784509,
-                  longitude: -58.834529}}
-                radius = { 50 }
-                strokeWidth = { 1 }
-                strokeColor = { '#1a66ff' }
-                fillColor = { 'rgba(230,238,255,0.5)' }
-        />
-
+        {pacientes && pacientes.map(paciente => {
+          {console.log("HOLA")}
+          {console.log(paciente)}
+          return (<Circle
+                  key={paciente.dni}
+                  center = {{latitude: parseFloat(paciente.latitude), longitude: parseFloat(paciente.longitude)}}
+                  radius = { 50 }
+                  strokeWidth = { 1 }
+                  strokeColor = { '#1a66ff' }
+                  fillColor = { 'rgba(230,238,255,0.5)' }
+                  />
+            )  
+        })}
+        
+      
       </MapView>
 
       </View>
