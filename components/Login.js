@@ -60,6 +60,13 @@ export default function Login({navigation}){
           title="Ingresar" 
           onPress={()=> navigation.navigate('Home')}/> 
 
+          <Button 
+          buttonStyle={styles.botonAzulMarino}
+          titleStyle={styles.botonTexto}
+          title="geoUsuario" 
+          onPress={()=> navigation.navigate('GeoUsuario')}/> 
+
+
         <Divider style={styles.divisorInferior} />
         
         <Button 

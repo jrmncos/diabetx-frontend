@@ -11,6 +11,8 @@ import Panel from './components/Panel';
 import Paciente from './components/Paciente';
 import Registro from './components/Registro';
 import AsignarECNT from './components/AsignarECNT';
+import GeoUsuario from './components/GeoUsuario';
+
 
 
 const Stack = createStackNavigator()
@@ -38,6 +40,7 @@ export default function App() {
         <Stack.Screen name="Paciente" component={Paciente} options={({ route }) => ({ title: route.params.name })}/>
         <Stack.Screen name="Registro" component={Registro} />
         <Stack.Screen name="AsignarECNT" component={AsignarECNT} />
+        <Stack.Screen name="GeoUsuario" component={GeoUsuario} />
       </Stack.Navigator>
     </NavigationContainer>
   );
