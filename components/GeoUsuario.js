@@ -9,24 +9,37 @@ import * as Permissions from 'expo-permissions';
 
 export default function GeoUsuario({navigation}){
 
-  const [region, setRegion] = useState({
+  const [mapData, setMapDate] = useState({
     latitude: 51.5079145,
     longitude: -0.0899163,
     latitudeDelta: 0.01,
     longitudeDelta: 0.01
   });
+
+  const [markerData, setMarkerData] = useState({
+    latitude: 51.5079145,
+    longitude: -0.0899163
+  })
+
+  const markerChange = (markerDataChange) => {
+    console.log(markerDataChange)
+    setMapDate(markerDataChange)
+    setMarkerData({latitude: markerDataChange.latitude, longitude: markerDataChange.longitude})
+  }
+
   return (
     <View>
       <MapView 
         provider={PROVIDER_GOOGLE}
         style={styles.mapStyle}
-        region={region}
-        onRegionChangeComplete={setRegion(region)}
+        region={mapData}
+        onRegionChangeComplete={markerChange}
 
+        /* (IsItMuted === true) ? 'On' : 'Off'; */
        >
-          <Marker 
+          <Marker
             title="hola"
-            coordinate={{ latitude: region.latitude, longitude: region.longitude}}
+            coordinate={markerData}
             pinColor='violet'/>
       </MapView> 
     </View>  
