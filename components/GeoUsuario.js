@@ -11,41 +11,80 @@ import marker from '../assets/corazon.png'
 
 export default function GeoUsuario({navigation}){
 
+  const [errorMsg, setErrorMsg] = useState(null);
+  
+  useEffect(() => {
+    (async () => {
+      Location.requestPermissionsAsync().then(status => {
+        console.log(status)
+      if(status.granted){
+        console.log("Tengo permisos")
+        Location.getCurrentPositionAsync({}).then(location => {
+          console.log(location)
+          setMapDate({
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude,
+            latitudeDelta: 0.01,
+            longitudeDelta: 0.01})})
+      }
+      else{
+        setErrorMsg("Recuerde que es obligatorio ingresar su domicilio para registrarse.");
+        console.log("Localización por defecto.")
+        setMapDate({ 
+          latitude: -34.783177,
+          longitude: -58.836571,
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01
+        })
+      }
+    })
+      // let { status } = await Location.requestPermissionsAsync();
+      // if (status !== 'granted') {
+      //   setErrorMsg("Recuerde que es obligatorio ingresar su domicilio para registrarse.");
+      //   setMapDate({ 
+      //     latitude: -34.783177,
+      //     longitude: -58.836571,
+      //     latitudeDelta: 0.01,
+      //     longitudeDelta: 0.01
+      //   })
+      // }
+      // else{
+      //   console.log("tenemos permisos!")
+      //   let location = await Location.getCurrentPositionAsync({});
+      //   console.log(location)
+      //   setMapDate({  latitude: location.latitude,
+      //     longitude: location.longitude,
+      //     latitudeDelta: 0.01,
+      //     longitudeDelta: 0.01})
+      // }
+
+    })();
+  }, []);
+
   const [mapData, setMapDate] = useState({
-    latitude: 51.5079145,
-    longitude: -0.0899163,
+    latitude: -34.783177,
+    longitude: -58.836571,
     latitudeDelta: 0.01,
     longitudeDelta: 0.01
   });
 
   const [markerData, setMarkerData] = useState({
-    latitude: 51.5079145,
-    longitude: -0.0899163
+    latitude: -34.783177,
+    longitude: -58.836571,
   })
 
-  const markerChange = (markerDataChange) => {
-    console.log(markerDataChange)
+  const markerChange = (markerDataChange) => {  
     setMapDate(markerDataChange)
-    //setMarkerData({latitude: markerDataChange.latitude, longitude: markerDataChange.longitude})
-  }
-
-  /*
-  <Marker
-            title="hola"
-            coordinate={markerData}
-            pinColor='violet'
-            />
-  */
+   }
 
   return (
     <View style={styles.map}>
       <MapView 
         provider={PROVIDER_GOOGLE}
         style={styles.map}
-        initialRegion={mapData}
+        region={mapData}
         onRegionChangeComplete={markerChange}
 
-        /* (IsItMuted === true) ? 'On' : 'Off'; */
        />
       <View style={styles.markerFixed}>
           <Image style={styles.marker} source={marker} />
@@ -58,31 +97,6 @@ export default function GeoUsuario({navigation}){
 
   );
 };
-/*
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'absolute'
-  },
-  mapStyle: {
-    width: '100%',
-    height: '100%',
-  },
-  markerFixed: {
-    left: '50%',
-    marginLeft: -24,
-    marginTop: -48,
-    position: 'absolute',
-    top: '50%'
-  },
-  marker: {
-    height: 48,
-    width: 48
-  },
-});
-*/
 const styles = StyleSheet.create({
   map: {
     flex: 1
