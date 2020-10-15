@@ -31,7 +31,7 @@ export default function Registro({ navigation }) {
       data.longitude = parseFloat(resJson[0].lon)
       return data
     })
-    .then( (usuario) => fetch('http://192.168.1.38:8000/hospital/users/',{
+    .then( (usuario) => fetch('http://192.168.0.231:8000/api/users/',{
       method: 'POST',
       headers:{
         Accept: 'application/json',
@@ -177,7 +177,7 @@ export default function Registro({ navigation }) {
           />
         )}
       />
-
+{/* 
       <Controller
         control={control}
         name={"location"}
@@ -194,23 +194,30 @@ export default function Registro({ navigation }) {
             value={value}
           />
         )}
-      />
+      /> */}
+
+      <Button 
+          buttonStyle={styles.botonVerdeClaro}
+          titleStyle={styles.botonTexto}
+          title="Establecer ubicación" 
+          onPress={()=> navigation.navigate('GeoUsuario')}/> 
+
 
       <Divider style={styles.divisorInferior} />
 
       <Button
         titleStyle={styles.botonTexto}
         buttonStyle={styles.botonAzulMarino}
-        title="Registrarse"
+        title="Siguiente"
         onPress={handleSubmit(onSubmit)}
       />
 
-      <Button
+      {/* <Button
         titleStyle={styles.botonTexto}
         buttonStyle={styles.botonVerdeClaro}
         title="Asignar ECNT"
         onPress={() => navigation.navigate("AsignarECNT")}
-      />
+      /> */}
     </View>
   );
 }

@@ -7,7 +7,7 @@ import { Marker, Overlay, Circle} from "react-native-maps";
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 
-import marker from '../assets/corazon.png'
+import marker from '../assets/marker.png'
 
 export default function GeoUsuario({navigation}){
 
@@ -38,25 +38,6 @@ export default function GeoUsuario({navigation}){
         })
       }
     })
-      // let { status } = await Location.requestPermissionsAsync();
-      // if (status !== 'granted') {
-      //   setErrorMsg("Recuerde que es obligatorio ingresar su domicilio para registrarse.");
-      //   setMapDate({ 
-      //     latitude: -34.783177,
-      //     longitude: -58.836571,
-      //     latitudeDelta: 0.01,
-      //     longitudeDelta: 0.01
-      //   })
-      // }
-      // else{
-      //   console.log("tenemos permisos!")
-      //   let location = await Location.getCurrentPositionAsync({});
-      //   console.log(location)
-      //   setMapDate({  latitude: location.latitude,
-      //     longitude: location.longitude,
-      //     latitudeDelta: 0.01,
-      //     longitudeDelta: 0.01})
-      // }
 
     })();
   }, []);
@@ -89,9 +70,14 @@ export default function GeoUsuario({navigation}){
       <View style={styles.markerFixed}>
           <Image style={styles.marker} source={marker} />
       </View>
-      <SafeAreaView style={styles.footer}>
+      <SafeAreaView style={styles.footerButton}>
+      <Button 
+          title="Aceptar" 
+          onPress={()=> navigation.navigate('Registro')}/> 
+      </SafeAreaView>
+      {/* <SafeAreaView style={styles.footer}>
           <Text style={styles.region}>{JSON.stringify(mapData, null, 2)}</Text>
-      </SafeAreaView>    
+      </SafeAreaView>     */}
       
     </View>  
 
@@ -112,12 +98,23 @@ const styles = StyleSheet.create({
     height: 48,
     width: 48
   },
+  footerButton: {
+    bottom: 15,
+    position: 'absolute',
+
+    width: '90%',
+    padding: '5%',
+    marginLeft:"5%",
+
+    fontSize: 30
+  },
   footer: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     bottom: 0,
     position: 'absolute',
     width: '100%'
   },
+
   region: {
     color: '#fff',
     lineHeight: 20,

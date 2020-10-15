@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, StyleSheet, Text, View, Dimensions, Image, Alert, ScrollView } from 'react-native';
+import { Button, StyleSheet, Text, View, Dimensions, Image, Alert, ScrollView, SafeAreaView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import MapView, { Circle } from 'react-native-maps';
 import CheckBox from '@react-native-community/checkbox';
@@ -61,7 +61,7 @@ export default function Geolocalizacion({navigation}){
 
   
     return(
-      <View style={styles.container}>
+      <View style={{flex: 1}}>
 
         <MapView style={styles.mapStyle} 
         initialRegion={{
@@ -71,6 +71,7 @@ export default function Geolocalizacion({navigation}){
           longitudeDelta: 0.015,
       }}
       >
+        
         {pacientes && pacientes.map(paciente => {
           {console.log("HOLA")}
           {console.log(paciente)}
@@ -88,6 +89,37 @@ export default function Geolocalizacion({navigation}){
         
       
       </MapView>
+      <SafeAreaView style={styles.footerTop}>
+        <View style={{ flexDirection: "row", alignSelf: "baseline", width: "50%" }}>
+            <CheckBox
+              title={<Text style={styles.textoCheckBox}>Diabetes</Text>}
+              value={checkDiabetes}
+              onValueChange={(newValue) => setCheckDiabetes(newValue)}
+            />
+            <Text style={styles.textoCheckBox}>Diabetes</Text>
+        </View>
+
+        <View style={{ flexDirection: "row", alignSelf: "baseline", width: "50%" }}>
+          <CheckBox
+            disabled={false}
+            value={checkEpoc}
+            onValueChange={(newValue) => setCheckEpoc(newValue)}
+          />
+          <Text style={styles.textoCheckBox}>Epoc</Text>
+        </View>
+
+        <View style={{ flexDirection: "row", alignSelf: "baseline", width: "80%" }}>
+         
+        <CheckBox
+          disabled={false}
+          value={checkHipertension}
+          onValueChange={(newValue) => setCheckHipertension(newValue)}
+        />
+          <Text style={styles.textoCheckBox}>Hipertensión</Text>
+        </View>
+
+      </SafeAreaView>
+
 
       <View
         style={{ flexDirection: "row", alignSelf: "baseline", width: "50%" }}
@@ -127,6 +159,25 @@ const styles = StyleSheet.create({
     mapStyle: {
       width: Dimensions.get('window').width,
       height: Dimensions.get('window').height -80,
+    },
+    textoCheckBox: { 
+      color: "white",
+      fontSize: 23,
+      paddingLeft: 6,
+    },
+    footerTop: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    top: 10,
+    left:10,
+    position: 'absolute',
+    width: '50%'
+    },
+    
+    footer: {
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      bottom: 0,
+      position: 'absolute',
+      width: '100%'
     },
   });
   

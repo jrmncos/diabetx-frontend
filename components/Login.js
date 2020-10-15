@@ -60,13 +60,6 @@ export default function Login({navigation}){
           title="Ingresar" 
           onPress={()=> navigation.navigate('Home')}/> 
 
-          <Button 
-          buttonStyle={styles.botonAzulMarino}
-          titleStyle={styles.botonTexto}
-          title="geoUsuario" 
-          onPress={()=> navigation.navigate('GeoUsuario')}/> 
-
-
         <Divider style={styles.divisorInferior} />
         
         <Button 
@@ -81,6 +74,11 @@ export default function Login({navigation}){
           title="Recuperar Clave" 
           onPress={()=> navigation.navigate('Home')}/> 
 
+        <Button 
+          buttonStyle={styles.botonVerdeClaro}
+          titleStyle={styles.botonTexto}
+          title="ECNT" 
+          onPress={()=> navigation.navigate('RegistroECNT')}/> 
 
         <Text
         style = {styles.textFirma}>
