@@ -66,7 +66,7 @@ export default function Login({navigation}){
           buttonStyle={styles.botonVerdeClaro}
           titleStyle={styles.botonTexto}
           title="Registrarse" 
-          onPress={()=> navigation.navigate('Registro')}/> 
+          onPress={()=> navigation.navigate('StepperRegistro')}/> 
 
         <Button 
           buttonStyle={styles.botonVerdeClaro}

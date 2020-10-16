@@ -211,13 +211,6 @@ export default function Registro({ navigation }) {
         title="Siguiente"
         onPress={handleSubmit(onSubmit)}
       />
-
-      {/* <Button
-        titleStyle={styles.botonTexto}
-        buttonStyle={styles.botonVerdeClaro}
-        title="Asignar ECNT"
-        onPress={() => navigation.navigate("AsignarECNT")}
-      /> */}
     </View>
   );
 }

@@ -13,6 +13,7 @@ import Registro from './components/Registro';
 import AsignarECNT from './components/AsignarECNT';
 import GeoUsuario from './components/GeoUsuario';
 import RegistroECNT from './components/RegistroECNT';
+import StepperRegistro from './components/StepperRegistro';
 
 
 const Stack = createStackNavigator()
@@ -42,6 +43,7 @@ export default function App() {
         <Stack.Screen name="AsignarECNT" component={AsignarECNT} />
         <Stack.Screen name="GeoUsuario" component={GeoUsuario} />
         <Stack.Screen name="RegistroECNT" component={RegistroECNT} />
+        <Stack.Screen name="StepperRegistro" component={StepperRegistro} />
       </Stack.Navigator>
     </NavigationContainer>
   );
