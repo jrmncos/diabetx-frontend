@@ -1,87 +1,84 @@
 import React, { useEffect, useState, useContext } from 'react'
-import { Button,SafeAreaView,  StyleSheet, Text, View, Dimensions, Image, Alert, ScrollView, TouchableOpacity } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
-import { Marker, Overlay, Circle} from "react-native-maps";
+import { Button,SafeAreaView,  StyleSheet, View, Dimensions, Image } from 'react-native'
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 
-import * as Location from 'expo-location';
-import * as Permissions from 'expo-permissions';
+import * as Location from 'expo-location'
 
 import marker from '../assets/marker.png'
 import { RegistroContext } from './RegistroContext'
 export default function GeoUsuario({navigation}){
-  useEffect(() => {
-    (async () => {
-      Location.requestPermissionsAsync().then(status => {
-        console.log(status)
-      if(status.granted){
-        console.log("Tengo permisos")
-        Location.getCurrentPositionAsync({}).then(location => {
-          console.log(location)
-          setMapDate({
-            latitude: location.coords.latitude,
-            longitude: location.coords.longitude,
-            latitudeDelta: 0.01,
-            longitudeDelta: 0.01})})
-      }
-      else{
-        setErrorMsg("Recuerde que es obligatorio ingresar su domicilio para registrarse.");
-        console.log("Localización por defecto.")
-        setMapDate({ 
-          latitude: -34.783177,
-          longitude: -58.836571,
-          latitudeDelta: 0.01,
-          longitudeDelta: 0.01
-        })
-      }
-    })
 
-    })();
-  }, []);
-
+  const [permisoUbicacion, setPermisoUbicacion] = useState(false)
   const [mapData, setMapDate] = useState({
     latitude: -34.783177,
     longitude: -58.836571,
     latitudeDelta: 0.01,
     longitudeDelta: 0.01
-  });
-
-  const [markerData, setMarkerData] = useState({
-    latitude: -34.783177,
-    longitude: -58.836571,
   })
 
+  const  context  = useContext(RegistroContext)
+  
+  useEffect(() => {
+    console.log(context.location)
+    if(context.location!=null){
+      setMapDate(context.location)
+    }
+    else if(!permisoUbicacion){
+      (async () => {
+        Location.requestPermissionsAsync().then(status => {
+          console.log('AKA2')
+          if(status.granted){
+            setPermisoUbicacion(true)
+            Location.getCurrentPositionAsync({}).then(location => {
+              console.log('AKA')
+              setMapDate({
+                latitude: location.coords.latitude,
+                longitude: location.coords.longitude,
+                latitudeDelta: 0.01,
+                longitudeDelta: 0.01})
+            })
+          }
+          else{
+            //setErrorMsg("Recuerde que es obligatorio ingresar su domicilio para registrarse.")
+            //console.log("Localización por defecto.")
+            setMapDate({ 
+              latitude: -34.783177,
+              longitude: -58.836571,
+              latitudeDelta: 0.01,
+              longitudeDelta: 0.01
+            })
+          }
+        })
+      })()
+    }
+  }, [])
+  /*
+  useEffect(() => {
+    (async () => {
+      
+    })()
+  }, [permisoUbicacion])
+  */
   const markerChange = (markerDataChange) => {  
     setMapDate(markerDataChange)
-    //context.setLocation(markerDataChange)
+    context.setLocation(markerDataChange)
    }
-
    return (
     <View style={{flex:1}}>
       <MapView 
         provider={PROVIDER_GOOGLE}
         style={styles.mapStyle} 
         region={mapData}
-        /*initialRegion={{
-          latitude: -34.558654,
-          longitude: -58.744867,
-          latitudeDelta: 0.015,
-          longitudeDelta: 0.015,
-        }}*/
         onRegionChangeComplete={markerChange}
        />
       <View style={styles.markerFixed}>
           <Image style={styles.marker} source={marker} />
       </View>
       <SafeAreaView style={styles.footerButton}>
-      <Button 
-          title="Aceptar" 
-          onPress={()=> console.log("Anda el mapa")}/> 
       </SafeAreaView>
     </View>  
-
-  );
-};
+  )
+}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -112,7 +109,7 @@ const styles = StyleSheet.create({
   },
   mapStyle: {
     width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height -80,
+    height: Dimensions.get('window').height -200,
   },
   textoCheckBox: { 
     color: "white",
@@ -133,4 +130,4 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: '100%'
   },
-});
+})
