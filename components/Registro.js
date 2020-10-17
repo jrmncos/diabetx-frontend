@@ -12,7 +12,7 @@ import { RegistroContext, RegistroProvider } from './RegistroContext'
 const RegistroMaestro = ({navegation}) => {
 
     const [active, setActive] = useState(0);
-    const cont = useContext(RegistroContext)
+    const  context  = useContext(RegistroContext)
 
     const content = [
         <FormDatosPersonales title="Component 1" />,
@@ -41,8 +41,14 @@ const RegistroMaestro = ({navegation}) => {
           <Stepper
             active={active}
             content={content}
-            onNext={() => setActive((p) => p + 1)}
-            onBack={() => setActive((p) => p - 1)}
+            onNext={() => {
+              console.log(context)
+              setActive((p) => p + 1)
+            }}
+            onBack={() =>{ 
+              console.log(context)
+              setActive((p) => p - 1)
+            }}
             onFinish={() => Alert.alert("Finish")}
           />
         </View>

@@ -1,20 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { StyleSheet, Text, View, Image, Alert } from "react-native";
 import { StatusBar } from "expo-status-bar";
 
 import { Button, Input, Icon, Header, Divider } from "react-native-elements";
 import { useForm, Controller } from "react-hook-form";
 import * as Location from 'expo-location';
-
+import { RegistroContext } from './RegistroContext'
 
 
 
 export default function FormDatosPersonales({ navigation }) {
   const { control, handleSubmit, errors } = useForm();
+  const context = useContext(RegistroContext)
 
-  const onSubmit = () => {
-    console.log('hola')
-  }
+
+  //Llama a set dni del context
 
   return (
     <View style={styles.container}>
@@ -53,6 +53,7 @@ export default function FormDatosPersonales({ navigation }) {
               onBlur={onBlur}
               onChangeText={(value) => {
                 onChange(value);
+                context.setNombre(value)
               }}
               value={value}
             />
@@ -72,6 +73,7 @@ export default function FormDatosPersonales({ navigation }) {
               onBlur={onBlur}
               onChangeText={(value) => {
                 onChange(value);
+                context.setApellido(value)
               }}
               value={value}
             />
@@ -93,6 +95,7 @@ export default function FormDatosPersonales({ navigation }) {
             onBlur={onBlur}
             onChangeText={(value) => {
               onChange(value);
+              context.setDni(value)
             }}
             value={value}
           />
@@ -111,6 +114,7 @@ export default function FormDatosPersonales({ navigation }) {
             onBlur={onBlur}
             onChangeText={(value) => {
               onChange(value);
+              context.setPassword(value)
             }}
             value={value}
           />
@@ -135,21 +139,8 @@ export default function FormDatosPersonales({ navigation }) {
         )}
       /> */}
 
-      <Button 
-          buttonStyle={styles.botonVerdeClaro}
-          titleStyle={styles.botonTexto}
-          title="Establecer ubicación" 
-          onPress={()=> navigation.navigate('GeoUsuario')}/> 
-
-
       <Divider style={styles.divisorInferior} />
 
-      <Button
-        titleStyle={styles.botonTexto}
-        buttonStyle={styles.botonAzulMarino}
-        title="Siguiente"
-        onPress={handleSubmit(onSubmit)}
-      />
     </View>
   );
 }

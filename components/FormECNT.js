@@ -8,10 +8,9 @@ import { RegistroContext } from './RegistroContext'
 
 export default function FormECNT({ navigation }) {
 
-  const { control, handleSubmit, errors } = useForm();
   const [ diabetes, setDiabetes ] = useState(false);
   const [ hipertension, setHipertension ] = useState(false);
-  const cont = useContext(RegistroContext)
+  const context = useContext(RegistroContext)
 
   return (
     
@@ -49,13 +48,6 @@ export default function FormECNT({ navigation }) {
         />
       </View>
       <Divider style={styles.divisorInferior} />
-
-      <Button 
-          buttonStyle={styles.botonAzulMarino}
-          titleStyle={styles.botonTexto}
-          title="Siguiente" 
-          onPress={()=> navigation.navigate('Login')}/> 
-
     </View>
   );
 }

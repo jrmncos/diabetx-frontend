@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { Button,SafeAreaView,  StyleSheet, Text, View, Dimensions, Image, Alert, ScrollView, TouchableOpacity } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
@@ -8,11 +8,11 @@ import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 
 import marker from '../assets/marker.png'
-
+import { RegistroContext } from './RegistroContext'
 export default function GeoUsuario({navigation}){
-
   const [errorMsg, setErrorMsg] = useState(null);
-  
+  const context = useContext(RegistroContext)
+
   useEffect(() => {
     (async () => {
       Location.requestPermissionsAsync().then(status => {
@@ -56,9 +56,10 @@ export default function GeoUsuario({navigation}){
 
   const markerChange = (markerDataChange) => {  
     setMapDate(markerDataChange)
+    context.setLocation(markerDataChange)
    }
 
-  return (
+   return (
     <View style={styles.map}>
       <MapView 
         provider={PROVIDER_GOOGLE}
