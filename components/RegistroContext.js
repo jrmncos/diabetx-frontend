@@ -8,6 +8,8 @@ export const RegistroProvider = ({ children }) => {
     const [apellido, setApellido] = useState('')
     const [location, setLocation] = useState(null)
     const [password, setPassword] = useState('')
+    const [diabetes, setDiabetes] = useState(false)
+    const [hipertension, setHipertension] = useState(false)
 
     return(
         <RegistroContext.Provider value={{
@@ -20,7 +22,12 @@ export const RegistroProvider = ({ children }) => {
             password: password,
             setPassword: setPassword,
             location: location,
-            setLocation: setLocation
+            setLocation: setLocation,
+            diabetes: diabetes,
+            setDiabetes: setDiabetes,
+            hipertension: hipertension,
+            setHipertension: setHipertension 
+
         }}>
             {children}
         </RegistroContext.Provider>

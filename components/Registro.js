@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import Stepper from "react-native-stepper-ui";
-import { View, Alert, Text } from "react-native";
+import { View, Alert, Text, StyleSheet } from "react-native";
 
 import FormDatosPersonales from './FormDatosPersonales';
 import GeoUsuario from './GeoUsuario';
@@ -36,23 +36,28 @@ const RegistroMaestro = ({navegation}) => {
   
   }
   */
-  return (
-        <View style={{ marginVertical: 10, marginHorizontal: 0 }}>
-          <Stepper
-            active={active}
-            content={content}
-            onNext={() => {
-              console.log(context)
-              setActive((p) => p + 1)
-            }}
-            onBack={() =>{ 
-              console.log(context)
-              setActive((p) => p - 1)
-            }}
-            onFinish={() => Alert.alert("Finish")}
-          />
-        </View>
-    );
+ return (
+  <View style={{ marginVertical: 10, marginHorizontal: 0 }}>
+    <Stepper
+      buttonStyle={styles.botonAzulMarino}
+      buttonTextStyle={styles.botonTexto}
+      active={active}
+      content={content}
+      onNext={() => {
+        console.log(context)
+        setActive((p) => p + 1)
+      }}
+      onBack={() =>{ 
+        console.log(context)
+        setActive((p) => p - 1)
+      }}
+      onFinish={() => {
+        Alert.alert("Formulario finalizado")
+        console.log(context)
+      }}
+    />
+  </View>
+);
 };
 
 export default function Registro({navegation}){
@@ -62,3 +67,35 @@ export default function Registro({navegation}){
     </RegistroProvider>
   )
 }
+
+
+const styles = StyleSheet.create({
+  botonTexto:{
+    textAlign:"center",
+     color: "white",
+     fontSize: 25,
+   },
+botonVerdeClaro:{
+  width: '95%',
+  padding: '5%',
+  backgroundColor: '#5cc101',
+  justifyContent: 'space-evenly',
+  marginTop: "2%",
+  marginBottom:"2%"
+},
+
+botonAzulMarino:{
+
+  flexDirection: "row", 
+  alignSelf: "baseline",
+  width: '45%',
+  backgroundColor: '#00a7ba',
+  justifyContent: 'center',
+  alignContent:"center",
+  alignSelf:'center',
+  marginTop: "2%",
+  marginBottom:"2%",
+  marginLeft:"2%"
+},
+
+});

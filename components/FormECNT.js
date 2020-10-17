@@ -35,15 +35,15 @@ export default function FormECNT({ navigation }) {
       <View style={styles.cajaCheckBox}>
         <CheckBox
           title={<Text style={styles.textoCheckBox}>Diabetes</Text>}
-          checked={diabetes}
-          onPress={() => setDiabetes(!diabetes)}
+          checked={context.diabetes}
+          onPress={() => context.setDiabetes(!context.diabetes)}
         />
       </View>
       <View style={styles.cajaCheckBox}>
         <CheckBox
           title={<Text style={styles.textoCheckBox}>Hipertensión</Text>}
-          checked={hipertension}
-          onPress={() => setHipertension(!hipertension)}
+          checked={context.hipertension}
+          onPress={() => context.setHipertension(!context.hipertension)}
         />
       </View>
       <Divider style={styles.divisorInferior} />

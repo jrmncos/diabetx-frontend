@@ -79,6 +79,7 @@ export default function GeoUsuario({navigation}){
     </View>  
   )
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -109,7 +110,7 @@ const styles = StyleSheet.create({
   },
   mapStyle: {
     width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height -200,
+    height: Dimensions.get('window').height -Dimensions.get('window').height*0.25,
   },
   textoCheckBox: { 
     color: "white",
@@ -130,4 +131,4 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: '100%'
   },
-})
+});
