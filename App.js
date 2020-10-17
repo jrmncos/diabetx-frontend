@@ -9,11 +9,10 @@ import Home from './components/Home'
 import Geolocalizacion from './components/Geolocalizacion';
 import Panel from './components/Panel';
 import Paciente from './components/Paciente';
-import Registro from './components/Registro';
-import AsignarECNT from './components/AsignarECNT';
+import FormDatosPersonales from './components/FormDatosPersonales';
 import GeoUsuario from './components/GeoUsuario';
-import RegistroECNT from './components/RegistroECNT';
-import StepperRegistro from './components/StepperRegistro';
+import FormECNT from './components/FormECNT';
+import Registro from './components/Registro';
 
 
 const Stack = createStackNavigator()
@@ -39,11 +38,10 @@ export default function App() {
         <Stack.Screen name="Geolocalizacion" component={Geolocalizacion}/>
         <Stack.Screen name="Panel" component={Panel}/>
         <Stack.Screen name="Paciente" component={Paciente} options={({ route }) => ({ title: route.params.name })}/>
-        <Stack.Screen name="Registro" component={Registro} />
-        <Stack.Screen name="AsignarECNT" component={AsignarECNT} />
+        <Stack.Screen name="FormDatosPersonales" component={FormDatosPersonales} />
         <Stack.Screen name="GeoUsuario" component={GeoUsuario} />
-        <Stack.Screen name="RegistroECNT" component={RegistroECNT} />
-        <Stack.Screen name="StepperRegistro" component={StepperRegistro} />
+        <Stack.Screen name="FormECNT" component={FormECNT} />
+        <Stack.Screen name="Registro" component={Registro} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,19 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { StyleSheet, Text, View, Image, Alert } from "react-native";
 import { StatusBar } from "expo-status-bar";
 
 import { Button, Input, Icon, Header, Divider, CheckBox } from "react-native-elements";
 import { useForm, Controller } from "react-hook-form";
+import { RegistroContext } from './RegistroContext'
 
-
-export default function RegistroECNT({ navigation }) {
+export default function FormECNT({ navigation }) {
 
   const { control, handleSubmit, errors } = useForm();
   const [ diabetes, setDiabetes ] = useState(false);
   const [ hipertension, setHipertension ] = useState(false);
-  
+  const cont = useContext(RegistroContext)
+
   return (
+    
     <View style={styles.container}>
+      <Text>{cont}</Text>
       <Header
         barStyle="light-content"
         centerComponent={
