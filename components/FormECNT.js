@@ -15,7 +15,6 @@ export default function FormECNT({ navigation }) {
   return (
     
     <View style={styles.container}>
-      <Text>{cont}</Text>
       <Header
         barStyle="light-content"
         centerComponent={

@@ -10,9 +10,6 @@ import * as Permissions from 'expo-permissions';
 import marker from '../assets/marker.png'
 import { RegistroContext } from './RegistroContext'
 export default function GeoUsuario({navigation}){
-  const [errorMsg, setErrorMsg] = useState(null);
-  const context = useContext(RegistroContext)
-
   useEffect(() => {
     (async () => {
       Location.requestPermissionsAsync().then(status => {
@@ -56,17 +53,22 @@ export default function GeoUsuario({navigation}){
 
   const markerChange = (markerDataChange) => {  
     setMapDate(markerDataChange)
-    context.setLocation(markerDataChange)
+    //context.setLocation(markerDataChange)
    }
 
    return (
-    <View style={styles.map}>
+    <View style={{flex:1}}>
       <MapView 
         provider={PROVIDER_GOOGLE}
-        style={styles.map}
+        style={styles.mapStyle} 
         region={mapData}
+        /*initialRegion={{
+          latitude: -34.558654,
+          longitude: -58.744867,
+          latitudeDelta: 0.015,
+          longitudeDelta: 0.015,
+        }}*/
         onRegionChangeComplete={markerChange}
-
        />
       <View style={styles.markerFixed}>
           <Image style={styles.marker} source={marker} />
@@ -74,19 +76,18 @@ export default function GeoUsuario({navigation}){
       <SafeAreaView style={styles.footerButton}>
       <Button 
           title="Aceptar" 
-          onPress={()=> navigation.navigate('Registro')}/> 
+          onPress={()=> console.log("Anda el mapa")}/> 
       </SafeAreaView>
-      {/* <SafeAreaView style={styles.footer}>
-          <Text style={styles.region}>{JSON.stringify(mapData, null, 2)}</Text>
-      </SafeAreaView>     */}
-      
     </View>  
 
   );
 };
 const styles = StyleSheet.create({
-  map: {
-    flex: 1
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   markerFixed: {
     left: '50%',
@@ -109,16 +110,27 @@ const styles = StyleSheet.create({
 
     fontSize: 30
   },
+  mapStyle: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height -80,
+  },
+  textoCheckBox: { 
+    color: "white",
+    fontSize: 23,
+    paddingLeft: 6,
+  },
+  footerTop: {
+  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  top: 10,
+  left:10,
+  position: 'absolute',
+  width: '50%'
+  },
+  
   footer: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     bottom: 0,
     position: 'absolute',
     width: '100%'
   },
-
-  region: {
-    color: '#fff',
-    lineHeight: 20,
-    margin: 20
-  }
-})
+});
