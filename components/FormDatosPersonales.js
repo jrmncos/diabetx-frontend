@@ -18,19 +18,7 @@ export default function FormDatosPersonales({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Header
-        barStyle="light-content"
-        centerComponent={
-          <Image
-            style={{ width: 140, height: 40 }}
-            source={require("../assets/mmplogo.png")}
-          />
-        }
-        containerStyle={{
-          backgroundColor: "#5cc101",
-          justifyContent: "space-between",
-        }}
-      />
+     
 
       <Text h2 style={styles.registrarse}>
         Registrarse

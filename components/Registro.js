@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import Stepper from "react-native-stepper-ui";
-import { View, Alert, Text, StyleSheet } from "react-native";
+import { View, Alert, Text, StyleSheet, Image } from "react-native";
+import { Header} from 'react-native-elements';
 
 import FormDatosPersonales from './FormDatosPersonales';
 import GeoUsuario from './GeoUsuario';
@@ -15,9 +16,9 @@ const RegistroMaestro = ({navegation}) => {
     const  context  = useContext(RegistroContext)
 
     const content = [
-        <FormDatosPersonales title="Component 1" />,
-        <GeoUsuario title="Component 2" />,
-        <FormECNT title="Component 3" />,
+        <FormDatosPersonales title="Datos personales" />,
+        <GeoUsuario title="Establecer ubicación" />,
+        <FormECNT title="Asignar ECNT" />,
     ];
             /*
   const onSubmit = (data) => {
@@ -37,8 +38,20 @@ const RegistroMaestro = ({navegation}) => {
   }
   */
  return (
-  <View style={{ marginVertical: 10, marginHorizontal: 0 }}>
+  <View style={{ flex:1, backgroundColor:"rgba(255,255,255,1)", marginHorizontal: 0 }}>
+  <Header 
+        barStyle="light-content" 
+        centerComponent={ <Image
+          style={{ width: 120, height: 40 }}
+          source={require('../assets/mmplogo.png')} 
+        />}
+        containerStyle={{
+          backgroundColor: '#5cc101',
+          justifyContent: 'space-between',
+        }}
+        />
     <Stepper
+      style={styles.stepperStyle}
       buttonStyle={styles.botonAzulMarino}
       buttonTextStyle={styles.botonTexto}
       active={active}
@@ -75,27 +88,34 @@ const styles = StyleSheet.create({
      color: "white",
      fontSize: 25,
    },
-botonVerdeClaro:{
-  width: '95%',
-  padding: '5%',
-  backgroundColor: '#5cc101',
-  justifyContent: 'space-evenly',
-  marginTop: "2%",
-  marginBottom:"2%"
-},
 
-botonAzulMarino:{
+   stepperStyle:{
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 
-  flexDirection: "row", 
-  alignSelf: "baseline",
-  width: '45%',
-  backgroundColor: '#00a7ba',
-  justifyContent: 'center',
-  alignContent:"center",
-  alignSelf:'center',
-  marginTop: "2%",
-  marginBottom:"2%",
-  marginLeft:"2%"
-},
+  botonVerdeClaro:{
+    width: '95%',
+    padding: '5%',
+    backgroundColor: '#5cc101',
+    justifyContent: 'space-evenly',
+    marginTop: "2%",
+    marginBottom:"2%"
+  },
+
+  botonAzulMarino:{
+
+    flexDirection: "row", 
+    alignSelf: "baseline",
+    width: '45%',
+    backgroundColor: '#00a7ba',
+    justifyContent: 'center',
+    alignContent:"center",
+    alignSelf:'center',
+    marginTop: "2%",
+    marginBottom:"2%",
+    marginLeft:"2%"
+  },
 
 });

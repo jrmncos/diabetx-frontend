@@ -13,6 +13,7 @@ import FormDatosPersonales from './components/FormDatosPersonales';
 import GeoUsuario from './components/GeoUsuario';
 import FormECNT from './components/FormECNT';
 import Registro from './components/Registro';
+import FormAC_Diabetes from './components/FormAC_Diabetes';
 
 
 const Stack = createStackNavigator()
@@ -42,6 +43,7 @@ export default function App() {
         <Stack.Screen name="GeoUsuario" component={GeoUsuario} />
         <Stack.Screen name="FormECNT" component={FormECNT} />
         <Stack.Screen name="Registro" component={Registro} />
+        <Stack.Screen name="FormAC_Diabetes" component={FormAC_Diabetes} />
       </Stack.Navigator>
     </NavigationContainer>
   );

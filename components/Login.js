@@ -71,6 +71,12 @@ export default function Login({navigation}){
         <Button 
           buttonStyle={styles.botonVerdeClaro}
           titleStyle={styles.botonTexto}
+          title="autocontrol" 
+          onPress={()=> navigation.navigate('FormAC_Diabetes')}/> 
+
+        <Button 
+          buttonStyle={styles.botonVerdeClaro}
+          titleStyle={styles.botonTexto}
           title="Recuperar Clave" 
           onPress={()=> navigation.navigate('Home')}/> 
 
