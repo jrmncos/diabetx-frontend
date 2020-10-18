@@ -8,13 +8,16 @@ import { RegistroContext } from './RegistroContext'
 
 export default function FormECNT({ navigation }) {
 
-  const [ diabetesMatutinoFalse, setDiabetesMatitunoFalse ] = useState(false);
-  const [ diabetesMatutinoTrue, setDiabetesMatutinoTrue ] = useState(false);
-  const [ glucoMatutino, setGlucoMatutino ] = useState('');
+  const [ diabetesMatutino, setDiabetesMatutino ] = useState(false)
+  const [ diabetesComida, setDiabetesComida ] = useState(false)
 
-  const [ diabetesComidaFalse, setDiabetesComidaFalse ] = useState(false);
-  const [ diabetesComidaTrue, setDiabetesComidaTrue ] = useState(false);
-  const [ glucoComida, setGlucoComida ] = useState('');
+  const [ diabetesMatutinoFalse, setDiabetesMatitunoFalse ] = useState(false)
+  const [ diabetesMatutinoTrue, setDiabetesMatutinoTrue ] = useState(false)
+  const [ glucoMatutino, setGlucoMatutino ] = useState('')
+
+  const [ diabetesComidaFalse, setDiabetesComidaFalse ] = useState(false)
+  const [ diabetesComidaTrue, setDiabetesComidaTrue ] = useState(false)
+  const [ glucoComida, setGlucoComida ] = useState('')
 
   return (
     
@@ -43,6 +46,8 @@ export default function FormECNT({ navigation }) {
               title={<Text style={styles.textoCheckBox}>Si</Text>}
               checked={diabetesMatutinoTrue}
               onPress={() => {
+                setDiabetesMatituno(true);
+
                 setDiabetesMatutinoTrue(true)
                 setDiabetesMatitunoFalse(false)
               }}
@@ -53,6 +58,8 @@ export default function FormECNT({ navigation }) {
               title={<Text style={styles.textoCheckBox}>No</Text>}
               checked={diabetesMatutinoFalse}
               onPress={() => {
+                setDiabetesMatutino(false)
+
                 setDiabetesMatutinoTrue(false)
                 setDiabetesMatitunoFalse(true)
               }}
@@ -91,6 +98,8 @@ export default function FormECNT({ navigation }) {
             title={<Text style={styles.textoCheckBox}>Si</Text>}
             checked={diabetesComidaTrue}
             onPress={() => {
+              setDiabetesComida(true)
+
               setDiabetesComidaFalse(false)
               setDiabetesComidaTrue(true)
             }}
@@ -101,6 +110,8 @@ export default function FormECNT({ navigation }) {
             title={<Text style={styles.textoCheckBox}>No</Text>}
             checked={diabetesComidaFalse}
             onPress={() => {
+              setDiabetesComida(false)
+              
               setDiabetesComidaFalse(true)
               setDiabetesComidaTrue(false)
             }}
@@ -115,7 +126,7 @@ export default function FormECNT({ navigation }) {
             leftIcon={
               <Icon name="heartbeat" color="#00a7ba" type="font-awesome" />
             }
-            onChange={(value) => {
+            onChangeText={(value) => {
               onChange(value);
               setGlucoComida(value)
             }}

@@ -14,6 +14,7 @@ import GeoUsuario from './components/GeoUsuario';
 import FormECNT from './components/FormECNT';
 import Registro from './components/Registro';
 import FormAC_Diabetes from './components/FormAC_Diabetes';
+import dniScanner from './components/dniScanner';
 
 
 const Stack = createStackNavigator()
@@ -44,6 +45,7 @@ export default function App() {
         <Stack.Screen name="FormECNT" component={FormECNT} />
         <Stack.Screen name="Registro" component={Registro} />
         <Stack.Screen name="FormAC_Diabetes" component={FormAC_Diabetes} />
+        <Stack.Screen name="dniScanner" component={dniScanner} />
       </Stack.Navigator>
     </NavigationContainer>
   );
