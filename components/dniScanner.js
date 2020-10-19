@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button, Image } from 'react-native';
+import { Text, View, StyleSheet, Image, Alert } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
+import { Button} from 'react-native-elements';
 
 import dniBordeScanner from '../assets/dd.png'
 import dniEjemplo from '../assets/dniScannerExample.png'
@@ -8,6 +9,12 @@ import dniEjemplo from '../assets/dniScannerExample.png'
 export default function dniScanner({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
+ 
+  const [dni, setDni] = useState()
+  const [lastName, setLastName] = useState()
+  const [name, setName] = useState()
+  const [genero, setGenero] = useState()
+  const [bod, setBod] = useState()
 
   useEffect(() => {
     (async () => {
@@ -17,17 +24,35 @@ export default function dniScanner({ navigation }) {
   }, []);
 
   const handleBarCodeScanned = ({ type, data }) => {
-    setScanned(true);
-    console.log(type)
-    console.log(data)
+    if(type == 2048){
+        setScanned(true);
+        var datosDNI = data.split("@")
+        setDni(datosDNI[4])
+        setName(datosDNI[2])
+        setLastName(datosDNI[1])
+        setGenero(datosDNI[3])
+        setBod(datosDNI[6])
+
+        console.log("Documento Argentino escaneado: \n"+
+        "DNI: "+dni+
+        "\nApellido: "+lastName+
+        "\nNombre: "+name+
+        "\nGenero: "+genero+
+        "\nFecha de Nacimiento: "+bod
+        )
+    }
+    else{
+        Alert.alert("Debe escanear un DNI argentino.")
+        setScanned(true)
+    }
     // alert(`Bar code with type ${type} and data ${data} has been scanned!`);
   };
 
   if (hasPermission === null) {
-    return <Text>Requesting for camera permission</Text>;
+    return <Text>Solicitando permisos de cámara.</Text>;
   }
   if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
+    return <Text>No tengo acceso a la cámara, es necesario para escanear tu DNI.</Text>;
   }
 
   return (
@@ -53,7 +78,14 @@ export default function dniScanner({ navigation }) {
           <Image style={styles.bordeCam} source={dniBordeScanner} />
       </View>
     
-      {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
+      {scanned && 
+      <View style={styles.botonCentro}>
+        <Button 
+            buttonStyle={styles.botonAzulMarino}
+            titleStyle={styles.botonTexto}
+            title="Reintentar" 
+            onPress={()=> setScanned(false)}/>
+      </View>}
     </View>
   );
 }
@@ -65,6 +97,25 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
     },
+    botonCentro: {
+        left:"8%",
+        marginLeft: -24,
+        marginTop: -48,
+        position: 'absolute',
+        top: '50%'
+      },
+      botonTexto:{
+        color: "white",
+        fontSize: 30,
+      },
+    botonAzulMarino:{
+        width: '95%',
+        padding: '7%',
+        backgroundColor: '#00a7ba',
+        justifyContent: 'space-evenly',
+        marginTop: "2%",
+        marginBottom:"2%"
+      },
     ejemploCam: {
         left: '30%',
         marginLeft: -24,
