@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, Image, Alert, ScrollView } from "react-native";
-import { StatusBar } from "expo-status-bar";
 
 import { Button, Input, Icon, Header, Divider, CheckBox } from "react-native-elements";
-import { useForm, Controller } from "react-hook-form";
-import { RegistroContext } from './RegistroContext'
+
+import * as Network from 'expo-network';
+
 
 export default function FormECNT({ navigation }) {
 
@@ -18,6 +18,19 @@ export default function FormECNT({ navigation }) {
   const [ diabetesComidaFalse, setDiabetesComidaFalse ] = useState(false)
   const [ diabetesComidaTrue, setDiabetesComidaTrue ] = useState(false)
   const [ glucoComida, setGlucoComida ] = useState('')
+
+
+  useEffect(() => {
+    if(Network.getNetworkStateAsync() == Network.NetworkStateType.UNKNOWN || 
+        Network.getNetworkStateAsync() == Network.NetworkStateType.NONE){
+
+        console.log("No tengo acceso a internet! :c")
+    }
+    else{
+      console.log("Tengo acceso a internet! c:")
+    }
+  })
+
 
   return (
     

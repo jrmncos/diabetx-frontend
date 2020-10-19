@@ -24,28 +24,31 @@ export default function dniScanner({ navigation }) {
   }, []);
 
   const handleBarCodeScanned = ({ type, data }) => {
+    console.log(data)
     if(type == 2048){
-        setScanned(true);
-        var datosDNI = data.split("@")
+        const datosDNI = data.split("@")
+        console.log(datosDNI)
+
         setDni(datosDNI[4])
         setName(datosDNI[2])
         setLastName(datosDNI[1])
         setGenero(datosDNI[3])
         setBod(datosDNI[6])
-
-        console.log("Documento Argentino escaneado: \n"+
-        "DNI: "+dni+
-        "\nApellido: "+lastName+
-        "\nNombre: "+name+
-        "\nGenero: "+genero+
-        "\nFecha de Nacimiento: "+bod
-        )
+        
+        setScanned(true);
     }
     else{
         Alert.alert("Debe escanear un DNI argentino.")
         setScanned(true)
     }
-    // alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+
+    console.log("Documento Argentino escaneado: \n"+
+    "DNI: "+dni+
+    "\nApellido: "+lastName+
+    "\nNombre: "+name+
+    "\nGenero(estamos en los 90?): "+genero+
+    "\nFecha de Nacimiento: "+bod
+    )
   };
 
   if (hasPermission === null) {
@@ -102,7 +105,7 @@ const styles = StyleSheet.create({
         marginLeft: -24,
         marginTop: -48,
         position: 'absolute',
-        top: '50%'
+        top: '90%'
       },
       botonTexto:{
         color: "white",
