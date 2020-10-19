@@ -46,7 +46,7 @@ export default function FormECNT({ navigation }) {
               title={<Text style={styles.textoCheckBox}>Si</Text>}
               checked={diabetesMatutinoTrue}
               onPress={() => {
-                setDiabetesMatituno(true);
+                setDiabetesMatutino(true);
 
                 setDiabetesMatutinoTrue(true)
                 setDiabetesMatitunoFalse(false)
@@ -72,7 +72,7 @@ export default function FormECNT({ navigation }) {
             style={styles.textoFormulario}
             keyboardType="numeric"
             leftIcon={
-              <Icon name="heartbeat" color="#00a7ba" type="font-awesome" />
+              <Icon name="heartbeat" color="#5cc101" type="font-awesome" />
             }
             onChangeText={(value) => {
               onChange(value);
@@ -124,7 +124,7 @@ export default function FormECNT({ navigation }) {
             style={styles.textoFormulario}
             keyboardType="numeric"
             leftIcon={
-              <Icon name="heartbeat" color="#00a7ba" type="font-awesome" />
+              <Icon name="heartbeat" color="#5cc101" type="font-awesome" />
             }
             onChangeText={(value) => {
               onChange(value);
@@ -132,15 +132,15 @@ export default function FormECNT({ navigation }) {
             }}
       />
      
-      
-      {/* <View style={styles.cajaCheckBox}>
-        <CheckBox
-          title={<Text style={styles.textoCheckBox}>Hipertensión</Text>}
-          checked={context.hipertension}
-          onPress={() => context.setHipertension(!context.hipertension)}
-        />
-      </View> */}
       <Divider style={styles.divisorInferior} />
+
+      <Button   
+          image={{ name: 'check-circle', color: '#fff' }}
+          titleStyle={styles.botonTexto}    
+          buttonStyle={styles.botonAzulMarino}
+          title="Completar control" 
+          onPress={()=> Alert.alert("Matutino: "+diabetesMatutino+", Comida: "+diabetesComida)}/> 
+
       </View></ScrollView>
  
   );

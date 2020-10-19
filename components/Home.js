@@ -49,9 +49,9 @@ export default function Home({navigation}){
           source={require('../assets/mapa.png')} 
         />
           <Button 
-          titleStyle={styles.botonTexto}    
-          buttonStyle={styles.botonVerdeClaro}
-            title="Mapa interactivo CNT" 
+            titleStyle={styles.botonTexto}    
+            buttonStyle={styles.botonVerdeClaro}
+            title="Mapa interactivo" 
             onPress={()=> navigation.navigate('Geolocalizacion')}/> 
         </View>
 
@@ -61,15 +61,33 @@ export default function Home({navigation}){
           source={require('../assets/seo.png')} 
         />
           <Button   
-          image={{ name: 'check-circle', color: '#fff' }}
-          titleStyle={styles.botonTexto}    
-          buttonStyle={styles.botonVerdeClaro}
-          title="Panel de control" 
-          onPress={()=> navigation.navigate('Panel')}/> 
+            image={{ name: 'check-circle', color: '#fff' }}
+            titleStyle={styles.botonTexto}    
+            buttonStyle={styles.botonVerdeClaro}
+            title="Panel de control" 
+            onPress={()=> navigation.navigate('Panel')}/> 
         </View>
 
-        
-       
+        <View style={{flexDirection: 'row', alignSelf: 'baseline', width:"90%", padding: "2%" }}>
+        <Image
+          style={{ width: 70, height: 69, backgroundColor:"#5cc101" }}
+          source={require('../assets/archivo-medico.png')} 
+        />
+          <Button   
+            image={{ name: 'check-circle', color: '#fff' }}
+            titleStyle={styles.botonTexto}    
+            buttonStyle={styles.botonVerdeClaro}
+            title="Autocontrol (Diabetes)" 
+            onPress={()=> navigation.navigate('FormAC_Diabetes')}/> 
+        </View>
+
+        <Button 
+          image={{ name: 'check-circle', color: '#fff' }}
+          buttonStyle={styles.botonAzulMarino}
+          titleStyle={styles.botonTexto}
+          title="Escanear DNI (test)" 
+          onPress={()=> navigation.navigate('dniScanner')}/> 
+
         <StatusBar style="auto" />
       </View>
     )

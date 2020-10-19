@@ -71,12 +71,6 @@ export default function Login({navigation}){
         <Button 
           buttonStyle={styles.botonVerdeClaro}
           titleStyle={styles.botonTexto}
-          title="scanner" 
-          onPress={()=> navigation.navigate('dniScanner')}/> 
-
-        <Button 
-          buttonStyle={styles.botonVerdeClaro}
-          titleStyle={styles.botonTexto}
           title="Recuperar Clave" 
           onPress={()=> navigation.navigate('Home')}/> 
 
