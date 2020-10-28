@@ -20,7 +20,7 @@ import dniScanner from './components/dniScanner';
 const Stack = createStackNavigator()
 
 
-export default function App() {
+export default function App() {z
 
   const [isLoggin, setIsLoggin] = useState(false)
 

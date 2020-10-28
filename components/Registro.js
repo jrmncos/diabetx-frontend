@@ -7,7 +7,7 @@ import FormDatosPersonales from './FormDatosPersonales';
 import GeoUsuario from './GeoUsuario';
 import FormECNT from './FormECNT';
 
-import { RegistroContext, RegistroProvider } from './RegistroContext'
+import { RegistroContext, RegistroProvider } from './context/RegistroContext'
 
 
 const RegistroMaestro = ({navegation}) => {
@@ -37,6 +37,51 @@ const RegistroMaestro = ({navegation}) => {
   
   }
   */
+
+    const onSubmit = () => {
+      console.log("El context: ")
+      console.log(context)
+      ecnts = []
+      if(context.diabetes){
+        ecnts.push({
+          'nombre': 'diabetes',
+          'descripcion':'nivel de glucemia elevado'
+        })
+      }
+      if(context.hipertension){
+        ecnts.push({
+          'nombre':'hipertension',
+          'descripcion':'nivel de presion elevado'
+        })
+      }
+      user = {
+        'dni': context.dni,
+        'first_name': context.nombre,
+        'last_name': context.apellido,
+        'latitude': context.location.latitude,
+        'longitude': context.location.longitude,
+        'bod': '1990-05-05',
+        'password':context.password,
+        'paciente_profile': {
+          'ultimo_autocontrol': 'hoy',
+          'ecnts': ecnts
+        }
+      }
+      console.log("Lo que mando: ")
+      console.log(JSON.stringify(user))
+      
+      fetch('http://192.168.1.38:8000/api/users/',{
+        method: 'POST',
+        headers:{
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(context)
+      })
+      .then(response => response.json())
+      .then(data => console.log(data))
+    } 
+
  return (
   <View style={{ flex:1, backgroundColor:"rgba(255,255,255,1)", marginHorizontal: 0 }}>
   <Header 
@@ -66,7 +111,7 @@ const RegistroMaestro = ({navegation}) => {
       }}
       onFinish={() => {
         Alert.alert("Formulario finalizado")
-        console.log(context)
+        onSubmit()
       }}
     />
   </View>
