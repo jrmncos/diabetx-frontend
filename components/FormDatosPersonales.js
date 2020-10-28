@@ -5,7 +5,7 @@ import { StatusBar } from "expo-status-bar";
 import { Button, Input, Icon, Header, Divider } from "react-native-elements";
 import { useForm, Controller } from "react-hook-form";
 import * as Location from 'expo-location';
-import { RegistroContext } from './RegistroContext'
+import { RegistroContext } from './context/RegistroContext'
 
 
 

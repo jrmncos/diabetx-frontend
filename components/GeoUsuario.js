@@ -5,7 +5,7 @@ import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import * as Location from 'expo-location'
 
 import marker from '../assets/marker.png'
-import { RegistroContext } from './RegistroContext'
+import { RegistroContext } from './context/RegistroContext'
 export default function GeoUsuario({navigation}){
 
   const [permisoUbicacion, setPermisoUbicacion] = useState(false)

@@ -19,7 +19,6 @@ export default function FormECNT({ navigation }) {
   const [ diabetesComidaTrue, setDiabetesComidaTrue ] = useState(false)
   const [ glucoComida, setGlucoComida ] = useState('')
 
-
   useEffect(() => {
     if(Network.getNetworkStateAsync() == Network.NetworkStateType.UNKNOWN || 
         Network.getNetworkStateAsync() == Network.NetworkStateType.NONE){

@@ -4,7 +4,7 @@ import { StatusBar } from "expo-status-bar";
 
 import { Button, Input, Icon, Header, Divider, CheckBox } from "react-native-elements";
 import { useForm, Controller } from "react-hook-form";
-import { RegistroContext } from './RegistroContext'
+import { RegistroContext } from './context/RegistroContext'
 
 export default function FormECNT({ navigation }) {
 

@@ -121,7 +121,7 @@ export default function Geolocalizacion({navigation}){
       </SafeAreaView>
 
 
-      <View
+      {/* <View
         style={{ flexDirection: "row", alignSelf: "baseline", width: "50%" }}
       >
         <Text>Diabetes</Text>
@@ -142,7 +142,7 @@ export default function Geolocalizacion({navigation}){
           value={checkHipertension}
           onValueChange={(newValue) => setCheckHipertension(newValue)}
         />
-      </View>
+      </View> */}
       </View>
     )
 

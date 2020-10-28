@@ -1,5 +1,5 @@
 import React , { useState, useEffect, useRef } from 'react'
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, Platform  } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
 import { Button, Input, Icon, Header, Divider } from 'react-native-elements';
@@ -7,7 +7,6 @@ import { Button, Input, Icon, Header, Divider } from 'react-native-elements';
 import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
-import { Text, View, Button, Platform } from 'react-native';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({

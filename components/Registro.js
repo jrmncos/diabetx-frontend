@@ -7,7 +7,7 @@ import FormDatosPersonales from './FormDatosPersonales';
 import GeoUsuario from './GeoUsuario';
 import FormECNT from './FormECNT';
 
-import { RegistroContext, RegistroProvider } from './context/RegistroContext'
+import { RegistroContext } from './context/RegistroContext'
 
 
 const RegistroMaestro = ({navegation}) => {
