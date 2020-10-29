@@ -55,6 +55,30 @@ export default function Home({navigation}){
             onPress={()=> navigation.navigate('Geolocalizacion')}/> 
         </View>
 
+        <View style={{flexDirection: 'row', alignSelf: 'flex-start', width:"90%", padding: "2%"}}>
+        <Image
+          style={{ width: 70, height: 70, backgroundColor:"#5cc101"}}
+          source={require('../assets/mapa.png')} 
+        />
+          <Button 
+            titleStyle={styles.botonTexto}    
+            buttonStyle={styles.botonVerdeClaro}
+            title="Enviar notificacion" 
+            onPress={()=> navigation.navigate('Geolocalizacion')}/> 
+        </View>
+        
+        <View style={{flexDirection: 'row', alignSelf: 'flex-start', width:"90%", padding: "2%"}}>
+        <Image
+          style={{ width: 70, height: 70, backgroundColor:"#5cc101"}}
+          source={require('../assets/mapa.png')} 
+        />
+          <Button 
+            titleStyle={styles.botonTexto}    
+            buttonStyle={styles.botonVerdeClaro}
+            title="Perfil" 
+            onPress={()=> navigation.navigate('Geolocalizacion')}/> 
+        </View>
+
         <View style={{flexDirection: 'row', alignSelf: 'baseline', width:"90%", padding: "2%" }}>
         <Image
           style={{ width: 70, height: 69, backgroundColor:"#5cc101" }}
