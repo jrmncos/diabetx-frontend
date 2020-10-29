@@ -1,10 +1,8 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { StyleSheet, Text, View, Image, Alert } from "react-native";
-import { StatusBar } from "expo-status-bar";
 
-import { Button, Input, Icon, Header, Divider, CheckBox } from "react-native-elements";
-import { useForm, Controller } from "react-hook-form";
-import { RegistroContext } from './context/RegistroContext'
+import { Divider, CheckBox } from "react-native-elements";
+import { RegistroContext } from '../context/RegistroContext'
 
 export default function FormECNT({ navigation }) {
 

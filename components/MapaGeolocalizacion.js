@@ -1,20 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Button, StyleSheet, Text, View, Dimensions, Image, Alert, ScrollView, SafeAreaView } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
 import MapView, { Circle } from 'react-native-maps';
 import CheckBox from '@react-native-community/checkbox';
-// Geocoder.init("AIzaSyDFZlvMAtiN5FKA1dhJ7K5xG7Yy9MhZOhA");
-
-
-import * as Location from 'expo-location';
-import * as Permissions from 'expo-permissions';
-
-
-//const ecnt = ['diabetes', 'epoc', 'hipertension']
 
 const ecnt = ['diabetes', 'hipertension', 'epoc']
-
-
 
 export default function Geolocalizacion({navigation}){
 

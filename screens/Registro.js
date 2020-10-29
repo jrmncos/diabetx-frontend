@@ -3,11 +3,11 @@ import Stepper from "react-native-stepper-ui";
 import { View, Alert, Text, StyleSheet, Image } from "react-native";
 import { Header} from 'react-native-elements';
 
-import FormDatosPersonales from './FormDatosPersonales';
-import GeoUsuario from './GeoUsuario';
-import FormECNT from './FormECNT';
+import FormDatosPersonales from '../components/FormDatosPersonales';
+import GeoUsuario from '../components/GeoUsuario';
+import FormECNT from '../components/FormECNT';
 
-import { RegistroContext } from './context/RegistroContext'
+import { RegistroContext } from '../context/RegistroContext'
 
 
 const RegistroMaestro = ({navegation}) => {

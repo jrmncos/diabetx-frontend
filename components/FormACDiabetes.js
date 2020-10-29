@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, Image, Alert, ScrollView } from "react-native";
 
-import { Button, Input, Icon, Header, Divider, CheckBox } from "react-native-elements";
+import { Button, Input, Icon, Divider, CheckBox } from "react-native-elements";
 
 import * as Network from 'expo-network';
-
 
 export default function FormECNT({ navigation }) {
 
