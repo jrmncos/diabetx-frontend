@@ -6,7 +6,7 @@ import { Button} from 'react-native-elements';
 import dniBordeScanner from '../assets/dd.png'
 import dniEjemplo from '../assets/dniScannerExample.png'
 
-export default function dniScanner({ navigation }) {
+export default function DniScanner({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
  

@@ -6,6 +6,8 @@ import Home from '../screens/Home'
 import Geolocalizacion from '../screens/Geolocalizacion';
 import Panel from '../screens/Panel';
 import Registro from '../screens/Registro';
+import Perfil from '../screens/Perfil';
+import DniScanner from '../components/DniScanner';
 
 const Stack = createStackNavigator()
 
@@ -26,6 +28,8 @@ export default function RootNavigation(){
         <Stack.Screen name="Geolocalizacion" component={Geolocalizacion}/>
         <Stack.Screen name="Panel" component={Panel}/>
         <Stack.Screen name="Registro" component={Registro} />
+        <Stack.Screen name="Perfil" component={Perfil} />
+        <Stack.Screen name="DniScanner" component={DniScanner} />
       </Stack.Navigator>
       )
 }

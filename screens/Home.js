@@ -76,7 +76,7 @@ export default function Home({navigation}){
             titleStyle={styles.botonTexto}    
             buttonStyle={styles.botonVerdeClaro}
             title="Perfil" 
-            onPress={()=> navigation.navigate('Geolocalizacion')}/> 
+            onPress={()=> navigation.navigate('Perfil')}/>
         </View>
 
         <View style={{flexDirection: 'row', alignSelf: 'baseline', width:"90%", padding: "2%" }}>

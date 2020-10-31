@@ -3,6 +3,8 @@ import React,{useState, createContext} from 'react'
 export const RegistroContext = createContext()
 
 export const RegistroProvider = ({ children }) => {
+    const [bod, setBod] = useState('')
+    const [genero, setGenero] = useState('')
     const [dni, setDni] = useState('')
     const [nombre, setNombre] = useState('')
     const [apellido, setApellido] = useState('')
@@ -15,6 +17,10 @@ export const RegistroProvider = ({ children }) => {
         <RegistroContext.Provider value={{
             dni: dni,
             setDni: setDni,
+            bod: bod,
+            setBod: setBod,
+            genero: genero,
+            setGenero: setGenero,
             nombre: nombre,
             setNombre: setNombre,
             apellido: apellido,

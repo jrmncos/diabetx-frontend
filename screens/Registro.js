@@ -7,18 +7,16 @@ import FormDatosPersonales from '../components/FormDatosPersonales';
 import GeoUsuario from '../components/GeoUsuario';
 import FormECNT from '../components/FormECNT';
 
-import { RegistroContext } from '../context/RegistroContext'
-
+import { RegistroContext, RegistroProvider }  from '../context/RegistroContext';
 
 const RegistroMaestro = ({navegation}) => {
 
     const [active, setActive] = useState(0);
-    const  context  = useContext(RegistroContext)
+    const context = useContext(RegistroContext)
 
     const content = [
         <FormDatosPersonales title="Datos personales" />,
         <GeoUsuario title="Establecer ubicación" />,
-        <FormECNT title="Asignar ECNT" />,
     ];
             /*
   const onSubmit = (data) => {

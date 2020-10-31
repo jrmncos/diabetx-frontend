@@ -1,17 +1,18 @@
 import React, { useEffect, useContext } from "react";
-import { StyleSheet, Text, View, Image, Alert } from "react-native";
-import { StatusBar } from "expo-status-bar";
-
+import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from "react-native";
+import { TextInputMask } from 'react-native-masked-text'
+import {Picker} from '@react-native-picker/picker';
 import { Button, Input, Icon, Header, Divider } from "react-native-elements";
 import { useForm, Controller } from "react-hook-form";
-import * as Location from 'expo-location';
 import { RegistroContext } from '../context/RegistroContext'
 
 export default function FormDatosPersonales({ navigation }) {
   const { control, handleSubmit, errors } = useForm();
   const context = useContext(RegistroContext)
 
-
+  function mascaraPass(value){
+    return new Array(value.length + 1).join('*');
+  }
   //Llama a set dni del context
 
   return (
@@ -22,111 +23,173 @@ export default function FormDatosPersonales({ navigation }) {
         Registrarse
       </Text>
 
-      <View
-        style={{ flexDirection: "row", alignSelf: "baseline", width: "50%" }}
-      >
-        <Controller
-          control={control}
-          name={"first_name"}
-          defaultValue=""
-          render={({ onChange, onBlur, value }) => (
-            <Input
-              placeholder="Nombre"
-              style={styles.textoFormularioNA}
-              leftIcon={
-                <Icon name="user" type="font-awesome" color="#00a7ba" />
-              }
-              onBlur={onBlur}
-              onChangeText={(value) => {
-                onChange(value);
-                context.setNombre(value)
-              }}
-              value={value}
-            />
-          )}
-        />
-        <Controller
-          control={control}
-          name={"last_name"}
-          defaultValue=""
-          render={({ onChange, onBlur, value }) => (
-            <Input
-              placeholder="Apellido"
-              style={styles.textoFormularioNA}
-              leftIcon={
-                <Icon name="user" type="font-awesome" color="#00a7ba" />
-              }
-              onBlur={onBlur}
-              onChangeText={(value) => {
-                onChange(value);
-                context.setApellido(value)
-              }}
-              value={value}
-            />
-          )}
-        />
-      </View>
-      <Controller
+      <Text h2 style={styles.textSubtitulo}>
+      Por favor, ingresá tus datos, también podes ingresarlos tocando en "Escanear DNI".
+      </Text>
+    
+
+    <Text style={styles.encabezado}> Nombre</Text>
+    <View style={styles.vistaTituloForm}>
+    <Image
+        style={{marginTop:"2%", marginLeft:"2%", width:"10%", height:"80%"}}
+        source={require('../assets/Registro/name.png')}
+      />
+    <Controller
+        control={control}
+        name={"nombre"}
+        defaultValue=""
+        render={({ onChange, onBlur, value }) => (
+          <TextInput
+            style={styles.textoFormulario}
+            onBlur={onBlur}
+            onChangeText={nombreInput => { 
+              onChange(nombreInput)
+              context.setNombre(nombreInput)}
+            }
+            value={value}
+          />
+        )}
+      />
+    </View>   
+
+    <Text style={styles.encabezado}> Apellido</Text>
+    <View style={styles.vistaTituloForm}>
+    <Image
+        style={{marginTop:"2%", marginLeft:"2%", width:"10%", height:"80%"}}
+        source={require('../assets/Registro/name.png')}
+      />
+    <Controller
+        control={control}
+        name={"apellido"}
+        defaultValue=""
+        render={({ onChange, onBlur, value }) => (
+          <TextInput
+            style={styles.textoFormulario}
+            onBlur={onBlur}
+            onChangeText={apellidoInput => { 
+              onChange(apellidoInput)
+              context.setApellido(apellidoInput)}
+            }
+            value={value}
+          />
+        )}
+      />
+    </View>
+
+    <Text style={styles.encabezado}> Género que figura en tu DNI</Text>
+    <View style={styles.vistaTituloForm}>
+    <Image
+        style={{marginTop:"2%", marginLeft:"2%", width:"10%", height:"80%"}}
+        source={require('../assets/Registro/genero.png')}
+      />
+    <Controller
+        control={control}
+        name={"genero"}
+        defaultValue=""
+        render={({ onChange, onBlur, value }) => (
+          <View style={{borderColor: 'gray', borderColor: 'rgba(0, 167, 186, 0.2)',
+          borderWidth: 1, width: "86%" }}>
+          <Picker
+            selectedValue={context.genero}
+            onValueChange={(itemValue) => context.setGenero(itemValue)}
+          >
+            <Picker.Item fontSize="20" label="Selecciona tu género" value="" />
+            <Picker.Item label="Femenino" value="F" />
+            <Picker.Item label="Masculino" value="M" />
+          </Picker>
+    
+        </View>
+        )}
+      />
+    </View>    
+    
+   
+    <Text style={styles.encabezado}> DNI</Text>
+    <View style={styles.vistaTituloForm}>
+    <Image
+        style={{marginTop:"2%", marginLeft:"2%", width:"10%", height:"80%"}}
+        source={require('../assets/Registro/dni.png')}
+      />
+    <Controller
         control={control}
         name={"dni"}
         defaultValue=""
         render={({ onChange, onBlur, value }) => (
-          <Input
-            placeholder="DNI"
-            style={styles.textoFormulario}
-            keyboardType="numeric"
-            leftIcon={
-              <Icon name="address-card" color="#00a7ba" type="font-awesome" />
-            }
+          <TextInputMask
+            type={'only-numbers'}
             onBlur={onBlur}
-            onChangeText={(value) => {
-              onChange(value);
-              context.setDni(value)
-            }}
-            value={value}
+            style={styles.textoFormulario}
+            value={context.dni}
+          onChangeText={dniInput => {
+            if(dniInput.length < 9){
+              context.setDni(dniInput)
+            }}}
           />
         )}
       />
-      <Controller
+    </View>    
+
+    <Text style={styles.encabezado}> Día de nacimiento</Text>
+    <View style={styles.vistaTituloForm}>
+    <Image
+        style={{ marginLeft:"2%", width:"10%", height:"100%"}}
+        source={require('../assets/Registro/nacimiento.png')}
+      />
+    <Controller
+        control={control}
+        name={"bod"}
+        defaultValue=""
+        render={({ onChange, onBlur, value }) => (
+          <TextInputMask
+            type={'datetime'}
+            options={{
+              format: 'DD/MM/YYYY'
+            }}
+            style={styles.textoFormulario}
+            value={context.bod}
+            onBlur={onBlur}
+          onChangeText={bodInput => {
+              context.setBod(bodInput)
+            }}
+          />
+        )}
+      />
+    </View>    
+
+    {/* <Text style={styles.encabezado}> Contraseña</Text>
+    <View style={{width:"100%", flexDirection:"row", marginBottom:"3%"}}>
+    <Image
+        style={{ marginLeft:"2%", width:"10%", height:"100%"}}
+        source={require('../assets/Registro/clave.png')}
+      />
+    <Controller
         control={control}
         name={"password"}
         defaultValue=""
         render={({ onChange, onBlur, value }) => (
-          <Input
-            placeholder="Password"
-            style={styles.textoFormulario}
-            leftIcon={<Icon name="lock" type="font-awesome" color="#00a7ba" />}
-            secureTextEntry={true}
-            onBlur={onBlur}
-            onChangeText={(value) => {
-              onChange(value);
-              context.setPassword(value)
+          <TextInputMask
+            type={'custom'}
+            options={{
+              mask: '************',
             }}
-            value={value}
+            style={styles.textoFormulario}
+            value={mascaraPass(context.password)}
+            onBlur={onBlur}
+          onChangeText={passInput => {
+              context.setPassword(passInput)
+            }}
           />
         )}
       />
-{/* 
-      <Controller
-        control={control}
-        name={"location"}
-        defaultValue=""
-        render={({ onChange, onBlur, value }) => (
-          <Input
-            placeholder="Domicilio"
-            style={styles.textoFormulario}
-            leftIcon={<Icon name="home" color="#00a7ba" type="font-awesome" />}
-            onBlur={onBlur}
-            onChangeText={(value) => {
-              onChange(value);
-            }}
-            value={value}
-          />
-        )}
-      /> */}
+    </View>     */}
+    <Divider style={styles.divisorInferior} />
 
-      <Divider style={styles.divisorInferior} />
-
+    <View style={styles.botonEscanerDNI}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('DniScanner')}> 
+          <Image style={{height: 100, width: 100}} source={require('../assets/Registro/escanea.png')} />
+        </TouchableOpacity>
+    </View>
     </View>
   );
 }
@@ -137,6 +200,35 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  
+  vistaTituloForm: {
+  width:"100%", 
+  flexDirection:"row",
+  marginBottom:"1%",
+  },
+
+  botonEscanerDNI: {
+    left: '75%',
+    marginLeft: -24,
+    marginTop: -48,
+    position: 'absolute',
+    top: '90%',
+  },
+ 
+  encabezado:{
+    fontSize: 25,
+    backgroundColor:"#00a7ba",
+    width:"98%",
+    alignSelf: "flex-start",
+    color: "#FFFFFF",
+  },
+   textSubtitulo:{
+      fontSize: 22,
+      textAlign: "center",
+      marginTop: "2%",
+      marginBottom: "2%",
+      color: "#696969",
+    },
 
   botonAzulMarino: {
     width: "95%",
@@ -163,19 +255,25 @@ const styles = StyleSheet.create({
 
   registrarse: {
     color: "#00a7ba",
-    fontSize: 40,
-    paddingTop: "2%",
-    paddingBottom: "2%",
+    fontSize: 35,
+    paddingTop: "1%",
+    paddingBottom: "1%",
   },
 
   textoFormulario: {
+    width:"85%",
+    marginLeft:"1%",
     color: "#00a7ba",
-    fontSize: 40,
+    fontSize: 35,
+    textAlign: "left",
+    padding:"1%",
+    borderColor: 'rgba(0, 167, 186, 0.2)',
+    borderWidth: 1,
   },
 
   textoFormularioNA: {
     color: "#00a7ba",
-    fontSize: 40,
+    fontSize: 35,
   },
 
   divisorInferior: {
@@ -183,4 +281,5 @@ const styles = StyleSheet.create({
     width: "95%",
     height: 1,
   },
+
 });
