@@ -9,6 +9,7 @@ import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function App() {
     const [expoPushToken, setExpoPushToken] = useState('');
@@ -16,9 +17,20 @@ export default function App() {
     const notificationListener = useRef();
     const responseListener = useRef();
 
-    useEffect(() => {
-        registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+    const storeData = async (value) => {
+      try {
+        await AsyncStorage.setItem('@token', value)
+      } catch (e) {
+        // saving error
+      }
+    }
 
+    useEffect(() => {
+        registerForPushNotificationsAsync().then(token => {
+          setExpoPushToken(token)
+          storeData(token)
+        });
+        
         // This listener is fired whenever a notification is received while the app is foregrounded
         notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
           setNotification(notification);

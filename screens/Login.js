@@ -7,6 +7,7 @@ import { Button, Input, Icon, Header, Divider } from 'react-native-elements';
 export default function Login({navigation}){
     return(
       <View style={styles.container}>
+        {/*
         <Header 
         barStyle="light-content" 
         centerComponent={ <Image
@@ -18,7 +19,7 @@ export default function Login({navigation}){
           justifyContent: 'space-between',
         }}
         />
-
+        */}
         <Text
         style = {styles.textSubtitulo}>
           Sistema de seguimiento de Enfermdades Cronicas no transmisibles</Text>

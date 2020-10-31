@@ -1,87 +1,49 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Stepper from "react-native-stepper-ui";
 import { View, Alert, Text, StyleSheet, Image } from "react-native";
 import { Header} from 'react-native-elements';
 
 import FormDatosPersonales from '../components/FormDatosPersonales';
 import GeoUsuario from '../components/GeoUsuario';
-import FormECNT from '../components/FormECNT';
+import FormPass from '../components/FormPass';
 
 import { RegistroContext, RegistroProvider }  from '../context/RegistroContext';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {createUser} from '../api/ApiRegistro'
 
 const RegistroMaestro = ({navegation}) => {
 
     const [active, setActive] = useState(0);
     const context = useContext(RegistroContext)
+    const [token, setToken] = useState('')
 
     const content = [
         <FormDatosPersonales title="Datos personales" />,
         <GeoUsuario title="Establecer ubicación" />,
+        <FormPass title="Establecer contraseña" />,
     ];
-            /*
-  const onSubmit = (data) => {
-    http://api.positionstack.com/v1/forward
-    ? access_key = YOUR_ACCESS_KEY
-    & query = 1600 Pennsylvania Ave NW, Washington DC
-    *
-    .then( (usuario) => fetch('http://192.168.0.231:8000/api/users/',{
-      method: 'POST',
-      headers:{
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(usuario)
-    }) )
-  
-  }
-  */
+
+    const getToken = async () => {
+      try {
+        const value = await AsyncStorage.getItem('@token')
+        if(value !== null) {
+          console.log('hola!')
+          setToken(value)
+        }
+      } catch(e) {
+        // error reading value
+      }
+    }
 
     const onSubmit = () => {
-      console.log("El context: ")
-      console.log(context)
-      ecnts = []
-      if(context.diabetes){
-        ecnts.push({
-          'nombre': 'diabetes',
-          'descripcion':'nivel de glucemia elevado'
-        })
-      }
-      if(context.hipertension){
-        ecnts.push({
-          'nombre':'hipertension',
-          'descripcion':'nivel de presion elevado'
-        })
-      }
-      user = {
-        'dni': context.dni,
-        'first_name': context.nombre,
-        'last_name': context.apellido,
-        'latitude': context.location.latitude,
-        'longitude': context.location.longitude,
-        'bod': '1990-05-05',
-        'password':context.password,
-        'paciente_profile': {
-          'ultimo_autocontrol': 'hoy',
-          'ecnts': ecnts
-        }
-      }
-      console.log("Lo que mando: ")
-      console.log(JSON.stringify(user))
-      
-      fetch('http://192.168.1.38:8000/api/users/',{
-        method: 'POST',
-        headers:{
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(context)
-      })
-      .then(response => response.json())
-      .then(data => console.log(data))
+      getToken()
+      .then(() => createUser(context, token))
     } 
 
  return (
   <View style={{ flex:1, backgroundColor:"rgba(255,255,255,1)", marginHorizontal: 0 }}>
+  {/*
   <Header 
         barStyle="light-content" 
         centerComponent={ <Image
@@ -92,7 +54,7 @@ const RegistroMaestro = ({navegation}) => {
           backgroundColor: '#5cc101',
           justifyContent: 'space-between',
         }}
-        />
+      />*/}
     <Stepper
       style={styles.stepperStyle}
       buttonStyle={styles.botonAzulMarino}

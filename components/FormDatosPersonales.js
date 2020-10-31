@@ -94,8 +94,8 @@ export default function FormDatosPersonales({ navigation }) {
             onValueChange={(itemValue) => context.setGenero(itemValue)}
           >
             <Picker.Item fontSize="20" label="Selecciona tu género" value="" />
-            <Picker.Item label="Femenino" value="F" />
-            <Picker.Item label="Masculino" value="M" />
+            <Picker.Item label="Femenino" value="Femenino" />
+            <Picker.Item label="Masculino" value="Masculino" />
           </Picker>
     
         </View>
