@@ -1,4 +1,4 @@
-import moment from 'moment'
+import baseurl from "../baseurl.json"
 
 export function createUser(user, token){
     console.log(user)
@@ -17,7 +17,7 @@ export function createUser(user, token){
     console.log(data)
 
     
-    fetch('http://192.168.1.38:8000/api/users/',{
+    fetch('http://'+baseurl.config.ip+':8000/api/users/',{
         method: 'POST',
         headers:{
             Accept: 'application/json',
