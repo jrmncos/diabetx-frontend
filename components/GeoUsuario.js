@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react'
-import { Button,SafeAreaView,  StyleSheet, View, Dimensions, Image } from 'react-native'
+import { Text,SafeAreaView,  StyleSheet, View, Dimensions, Image } from 'react-native'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 
 import * as Location from 'expo-location'
@@ -53,7 +53,15 @@ export default function GeoUsuario({navigation}){
     context.setLocation(markerDataChange)
    }
    return (
-    <View style={{flex:1}}>
+    <>
+    <Text h2 style={styles.registrarse}>
+      Ubicación
+    </Text>
+
+    <Text h2 style={styles.textSubtitulo}>
+      Selecciona la ubicación de tu domicilio.
+    </Text>
+    <View style={{margin:"1%",overflow: 'hidden' ,borderWidth:2, borderColor:"rgba(0, 204, 0, 0.5)", flex:1, borderRadius: 10}}>
       <MapView 
         provider={PROVIDER_GOOGLE}
         style={styles.mapStyle} 
@@ -66,6 +74,7 @@ export default function GeoUsuario({navigation}){
       <SafeAreaView style={styles.footerButton}>
       </SafeAreaView>
     </View>  
+    </>
   )
 }
 
@@ -76,6 +85,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+
+  registrarse: {
+    color: "#00a7ba",
+    alignSelf:"center",
+    fontSize: 35,
+    paddingTop: "1%",
+  },
+  textSubtitulo:{
+    fontSize: 22,
+    textAlign: "center",
+    marginTop: "2%",
+    marginBottom: "2%",
+    color: "#696969",
+  },
+
   markerFixed: {
     left: '50%',
     marginLeft: -24,
@@ -98,6 +122,7 @@ const styles = StyleSheet.create({
     fontSize: 30
   },
   mapStyle: {
+    alignSelf:"center",
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height -Dimensions.get('window').height*0.35,
   },

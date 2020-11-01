@@ -5,8 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0a4f2df4-6a56-4a84-8b06-2148d7ced48c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/components/GeoUsuario.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/GeoUsuario.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Registro.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/Registro.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,10 +40,10 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="158" y="87" width="1648" height="853" key="AVDManager" timestamp="1602953739841">
+    <state x="158" y="87" width="1648" height="853" key="AVDManager" timestamp="1604268258153">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state x="158" y="87" width="1648" height="853" key="AVDManager/72.27.1848.1053@72.27.1848.1053" timestamp="1602953739841" />
+    <state x="158" y="87" width="1648" height="853" key="AVDManager/72.27.1848.1053@72.27.1848.1053" timestamp="1604268258153" />
     <state x="485" y="188" width="1022" height="737" key="SettingsEditor" timestamp="1602953943200">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
