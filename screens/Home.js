@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
 import { Button, Input, Icon, Header, Divider } from 'react-native-elements';
@@ -43,74 +43,65 @@ export default function Home({navigation}){
 
         <Divider style={styles.divisorInferior} />
 
-        <View style={{flexDirection: 'row', alignSelf: 'flex-start', width:"90%", padding: "2%"}}>
-        <Image
-          style={{ width: 70, height: 70, backgroundColor:"#5cc101"}}
-          source={require('../assets/mapa.png')} 
-        />
-          <Button 
-            titleStyle={styles.botonTexto}    
-            buttonStyle={styles.botonVerdeClaro}
-            title="Mapa interactivo" 
-            onPress={()=> navigation.navigate('Geolocalizacion')}/> 
-        </View>
+        <TouchableOpacity 
+          style={{width:"100%", padding: "2%"}}       
+          onPress={() => navigation.navigate('Geolocalizacion')}>
+          <View style={styles.botonMenuHome}>
+            <Image
+              style={{ width: 50, height: 50, margin:"2%"}}
+              source={require('../assets/mapa.png')} 
+            />
+            <Text h2 style={styles.textoRol}>Mapa Interactivo</Text> 
+          </View>
+        </TouchableOpacity>
 
-        <View style={{flexDirection: 'row', alignSelf: 'flex-start', width:"90%", padding: "2%"}}>
-        <Image
-          style={{ width: 70, height: 70, backgroundColor:"#5cc101"}}
-          source={require('../assets/mapa.png')} 
-        />
-          <Button 
-            titleStyle={styles.botonTexto}    
-            buttonStyle={styles.botonVerdeClaro}
-            title="Enviar notificacion" 
-            onPress={()=> navigation.navigate('Geolocalizacion')}/> 
-        </View>
-        
-        <View style={{flexDirection: 'row', alignSelf: 'flex-start', width:"90%", padding: "2%"}}>
-        <Image
-          style={{ width: 70, height: 70, backgroundColor:"#5cc101"}}
-          source={require('../assets/mapa.png')} 
-        />
-          <Button 
-            titleStyle={styles.botonTexto}    
-            buttonStyle={styles.botonVerdeClaro}
-            title="Perfil" 
-            onPress={()=> navigation.navigate('Perfil')}/>
-        </View>
+        <TouchableOpacity 
+          style={{width:"100%", padding: "2%"}}       
+          onPress={() => navigation.navigate('Geolocalizacion')}>
+          <View style={styles.botonMenuHome}>
+            <Image
+              style={{ width: 50, height: 50, margin:"2%"}}
+              source={require('../assets/campana.png')} 
+            />
+            <Text h2 style={styles.textoRol}>Notificaciones</Text> 
+          </View>
+        </TouchableOpacity>
 
-        <View style={{flexDirection: 'row', alignSelf: 'baseline', width:"90%", padding: "2%" }}>
-        <Image
-          style={{ width: 70, height: 69, backgroundColor:"#5cc101" }}
-          source={require('../assets/seo.png')} 
-        />
-          <Button   
-            image={{ name: 'check-circle', color: '#fff' }}
-            titleStyle={styles.botonTexto}    
-            buttonStyle={styles.botonVerdeClaro}
-            title="Panel de control" 
-            onPress={()=> navigation.navigate('Panel')}/> 
-        </View>
+        <TouchableOpacity 
+          style={{width:"100%", padding: "2%"}}       
+          onPress={() => navigation.navigate('Perfil')}>
+          <View style={styles.botonMenuHome}>
+            <Image
+              style={{ width: 50, height: 50, margin:"2%"}}
+              source={require('../assets/paciente.png')} 
+            />
+            <Text h2 style={styles.textoRol}>Perfil de usuario</Text> 
+          </View>
+        </TouchableOpacity>
 
-        <View style={{flexDirection: 'row', alignSelf: 'baseline', width:"90%", padding: "2%" }}>
-        <Image
-          style={{ width: 70, height: 69, backgroundColor:"#5cc101" }}
-          source={require('../assets/archivo-medico.png')} 
-        />
-          <Button   
-            image={{ name: 'check-circle', color: '#fff' }}
-            titleStyle={styles.botonTexto}    
-            buttonStyle={styles.botonVerdeClaro}
-            title="Autocontrol (Diabetes)" 
-            onPress={()=> navigation.navigate('FormAC_Diabetes')}/> 
-        </View>
+        <TouchableOpacity 
+          style={{width:"100%", padding: "2%"}}       
+          onPress={() => navigation.navigate('panel')}>
+          <View style={styles.botonMenuHome}>
+            <Image
+              style={{ width: 50, height: 50, margin:"2%"}}
+              source={require('../assets/seo.png')} 
+            />
+            <Text h2 style={styles.textoRol}>Panel de control</Text> 
+          </View>
+        </TouchableOpacity>
 
-        <Button 
-          image={{ name: 'check-circle', color: '#fff' }}
-          buttonStyle={styles.botonAzulMarino}
-          titleStyle={styles.botonTexto}
-          title="Escanear DNI (test)" 
-          onPress={()=> navigation.navigate('dniScanner')}/> 
+        <TouchableOpacity 
+          style={{width:"100%", padding: "2%"}}       
+          onPress={() => navigation.navigate('panel')}>
+          <View style={styles.botonMenuHome}>
+            <Image
+              style={{ width: 50, height: 50, margin:"2%"}}
+              source={require('../assets/archivo-medico.png')} 
+            />
+            <Text h2 style={styles.textoRol}>Autocontrol</Text> 
+          </View>
+        </TouchableOpacity>
 
         <StatusBar style="auto" />
       </View>
@@ -122,6 +113,21 @@ const styles = StyleSheet.create({
       backgroundColor: '#fff',
       alignItems: 'center',
       justifyContent: 'center',
+    },
+
+    botonMenuHome: {
+      borderRadius:10, 
+      flexDirection: 'row', 
+      alignSelf: 'center', 
+      width:"100%", 
+      backgroundColor: '#5cc101',
+      borderWidth: 1,
+      borderColor: "#479801",
+      shadowColor: 'rgba(0, 0, 0, 1)',
+      shadowOpacity: 1,
+      elevation: 5,
+      shadowRadius: 15 ,
+      shadowOffset : { width: 1, height: 13},
     },
 
     botonAzulMarino:{
@@ -145,7 +151,7 @@ const styles = StyleSheet.create({
 
     textoRol:{
       paddingLeft:"5%",
-      paddingTop:"5%",
+      paddingTop:"4%",
       color: "white",
       fontSize: 30,
     },
