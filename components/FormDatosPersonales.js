@@ -32,7 +32,7 @@ export default function FormDatosPersonales({ navigation }) {
     <View style={styles.vistaTituloForm}>
     <Image
         style={{marginTop:"2%", marginLeft:"2%", width:"10%", height:"80%"}}
-        source={require('../assets/Registro/name.png')}
+        source={require('../assets/archivo-medico.png')} 
       />
     <Controller
         control={control}
