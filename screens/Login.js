@@ -1,5 +1,5 @@
-import React , { useState, useEffect, useRef } from 'react'
-import { StyleSheet, Text, View, Image, Platform  } from 'react-native';
+import React from 'react'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
 import { Button, Input, Icon, Header, Divider } from 'react-native-elements';
@@ -7,19 +7,6 @@ import { Button, Input, Icon, Header, Divider } from 'react-native-elements';
 export default function Login({navigation}){
     return(
       <View style={styles.container}>
-        {/*
-        <Header 
-        barStyle="light-content" 
-        centerComponent={ <Image
-          style={{ width: 140, height: 40 }}
-          source={require('../assets/mmplogo.png')} 
-        />}
-        containerStyle={{
-          backgroundColor: '#5cc101',
-          justifyContent: 'space-between',
-        }}
-        />
-        */}
         <Text
         style = {styles.textSubtitulo}>
           Sistema de seguimiento de Enfermdades Cronicas no transmisibles</Text>
@@ -39,7 +26,7 @@ export default function Login({navigation}){
           }
         />
 
-        <Input placeholder="Password" 
+        <Input placeholder="Contraseña" 
         style={styles.textoFormulario}
           leftIcon={
             <Icon
@@ -52,26 +39,33 @@ export default function Login({navigation}){
         />
 
         <StatusBar/>
-        <Button 
-          buttonStyle={styles.botonAzulMarino}
-          titleStyle={styles.botonTexto}
-          title="Ingresar" 
-          onPress={()=> navigation.navigate('Home')}/> 
+
+        <TouchableOpacity 
+          style={{width:"100%", padding: "2%"}}       
+          onPress={() => navigation.navigate('Home')}>
+          <View style={styles.botonMenuHomeAzul}>
+            <Text h2 style={styles.botonTexto}>Ingresar</Text> 
+          </View>
+        </TouchableOpacity>
 
         <Divider style={styles.divisorInferior} />
         
-        <Button 
-          buttonStyle={styles.botonVerdeClaro}
-          titleStyle={styles.botonTexto}
-          title="Registrarse" 
-          onPress={()=> navigation.navigate('Registro')}/> 
+        <TouchableOpacity 
+          style={{width:"100%", padding: "2%"}}       
+          onPress={() => navigation.navigate('Registro')}>
+          <View style={styles.botonMenuHomeVerde}>
+            <Text h2 style={styles.botonTexto}>Registrarse</Text> 
+          </View>
+        </TouchableOpacity>
 
-        <Button 
-          buttonStyle={styles.botonVerdeClaro}
-          titleStyle={styles.botonTexto}
-          title="Recuperar Clave" 
-          onPress={()=> navigation.navigate('Home')}/> 
-
+        <TouchableOpacity 
+          style={{width:"100%", padding: "2%"}}       
+          onPress={() => navigation.navigate('Registro')}>
+          <View style={styles.botonMenuHomeVerde}>
+            <Text h2 style={styles.botonTexto}>Recuperar Clave</Text> 
+          </View>
+        </TouchableOpacity>
+   
         <Text
         style = {styles.textFirma}>
         Todos los derechos reservados 2020: Gerc0s, Dub.</Text>
@@ -84,6 +78,36 @@ const styles = StyleSheet.create({
       backgroundColor: '#fff',
       alignItems: 'center',
       justifyContent: 'center',
+    },
+
+    botonMenuHomeVerde: {
+      borderRadius:10, 
+      flexDirection: 'row', 
+      alignSelf: 'center', 
+      width:"100%", 
+      backgroundColor: '#5cc101',
+      borderWidth: 1,
+      borderColor: "#479801",
+      shadowColor: 'rgba(0, 0, 0, 1)',
+      shadowOpacity: 1,
+      elevation: 5,
+      shadowRadius: 15 ,
+      shadowOffset : { width: 1, height: 13},
+    },
+
+    botonMenuHomeAzul: {
+      borderRadius:10, 
+      flexDirection: 'row', 
+      alignSelf: 'center', 
+      width:"100%", 
+      backgroundColor: '#00a7ba',
+      borderWidth: 1,
+      borderColor: "#00707d",
+      shadowColor: 'rgba(0, 0, 0, 1)',
+      shadowOpacity: 1,
+      elevation: 5,
+      shadowRadius: 15 ,
+      shadowOffset : { width: 1, height: 13},
     },
 
     ingresar: {
@@ -114,27 +138,12 @@ const styles = StyleSheet.create({
       color: "#909090",
     },
 
-    botonVerdeClaro:{
-      width: '95%',
-      padding: '5%',
-      backgroundColor: '#5cc101',
-      justifyContent: 'space-evenly',
-      marginTop: "2%",
-      marginBottom:"2%"
-    },
-
-    botonAzulMarino:{
-      width: '95%',
-      padding: '5%',
-      backgroundColor: '#00a7ba',
-      justifyContent: 'space-evenly',
-      marginTop: "2%",
-      marginBottom:"2%"
-    },
-
     botonTexto:{
+      padding:"5%",
+      width:"100%",
+      textAlign:"center",
       color: "white",
-      fontSize: 30,
+      fontSize: 35,
     },
 
     divisorInferior:{

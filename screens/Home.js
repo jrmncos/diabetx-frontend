@@ -1,60 +1,72 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
-import { Button, Input, Icon, Header, Divider } from 'react-native-elements';
+import { CheckBox, Divider } from 'react-native-elements';
+import doctor from '../assets/docto.png'
+import paciente from '../assets/abuelo.png'
+
 
 export default function Home({navigation}){
+  const [opcionesRol, cambiarVistaOPCRol] = useState(true)
+  const [textoRol, setTextoRol] = useState("Profesional de la salud")
+  const [imagenRol, setImagenRol] = useState(doctor)
 
-    return(
-        <View style={styles.container}>
-        <Header 
-        barStyle="light-content" 
-        centerComponent={ <Image
-          style={{ width: 140, height: 40 }}
-          source={require('../assets/mmplogo.png')} 
-        />}
-        containerStyle={{
-          backgroundColor: '#5cc101',
-          justifyContent: 'space-between',
-        }}
-        />
+  function cambiarTextos() {
+    if(opcionesRol){
+      setTextoRol("Paciente")
+      setImagenRol(paciente) 
+    }
+    else{
+      setTextoRol("Profesional de la salud")
+      setImagenRol(doctor)
+    }
+  }
+  return(
+      <View style={styles.container}>
 
-        {
-        //Preguntar con qué rol está logeado
-        
-        //Profesional de la salud:
-        }
-
-        <View style={{flexDirection: 'row', alignSelf: 'center', width:"100%", backgroundColor: '#00a7ba'}}>
       
-        <Image
-          style={{ width: 70, height: 70, backgroundColor:"#00a7ba"}}
-          source={require('../assets/doctor.png')} 
+
+      <View style={{flexDirection: 'row', alignSelf: 'center', width:"100%", backgroundColor: '#00a7ba'}}>
+          <Image
+            style={{ width: 70, height: 70, backgroundColor:"#00a7ba"}}
+            source={imagenRol} 
+          />
+          <Text h2 style={styles.textoRol}>{textoRol}</Text> 
+      </View>
+      
+
+      <Text h2 style={styles.textoBienvenida}>Bienvenido!</Text> 
+      <Text h2 style={styles.textoNombreUsuario}>Santiago Galván</Text> 
+      <Text h2 style={styles.textoBienvenida}>Selecciona una acción para continuar.</Text> 
+
+      <View>
+        <CheckBox
+          title={<Text>Cambiar vista: Paciente/Profesional</Text>}
+          checked={opcionesRol}
+          onPress={() => {
+            cambiarTextos()
+            cambiarVistaOPCRol(!opcionesRol)}}
         />
+      </View>
 
-        <Text h2 style={styles.textoRol}>Profesiona de la salud</Text> 
-
-        </View>
-
-        <Text h2 style={styles.textoBienvenida}>Bienvenido!</Text> 
-        <Text h2 style={styles.textoNombreUsuario}>German Costilla</Text> 
-        <Text h2 style={styles.textoBienvenida}>Selecciona una acción para continuar.</Text> 
-
-        <Divider style={styles.divisorInferior} />
-
+      <Divider style={styles.divisorInferior} />
+      
+      {
+        opcionesRol && 
+        <>
         <TouchableOpacity 
           style={{width:"100%", padding: "2%"}}       
           onPress={() => navigation.navigate('Geolocalizacion')}>
           <View style={styles.botonMenuHome}>
             <Image
               style={{ width: 50, height: 50, margin:"2%"}}
-              source={require('../assets/mapa.png')} 
+              source={require('../assets/locationGeo.png')} 
             />
             <Text h2 style={styles.textoRol}>Mapa Interactivo</Text> 
           </View>
         </TouchableOpacity>
-
+        
         <TouchableOpacity 
           style={{width:"100%", padding: "2%"}}       
           onPress={() => navigation.navigate('Geolocalizacion')}>
@@ -66,46 +78,52 @@ export default function Home({navigation}){
             <Text h2 style={styles.textoRol}>Notificaciones</Text> 
           </View>
         </TouchableOpacity>
-
-        <TouchableOpacity 
-          style={{width:"100%", padding: "2%"}}       
-          onPress={() => navigation.navigate('Perfil')}>
-          <View style={styles.botonMenuHome}>
-            <Image
-              style={{ width: 50, height: 50, margin:"2%"}}
-              source={require('../assets/paciente.png')} 
-            />
-            <Text h2 style={styles.textoRol}>Perfil de usuario</Text> 
-          </View>
-        </TouchableOpacity>
-
+  
         <TouchableOpacity 
           style={{width:"100%", padding: "2%"}}       
           onPress={() => navigation.navigate('panel')}>
           <View style={styles.botonMenuHome}>
             <Image
               style={{ width: 50, height: 50, margin:"2%"}}
-              source={require('../assets/seo.png')} 
+              source={require('../assets/paneldecontrol.png')} 
             />
             <Text h2 style={styles.textoRol}>Panel de control</Text> 
           </View>
         </TouchableOpacity>
+        </>
+        
+      }
+      {
+        !opcionesRol &&
+        <>
+      <TouchableOpacity 
+        style={{width:"100%", padding: "2%"}}       
+        onPress={() => navigation.navigate('Perfil')}>
+        <View style={styles.botonMenuHome}>
+          <Image
+            style={{ width: 60, height: 60, margin:"1%"}}
+            source={require('../assets/abuelos.png')} 
+          />
+          <Text h2 style={styles.textoRol}>Perfil de usuario</Text> 
+        </View>
+      </TouchableOpacity>
 
-        <TouchableOpacity 
-          style={{width:"100%", padding: "2%"}}       
-          onPress={() => navigation.navigate('panel')}>
-          <View style={styles.botonMenuHome}>
-            <Image
-              style={{ width: 50, height: 50, margin:"2%"}}
-              source={require('../assets/archivo-medico.png')} 
-            />
-            <Text h2 style={styles.textoRol}>Autocontrol</Text> 
-          </View>
-        </TouchableOpacity>
-
-        <StatusBar style="auto" />
-      </View>
-    )
+      <TouchableOpacity 
+        style={{width:"100%", padding: "2%"}}       
+        onPress={() => navigation.navigate('FormACDiabetes')}>
+        <View style={styles.botonMenuHome}>
+          <Image
+            style={{ width: 50, height: 50, margin:"2%"}}
+            source={require('../assets/archivo-medico.png')} 
+          />
+          <Text h2 style={styles.textoRol}>Autocontrol</Text> 
+        </View>
+      </TouchableOpacity>
+      </>
+      }
+      <StatusBar style="auto" />
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({

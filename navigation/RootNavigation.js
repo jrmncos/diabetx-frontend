@@ -8,6 +8,7 @@ import Panel from '../screens/Panel';
 import Registro from '../screens/Registro';
 import Perfil from '../screens/Perfil';
 import DniScanner from '../components/DniScanner';
+import FormACDiabetes from '../components/FormACDiabetes';
 
 const Stack = createStackNavigator()
 
@@ -30,6 +31,7 @@ export default function RootNavigation(){
         <Stack.Screen name="Registro" component={Registro} />
         <Stack.Screen name="Perfil" component={Perfil} />
         <Stack.Screen name="DniScanner" component={DniScanner} />
+        <Stack.Screen name="FormACDiabetes" component={FormACDiabetes} />
       </Stack.Navigator>
       )
 }

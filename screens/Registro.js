@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import Stepper from "react-native-stepper-ui";
 import { View, Alert, Text, StyleSheet, Image } from "react-native";
-import { Header} from 'react-native-elements';
 
 import FormDatosPersonales from '../components/FormDatosPersonales';
 import GeoUsuario from '../components/GeoUsuario';
@@ -43,18 +42,7 @@ const RegistroMaestro = ({navegation}) => {
 
  return (
   <View style={{ flex:1, backgroundColor:"rgba(255,255,255,1)", marginHorizontal: 0 }}>
-  {/*
-  <Header 
-        barStyle="light-content" 
-        centerComponent={ <Image
-          style={{ width: 120, height: 40 }}
-          source={require('../assets/mmplogo.png')} 
-        />}
-        containerStyle={{
-          backgroundColor: '#5cc101',
-          justifyContent: 'space-between',
-        }}
-      />*/}
+
     <Stepper
       style={styles.stepperStyle}
       buttonStyle={styles.botonAzulMarino}

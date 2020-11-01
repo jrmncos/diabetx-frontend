@@ -28,7 +28,7 @@ export default function FormDatosPersonales({ navigation }) {
       </Text>
     
 
-    <Text style={styles.encabezado}> Nombre</Text>
+    <Text style={styles.encabezado}> Nombres</Text>
     <View style={styles.vistaTituloForm}>
     <Image
         style={{marginTop:"2%", marginLeft:"2%", width:"10%", height:"80%"}}
@@ -52,7 +52,7 @@ export default function FormDatosPersonales({ navigation }) {
       />
     </View>   
 
-    <Text style={styles.encabezado}> Apellido</Text>
+    <Text style={styles.encabezado}> Apellidos</Text>
     <View style={styles.vistaTituloForm}>
     <Image
         style={{marginTop:"2%", marginLeft:"2%", width:"10%", height:"80%"}}
