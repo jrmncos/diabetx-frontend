@@ -1,4 +1,3 @@
-import moment from 'moment'
 
 export function createUser(user, token){
     console.log(user)

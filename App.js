@@ -11,6 +11,8 @@ import * as Permissions from 'expo-permissions';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import {UserProvider} from './context/UserContext'
+
 export default function App() {
     const [expoPushToken, setExpoPushToken] = useState('');
     const [notification, setNotification] = useState(false);
@@ -48,9 +50,11 @@ export default function App() {
     }, []);
 
     return (
+      <UserProvider>
         <NavigationContainer>    
           <RootNavigation/>
         </NavigationContainer>
+      </UserProvider>
     );
 }
 

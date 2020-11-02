@@ -1,32 +1,37 @@
 import React , { useState, useEffect, useRef } from 'react'
-import { StyleSheet, Text, View, Image, Platform  } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Image, Platform  } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
 import { Button, Input, Icon, Header, Divider } from 'react-native-elements';
+import useUser from '../hooks/useUser';
 
 export default function Login({navigation}){
+
+    const [dni, setDni] = useState('')
+    const [password, setPassword] = useState('')
+    const {isLogged, login, isLoginLoading, hasLoginError} = useUser()
+
+    useEffect(() => {
+      if(isLogged){
+        navigation.navigate('Home')
+      }
+    }, [isLogged])
+    
+    const handleSubmit = () => {
+      console.log(dni)
+      console.log(password)
+      login({dni, password})
+    }
+    const loading = (<Text style = {styles.textSubtitulo}> Validando dni y password.... </Text>)
+    const error = (<Text style = {styles.textSubtitulo}> Los datos ingresados no son correctos.... </Text>)
+    
     return(
       <View style={styles.container}>
-        {/*
-        <Header 
-        barStyle="light-content" 
-        centerComponent={ <Image
-          style={{ width: 140, height: 40 }}
-          source={require('../assets/mmplogo.png')} 
-        />}
-        containerStyle={{
-          backgroundColor: '#5cc101',
-          justifyContent: 'space-between',
-        }}
-        />
-        */}
-        <Text
-        style = {styles.textSubtitulo}>
-          Sistema de seguimiento de Enfermdades Cronicas no transmisibles</Text>
+        <Text style = {styles.textSubtitulo}> Sistema de seguimiento de Enfermdades Cronicas no transmisibles</Text>
 
         <Text h2 style={styles.ingresar}>INGRESAR</Text> 
         
-        <Input
+        <TextInput
           placeholder='DNI' 
           style={styles.textoFormulario}
           keyboardType = 'numeric'
@@ -36,10 +41,12 @@ export default function Login({navigation}){
               color='#00a7ba'
               type='font-awesome'
             />
-          }
+          }          
+          onChangeText={(value) => setDni(value)}
+          value={dni}
         />
 
-        <Input placeholder="Password" 
+        <TextInput placeholder="Password" 
         style={styles.textoFormulario}
           leftIcon={
             <Icon
@@ -48,34 +55,42 @@ export default function Login({navigation}){
             color='#00a7ba'
           />
           }
-          secureTextEntry={true} 
+          secureTextEntry={true}
+          onChangeText={(value)=>setPassword(value)}
+          value={password}
         />
 
-        <StatusBar/>
-        <Button 
-          buttonStyle={styles.botonAzulMarino}
-          titleStyle={styles.botonTexto}
-          title="Ingresar" 
-          onPress={()=> navigation.navigate('Home')}/> 
+        {isLoginLoading && loading }
 
-        <Divider style={styles.divisorInferior} />
-        
-        <Button 
-          buttonStyle={styles.botonVerdeClaro}
-          titleStyle={styles.botonTexto}
-          title="Registrarse" 
-          onPress={()=> navigation.navigate('Registro')}/> 
+        {!isLoginLoading &&
+          <> 
+          <StatusBar/>
+          <Button 
+            buttonStyle={styles.botonAzulMarino}
+            titleStyle={styles.botonTexto}
+            title="Ingresar" 
+            onPress={()=> handleSubmit()}/> 
 
-        <Button 
-          buttonStyle={styles.botonVerdeClaro}
-          titleStyle={styles.botonTexto}
-          title="Recuperar Clave" 
-          onPress={()=> navigation.navigate('Home')}/> 
+          <Divider style={styles.divisorInferior} />
+          
+          <Button 
+            buttonStyle={styles.botonVerdeClaro}
+            titleStyle={styles.botonTexto}
+            title="Registrarse" 
+            onPress={()=> navigation.navigate('Registro')}/> 
 
-        <Text
-        style = {styles.textFirma}>
-        Todos los derechos reservados 2020: Gerc0s, Dub.</Text>
-    </View>
+          <Button 
+            buttonStyle={styles.botonVerdeClaro}
+            titleStyle={styles.botonTexto}
+            title="Recuperar Clave" 
+          /> 
+          </>
+        }
+        {
+          hasLoginError && error
+        }
+      <Text style = {styles.textFirma}> Todos los derechos reservados 2020: Gerc0s, Dub.</Text>
+      </View>
     )
 }
 

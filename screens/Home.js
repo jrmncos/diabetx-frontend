@@ -64,7 +64,7 @@ export default function Home({navigation}){
             titleStyle={styles.botonTexto}    
             buttonStyle={styles.botonVerdeClaro}
             title="Enviar notificacion" 
-            onPress={()=> navigation.navigate('Geolocalizacion')}/> 
+            onPress={()=> navigation.navigate('Notificacion')}/> 
         </View>
         
         <View style={{flexDirection: 'row', alignSelf: 'flex-start', width:"90%", padding: "2%"}}>
