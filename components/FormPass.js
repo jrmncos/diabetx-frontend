@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from "react";
 import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from "react-native";
 import { TextInputMask } from 'react-native-masked-text'
 import {Picker} from '@react-native-picker/picker';
-import { Button, Input, Icon, Header, Divider } from "react-native-elements";
+import { Button, Input, Icon, Divider } from "react-native-elements";
 import { useForm, Controller } from "react-hook-form";
 import { RegistroContext } from '../context/RegistroContext'
 

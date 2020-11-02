@@ -28,11 +28,11 @@ export default function FormDatosPersonales({ navigation }) {
       </Text>
     
 
-    <Text style={styles.encabezado}> Nombre</Text>
+    <Text style={styles.encabezado}> Nombres</Text>
     <View style={styles.vistaTituloForm}>
     <Image
         style={{marginTop:"2%", marginLeft:"2%", width:"10%", height:"80%"}}
-        source={require('../assets/Registro/name.png')}
+        source={require('../assets/archivo-medico.png')} 
       />
     <Controller
         control={control}
@@ -52,7 +52,7 @@ export default function FormDatosPersonales({ navigation }) {
       />
     </View>   
 
-    <Text style={styles.encabezado}> Apellido</Text>
+    <Text style={styles.encabezado}> Apellidos</Text>
     <View style={styles.vistaTituloForm}>
     <Image
         style={{marginTop:"2%", marginLeft:"2%", width:"10%", height:"80%"}}

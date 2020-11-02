@@ -101,6 +101,36 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
     },
 
+    botonMenuHomeVerde: {
+      borderRadius:10, 
+      flexDirection: 'row', 
+      alignSelf: 'center', 
+      width:"100%", 
+      backgroundColor: '#5cc101',
+      borderWidth: 1,
+      borderColor: "#479801",
+      shadowColor: 'rgba(0, 0, 0, 1)',
+      shadowOpacity: 1,
+      elevation: 5,
+      shadowRadius: 15 ,
+      shadowOffset : { width: 1, height: 13},
+    },
+
+    botonMenuHomeAzul: {
+      borderRadius:10, 
+      flexDirection: 'row', 
+      alignSelf: 'center', 
+      width:"100%", 
+      backgroundColor: '#00a7ba',
+      borderWidth: 1,
+      borderColor: "#00707d",
+      shadowColor: 'rgba(0, 0, 0, 1)',
+      shadowOpacity: 1,
+      elevation: 5,
+      shadowRadius: 15 ,
+      shadowOffset : { width: 1, height: 13},
+    },
+
     ingresar: {
       color:"#00a7ba",
       fontSize: 40,
@@ -129,27 +159,12 @@ const styles = StyleSheet.create({
       color: "#909090",
     },
 
-    botonVerdeClaro:{
-      width: '95%',
-      padding: '5%',
-      backgroundColor: '#5cc101',
-      justifyContent: 'space-evenly',
-      marginTop: "2%",
-      marginBottom:"2%"
-    },
-
-    botonAzulMarino:{
-      width: '95%',
-      padding: '5%',
-      backgroundColor: '#00a7ba',
-      justifyContent: 'space-evenly',
-      marginTop: "2%",
-      marginBottom:"2%"
-    },
-
     botonTexto:{
+      padding:"5%",
+      width:"100%",
+      textAlign:"center",
       color: "white",
-      fontSize: 30,
+      fontSize: 35,
     },
 
     divisorInferior:{

@@ -1,60 +1,56 @@
-import React from 'react'
-import { StyleSheet, Text, View, Image } from 'react-native';
+import React, { useState } from 'react'
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
-import { Button, Input, Icon, Header, Divider } from 'react-native-elements';
+import { CheckBox, Divider } from 'react-native-elements';
+import doctor from '../assets/docto.png'
+import paciente from '../assets/abuelo.png'
+
 
 export default function Home({navigation}){
+  const [opcionesRol, cambiarVistaOPCRol] = useState(true)
+  const [textoRol, setTextoRol] = useState("Profesional de la salud")
+  const [imagenRol, setImagenRol] = useState(doctor)
 
-    return(
-        <View style={styles.container}>
-        <Header 
-        barStyle="light-content" 
-        centerComponent={ <Image
-          style={{ width: 140, height: 40 }}
-          source={require('../assets/mmplogo.png')} 
-        />}
-        containerStyle={{
-          backgroundColor: '#5cc101',
-          justifyContent: 'space-between',
-        }}
-        />
+  function cambiarTextos() {
+    if(opcionesRol){
+      setTextoRol("Paciente")
+      setImagenRol(paciente) 
+    }
+    else{
+      setTextoRol("Profesional de la salud")
+      setImagenRol(doctor)
+    }
+  }
+  return(
+      <View style={styles.container}>
 
-        {
-        //Preguntar con qué rol está logeado
-        
-        //Profesional de la salud:
-        }
-
-        <View style={{flexDirection: 'row', alignSelf: 'center', width:"100%", backgroundColor: '#00a7ba'}}>
       
-        <Image
-          style={{ width: 70, height: 70, backgroundColor:"#00a7ba"}}
-          source={require('../assets/doctor.png')} 
+
+      <View style={{flexDirection: 'row', alignSelf: 'center', width:"100%", backgroundColor: '#00a7ba'}}>
+          <Image
+            style={{ width: 70, height: 70, backgroundColor:"#00a7ba"}}
+            source={imagenRol} 
+          />
+          <Text h2 style={styles.textoRol}>{textoRol}</Text> 
+      </View>
+      
+
+      <Text h2 style={styles.textoBienvenida}>Bienvenido!</Text> 
+      <Text h2 style={styles.textoNombreUsuario}>Santiago Galván</Text> 
+      <Text h2 style={styles.textoBienvenida}>Selecciona una acción para continuar.</Text> 
+
+      <View>
+        <CheckBox
+          title={<Text>Cambiar vista: Paciente/Profesional</Text>}
+          checked={opcionesRol}
+          onPress={() => {
+            cambiarTextos()
+            cambiarVistaOPCRol(!opcionesRol)}}
         />
+      </View>
 
-        <Text h2 style={styles.textoRol}>Profesiona de la salud</Text> 
-
-        </View>
-
-        <Text h2 style={styles.textoBienvenida}>Bienvenido!</Text> 
-        <Text h2 style={styles.textoNombreUsuario}>German Costilla</Text> 
-        <Text h2 style={styles.textoBienvenida}>Selecciona una acción para continuar.</Text> 
-
-        <Divider style={styles.divisorInferior} />
-
-        <View style={{flexDirection: 'row', alignSelf: 'flex-start', width:"90%", padding: "2%"}}>
-        <Image
-          style={{ width: 70, height: 70, backgroundColor:"#5cc101"}}
-          source={require('../assets/mapa.png')} 
-        />
-          <Button 
-            titleStyle={styles.botonTexto}    
-            buttonStyle={styles.botonVerdeClaro}
-            title="Mapa interactivo" 
-            onPress={()=> navigation.navigate('Geolocalizacion')}/> 
-        </View>
-
+<<<<<<< HEAD
         <View style={{flexDirection: 'row', alignSelf: 'flex-start', width:"90%", padding: "2%"}}>
         <Image
           style={{ width: 70, height: 70, backgroundColor:"#5cc101"}}
@@ -66,55 +62,82 @@ export default function Home({navigation}){
             title="Enviar notificacion" 
             onPress={()=> navigation.navigate('Notificacion')}/> 
         </View>
+=======
+      <Divider style={styles.divisorInferior} />
+      
+      {
+        opcionesRol && 
+        <>
+        <TouchableOpacity 
+          style={{width:"100%", padding: "2%"}}       
+          onPress={() => navigation.navigate('Geolocalizacion')}>
+          <View style={styles.botonMenuHome}>
+            <Image
+              style={{ width: 50, height: 50, margin:"2%"}}
+              source={require('../assets/locationGeo.png')} 
+            />
+            <Text h2 style={styles.textoRol}>Mapa Interactivo</Text> 
+          </View>
+        </TouchableOpacity>
+>>>>>>> a0e74ca4f7b99bc8d7bf4cf60d892aaa9c61f357
         
-        <View style={{flexDirection: 'row', alignSelf: 'flex-start', width:"90%", padding: "2%"}}>
-        <Image
-          style={{ width: 70, height: 70, backgroundColor:"#5cc101"}}
-          source={require('../assets/mapa.png')} 
-        />
-          <Button 
-            titleStyle={styles.botonTexto}    
-            buttonStyle={styles.botonVerdeClaro}
-            title="Perfil" 
-            onPress={()=> navigation.navigate('Perfil')}/>
+        <TouchableOpacity 
+          style={{width:"100%", padding: "2%"}}       
+          onPress={() => navigation.navigate('Geolocalizacion')}>
+          <View style={styles.botonMenuHome}>
+            <Image
+              style={{ width: 50, height: 50, margin:"2%"}}
+              source={require('../assets/campana.png')} 
+            />
+            <Text h2 style={styles.textoRol}>Notificaciones</Text> 
+          </View>
+        </TouchableOpacity>
+  
+        <TouchableOpacity 
+          style={{width:"100%", padding: "2%"}}       
+          onPress={() => navigation.navigate('panel')}>
+          <View style={styles.botonMenuHome}>
+            <Image
+              style={{ width: 50, height: 50, margin:"2%"}}
+              source={require('../assets/paneldecontrol.png')} 
+            />
+            <Text h2 style={styles.textoRol}>Panel de control</Text> 
+          </View>
+        </TouchableOpacity>
+        </>
+        
+      }
+      {
+        !opcionesRol &&
+        <>
+      <TouchableOpacity 
+        style={{width:"100%", padding: "2%"}}       
+        onPress={() => navigation.navigate('Perfil')}>
+        <View style={styles.botonMenuHome}>
+          <Image
+            style={{ width: 60, height: 60, margin:"1%"}}
+            source={require('../assets/abuelos.png')} 
+          />
+          <Text h2 style={styles.textoRol}>Perfil de usuario</Text> 
         </View>
+      </TouchableOpacity>
 
-        <View style={{flexDirection: 'row', alignSelf: 'baseline', width:"90%", padding: "2%" }}>
-        <Image
-          style={{ width: 70, height: 69, backgroundColor:"#5cc101" }}
-          source={require('../assets/seo.png')} 
-        />
-          <Button   
-            image={{ name: 'check-circle', color: '#fff' }}
-            titleStyle={styles.botonTexto}    
-            buttonStyle={styles.botonVerdeClaro}
-            title="Panel de control" 
-            onPress={()=> navigation.navigate('Panel')}/> 
+      <TouchableOpacity 
+        style={{width:"100%", padding: "2%"}}       
+        onPress={() => navigation.navigate('FormACDiabetes')}>
+        <View style={styles.botonMenuHome}>
+          <Image
+            style={{ width: 50, height: 50, margin:"2%"}}
+            source={require('../assets/archivo-medico.png')} 
+          />
+          <Text h2 style={styles.textoRol}>Autocontrol</Text> 
         </View>
-
-        <View style={{flexDirection: 'row', alignSelf: 'baseline', width:"90%", padding: "2%" }}>
-        <Image
-          style={{ width: 70, height: 69, backgroundColor:"#5cc101" }}
-          source={require('../assets/archivo-medico.png')} 
-        />
-          <Button   
-            image={{ name: 'check-circle', color: '#fff' }}
-            titleStyle={styles.botonTexto}    
-            buttonStyle={styles.botonVerdeClaro}
-            title="Autocontrol (Diabetes)" 
-            onPress={()=> navigation.navigate('FormAC_Diabetes')}/> 
-        </View>
-
-        <Button 
-          image={{ name: 'check-circle', color: '#fff' }}
-          buttonStyle={styles.botonAzulMarino}
-          titleStyle={styles.botonTexto}
-          title="Escanear DNI (test)" 
-          onPress={()=> navigation.navigate('dniScanner')}/> 
-
-        <StatusBar style="auto" />
-      </View>
-    )
+      </TouchableOpacity>
+      </>
+      }
+      <StatusBar style="auto" />
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -122,6 +145,21 @@ const styles = StyleSheet.create({
       backgroundColor: '#fff',
       alignItems: 'center',
       justifyContent: 'center',
+    },
+
+    botonMenuHome: {
+      borderRadius:10, 
+      flexDirection: 'row', 
+      alignSelf: 'center', 
+      width:"100%", 
+      backgroundColor: '#5cc101',
+      borderWidth: 1,
+      borderColor: "#479801",
+      shadowColor: 'rgba(0, 0, 0, 1)',
+      shadowOpacity: 1,
+      elevation: 5,
+      shadowRadius: 15 ,
+      shadowOffset : { width: 1, height: 13},
     },
 
     botonAzulMarino:{
@@ -145,7 +183,7 @@ const styles = StyleSheet.create({
 
     textoRol:{
       paddingLeft:"5%",
-      paddingTop:"5%",
+      paddingTop:"4%",
       color: "white",
       fontSize: 30,
     },
