@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from "react-native";
 import { TextInputMask } from 'react-native-masked-text'
 import {Picker} from '@react-native-picker/picker';
@@ -9,6 +9,7 @@ import { RegistroContext } from '../context/RegistroContext'
 export default function FormPass({ navigation }) {
   const { control, handleSubmit, errors } = useForm();
   const context = useContext(RegistroContext)
+  const [password, setPassword] = useState('')
 
   function mascaraPass(value){
     return new Array(value.length + 1).join('*');
@@ -34,6 +35,7 @@ export default function FormPass({ navigation }) {
         style={{ marginLeft:"2%", width:"10%", height:"100%"}}
         source={require('../assets/Registro/clave.png')}
       />
+    {/*  
     <Controller
         control={control}
         name={"password"}
@@ -47,11 +49,29 @@ export default function FormPass({ navigation }) {
             style={styles.textoFormulario}
             value={mascaraPass(context.password)}
             onBlur={onBlur}
-          onChangeText={passInput => {
+            onChangeText={passInput => {
               context.setPassword(passInput)
             }}
           />
         )}
+      />
+    */
+    }
+      <TextInput placeholder="Password" 
+        style={styles.textoFormulario}
+        leftIcon={
+          <Icon
+          name='lock'
+          type='font-awesome'
+          color='#00a7ba'
+        />
+        }
+        secureTextEntry={true}
+        onChangeText={(value)=> {
+          context.setPassword(value)
+          setPassword(value)
+        }}
+        value={password}
       />
     </View>     
 
@@ -61,6 +81,7 @@ export default function FormPass({ navigation }) {
         style={{ marginLeft:"2%", width:"10%", height:"100%"}}
         source={require('../assets/Registro/clave.png')}
       />
+    {/*  
     <Controller
         control={control}
         name={"password"}
@@ -74,16 +95,33 @@ export default function FormPass({ navigation }) {
             style={styles.textoFormulario}
             value={mascaraPass(context.password)}
             onBlur={onBlur}
-          onChangeText={passInput => {
+            onChangeText={passInput => {
               context.setPassword(passInput)
             }}
           />
         )}
       />
+    */}
+      <TextInput placeholder="Password" 
+        style={styles.textoFormulario}
+          leftIcon={
+            <Icon
+            name='lock'
+            type='font-awesome'
+            color='#00a7ba'
+          />
+          }
+          secureTextEntry={true}
+          onChangeText={(value)=> {
+            context.setPassword(value)
+            setPassword(value)
+          }}
+          value={password}
+      />
     </View>     
     <Divider style={styles.divisorInferior} />
-
-   
+            
+            
     </View>
   );
 }

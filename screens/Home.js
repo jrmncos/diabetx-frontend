@@ -72,7 +72,7 @@ export default function Home({navigation}){
         
         <TouchableOpacity 
           style={{width:"100%", padding: "2%"}}       
-          onPress={() => navigation.navigate('Geolocalizacion')}>
+          onPress={() => navigation.navigate('Notificacion')}>
           <View style={styles.botonMenuHome}>
             <Image
               style={{ width: 50, height: 50, margin:"2%"}}
@@ -84,7 +84,7 @@ export default function Home({navigation}){
   
         <TouchableOpacity 
           style={{width:"100%", padding: "2%"}}       
-          onPress={() => navigation.navigate('panel')}>
+          onPress={() => navigation.navigate('Panel')}>
           <View style={styles.botonMenuHome}>
             <Image
               style={{ width: 50, height: 50, margin:"2%"}}

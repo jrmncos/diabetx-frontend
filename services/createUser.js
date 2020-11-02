@@ -13,10 +13,10 @@ export function createUser(user, token){
         'bod':user.bod.split('/').reverse().join('-'),
         'expo_token':token
     }
+    console.log("Mando al backend: ")
     console.log(data)
-
     
-    fetch('http://'+baseurl.config.ip+':8000/api/users/',{
+    fetch('http://192.168.1.38:8000/api/users/',{
         method: 'POST',
         headers:{
             Accept: 'application/json',

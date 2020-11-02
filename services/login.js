@@ -2,7 +2,7 @@
 export default function loginUserService({dni, password}){
     console.log("Estoy en la funcion login")
    
-    let client_id = "dc4Q6Ecmlwo6WCdZkmwsNX8zr19EH1IhgyCaJbpo"
+    let client_id = "16KovzsaSPYWEoUov98zTnNb12KUNqctAk4CfWCn"
     
     let _data = "grant_type=password&username="+String(dni)
     +"&password="+String(password)
@@ -18,6 +18,7 @@ export default function loginUserService({dni, password}){
 
     return fetch(request)
     .then(res => {
+        if(!res.ok) throw Error("Las credenciales no son correctas")
         return res.json()
     })
 }

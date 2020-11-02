@@ -1,0 +1,294 @@
+[33mcommit 90982edb4000af4e2494fc72be4463be79357f3c[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: German <costillagermanalfredo@gmail.com>
+Date:   Mon Nov 2 04:38:14 2020 -0300
+
+    Oauth2 ok
+
+[33mcommit 96abb5c8dd8138e3532fbafe3041fe96df64142e[m
+Merge: 7cfda2b a0e74ca
+Author: German <costillagermanalfredo@gmail.com>
+Date:   Mon Nov 2 00:50:27 2020 -0300
+
+    Login con oauth2
+
+[33mcommit 7cfda2baa494d3c543a313d3d6001b5ac638d1a4[m
+Author: German <costillagermanalfredo@gmail.com>
+Date:   Mon Nov 2 00:46:58 2020 -0300
+
+    Login con Oauth2
+
+[33mcommit a0e74ca4f7b99bc8d7bf4cf60d892aaa9c61f357[m
+Author: Santiago Galvan <santiagodgalvan@gmail.com>
+Date:   Sun Nov 1 20:36:47 2020 -0300
+
+    registro refactor
+
+[33mcommit 2409d66b276d87127e77c77a6d5099d406b7e2c6[m
+Author: Santiago Galvan <santiagodgalvan@gmail.com>
+Date:   Sun Nov 1 18:49:59 2020 -0300
+
+    refactor home
+
+[33mcommit 5155ad3ed79f0dc7d6255c6265a9658f614c398f[m
+Author: Santiago Galvan <santiagodgalvan@gmail.com>
+Date:   Sun Nov 1 16:54:40 2020 -0300
+
+    refactor home
+
+[33mcommit 9125ac8820d458abc74571246e3a8a534d09e566[m
+Author: Santiago Galvan <santiagodgalvan@gmail.com>
+Date:   Sat Oct 31 21:56:27 2020 -0300
+
+    perfil
+
+[33mcommit cd6a48f87f2552990e752e331fa6c9740d020ac9[m
+Author: Santiago Galvan <santiagodgalvan@gmail.com>
+Date:   Sat Oct 31 20:54:33 2020 -0300
+
+    archivo config apu
+
+[33mcommit 518ce638f90e8635e266d55be8e3c7064c625d2a[m
+Author: German <costillagermanalfredo@gmail.com>
+Date:   Sat Oct 31 18:12:02 2020 -0300
+
+    Form user ok
+
+[33mcommit aa6aff776dc3bdde678d9565d553e40746a9df5a[m
+Author: Santiago Galvan <santiagodgalvan@gmail.com>
+Date:   Sat Oct 31 02:42:42 2020 -0300
+
+    Modificacion de pantalla de registro
+
+[33mcommit e69cad845aec05c63cce1b745a88347927f6e1a1[m
+Author: German <costillagermanalfredo@gmail.com>
+Date:   Thu Oct 29 22:23:01 2020 -0300
+
+    Refactor
+
+[33mcommit 9da195a24bd70890f7c339e83499a1aa3333c2e6[m
+Author: German <costillagermanalfredo@gmail.com>
+Date:   Thu Oct 29 15:58:56 2020 -0300
+
+    Refactor
+
+[33mcommit 0d6982548795691b14deee5e0811b148bca155ac[m
+Author: German <costillagermanalfredo@gmail.com>
+Date:   Thu Oct 29 15:43:31 2020 -0300
+
+    Refactor entre componentes/screens
+
+[33mcommit d2bb9d69a87626a4fa84b6381dab7096e9bb71bf[m
+Author: German <costillagermanalfredo@gmail.com>
+Date:   Wed Oct 28 22:38:24 2020 -0300
+
+    Push notifications
+
+[33mcommit 055ce6dda586f9a39253b476804ac16765b59074[m
+Author: Santiago Galvan <santiagodgalvan@gmail.com>
+Date:   Wed Oct 28 20:42:47 2020 -0300
+
+    cambiamos las referencias de contexto
+
+[33mcommit fcb62004b0b6d26226bef9248e0a306759e2030e[m
+Author: German <costillagermanalfredo@gmail.com>
+Date:   Wed Oct 28 20:21:43 2020 -0300
+
+    Expo notifications
+
+[33mcommit c98cc5445e06cc4bf433b605092fbf1d0a68f0a7[m
+Author: Santiago Galvan <santiagodgalvan@gmail.com>
+Date:   Sun Oct 18 22:57:34 2020 -0300
+
+    Network
+
+[33mcommit f8ee422b993be60d63c5da661542ffd4ede93e42[m
+Author: Santiago Galvan <santiagodgalvan@gmail.com>
+Date:   Sun Oct 18 21:43:07 2020 -0300
+
+    agregue botones Home para test
+
+[33mcommit bfe06ab64ba21c8e29dd964e427eab1d26a968a4[m
+Author: Santiago Galvan <santiagodgalvan@gmail.com>
+Date:   Sun Oct 18 17:13:19 2020 -0700
+
+    dniScanner - identificacion de tipo de dni
+
+[33mcommit 3bab607a7479aff7a2ec35c04b62f1e29b81485a[m
+Author: Santiago Galvan <santiagodgalvan@gmail.com>
+Date:   Sun Oct 18 14:38:56 2020 -0700
+
+    scanner DNI
+
+[33mcommit 1c98c6a4bcbf139f35c443ffea60aad9fafbf740[m
+Author: Santiago Galvan <santiagodgalvan@gmail.com>
+Date:   Sat Oct 17 18:23:30 2020 -0700
+
+    Pantalla de Autocontrol Diabetes
+
+[33mcommit cae5b728b20fee6ac739ed384c76445755058479[m
+Author: Santiago Galvan <santiagodgalvan@gmail.com>
+Date:   Sat Oct 17 14:49:26 2020 -0700
+
+    Styles, registroECNT context
+
+[33mcommit d2da861d32af066dacadbd809d44205f016160ba[m
+Author: German <costillagermanalfredo@gmail.com>
+Date:   Sat Oct 17 18:27:07 2020 -0300
+
+    El mapa usa el context
+
+[33mcommit 9368df30c74cda32c4eceb1d03e784f97940c056[m
+Author: German <costillagermanalfredo@gmail.com>
+Date:   Sat Oct 17 01:56:15 2020 -0300
+
+    Se ve el mapa en el step 2, falta el context
+
+[33mcommit fdcce72895f9511444b28aaf69b41b537c2cebbd[m
+Author: German <costillagermanalfredo@gmail.com>
+Date:   Fri Oct 16 23:19:39 2020 -0300
+
+    Error en el step del mapa
+
+[33mcommit 7a8b518a71853f6a30c7711ebb1df3257f646470[m
+Author: German <costillagermanalfredo@gmail.com>
+Date:   Fri Oct 16 22:33:11 2020 -0300
+
+    Context para el multi step de registro
+
+[33mcommit c6ee31b11c3559d745968811e3f5e22b5f106855[m
+Author: Santiago Galvan <santiagodgalvan@gmail.com>
+Date:   Fri Oct 16 16:36:45 2020 -0700
+
+    Stepper
+
+[33mcommit 9713442fc9cb24db6718f542a90f1d3e71bca2ab[m
+Author: Santiago Galvan <santiagodgalvan@gmail.com>
+Date:   Wed Oct 14 19:44:31 2020 -0700
+
+    Modificaciones en Geolocalizacion, botones, registroECNT
+
+[33mcommit 78d5dbaab75898d9c5c119e293d66d571bfca727[m
+Author: Santiago Galvan <santiagodgalvan@gmail.com>
+Date:   Wed Oct 7 18:29:24 2020 -0700
+
+    Permisos de Localizacion
+
+[33mcommit 22f338e6af64d536c0473de9e8aa1baab730906e[m
+Author: jrmncos <costillagermanalfredo@gmail.com>
+Date:   Wed Oct 7 20:00:49 2020 -0300
+
+    Fake marker
+
+[33mcommit ea448b79738f2d17c5d2ad0772a87e483de3c9ff[m
+Author: jrmncos <costillagermanalfredo@gmail.com>
+Date:   Wed Oct 7 01:27:53 2020 -0300
+
+    Se puede mover el marker
+
+[33mcommit aaab97a365ff493605ca0b8dbc4212410a848df4[m
+Author: Santiago Galvan <santiagodgalvan@gmail.com>
+Date:   Tue Oct 6 20:43:27 2020 -0700
+
+    Map marker
+
+[33mcommit ea40ffbe1a29c77e1085b87f2bd77a7452096f34[m
+Author: jrmncos <costillagermanalfredo@gmail.com>
+Date:   Mon Oct 5 19:00:56 2020 -0300
+
+    Fin de entrega 2
+
+[33mcommit 5c2d78e4c603116cc34f5df01e9931c8310ce57f[m
+Author: jrmncos <costillagermanalfredo@gmail.com>
+Date:   Mon Oct 5 02:16:00 2020 -0300
+
+    Se muestran los pacientes en el mapa desde el backend
+
+[33mcommit 9ab9c09e311972b141c0e44e4a6dbd663f658088[m
+Author: jrmncos <costillagermanalfredo@gmail.com>
+Date:   Mon Oct 5 01:01:40 2020 -0300
+
+    El form de registro guarda lat y lon
+
+[33mcommit 8ff5c95643b741c6899f49a0b22cd42b7fdbf3d5[m
+Author: Santiago Galvan <santiagodgalvan@gmail.com>
+Date:   Sun Oct 4 10:06:01 2020 -0700
+
+    MapView - Circle
+
+[33mcommit 85bc99438db07378c4b198d245af384c9eb13538[m
+Author: Santiago Galvan <santiagodgalvan@gmail.com>
+Date:   Sun Oct 4 09:42:21 2020 -0700
+
+    MapMarker - Punto de prueba
+
+[33mcommit f9e9663eca6e24ec8301becc8a757c4cd9700db9[m
+Author: jrmncos <costillagermanalfredo@gmail.com>
+Date:   Sun Oct 4 02:36:13 2020 -0300
+
+    Consumiendo datos desde la API
+
+[33mcommit 13fa1bb43ce2827f2ad88957afd3a7e8ecf729e9[m
+Author: jrmncos <costillagermanalfredo@gmail.com>
+Date:   Sun Oct 4 01:22:04 2020 -0300
+
+    React hook form para registro
+
+[33mcommit 87f723fe5382bc6840bf483bae1f0bb1be4721a4[m
+Author: Santiago Galvan <santiagodgalvan@gmail.com>
+Date:   Fri Oct 2 21:36:21 2020 -0700
+
+    Home - Agregado estilos
+
+[33mcommit 9e97b72f6c98ab1139f9ee290f705058d907dba3[m
+Author: Santiago Galvan <santiagodgalvan@gmail.com>
+Date:   Fri Oct 2 20:11:24 2020 -0700
+
+    Pantallas: Login, Registro, AsignarECNT
+
+[33mcommit 83390fc1d81fb7777313b4e7deda57cf02c6ee3c[m
+Author: Santiago Galvan <santiagodgalvan@gmail.com>
+Date:   Fri Oct 2 17:43:06 2020 -0700
+
+    Registro - Pantalla agregada
+
+[33mcommit 052733b3f305bf506f3fe0232c284e69c81799ed[m
+Author: jrmncos <costillagermanalfredo@gmail.com>
+Date:   Fri Oct 2 21:11:38 2020 -0300
+
+    Template login
+
+[33mcommit 5d1b7b676c3375c330954ce889b9e97ebc910457[m
+Author: jrmncos <costillagermanalfredo@gmail.com>
+Date:   Sun Sep 27 18:55:29 2020 -0300
+
+    Geolocalizacion de pacientes
+
+[33mcommit d1fa26d3e320658d99e29bc871523891ac08da59[m
+Author: jrmncos <costillagermanalfredo@gmail.com>
+Date:   Sun Sep 27 16:35:46 2020 -0300
+
+    Integracion de google maps
+
+[33mcommit 4ea3a6f8d70682eba3526f12cc09d6b11950d93d[m
+Author: jrmncos <costillagermanalfredo@gmail.com>
+Date:   Sat Sep 26 23:18:27 2020 -0300
+
+    Preview de pacientes en Panel con Nav
+
+[33mcommit 9d555cacde4e23b2d310709ac94b8cebb87f6d6b[m
+Author: jrmncos <costillagermanalfredo@gmail.com>
+Date:   Sat Sep 26 22:05:22 2020 -0300
+
+    Navegacion con un stack basico
+
+[33mcommit 47f36ab7713b711f4dd5038933be45de39cdeb3c[m
+Author: jrmncos <costillagermanalfredo@gmail.com>
+Date:   Sat Sep 26 20:19:18 2020 -0300
+
+    first commit
+
+[33mcommit f480ce4166769a36d27ca1a37b5902ca593fe859[m
+Author: jrmncos <costillagermanalfredo@gmail.com>
+Date:   Sat Sep 26 20:10:23 2020 -0300
+
+    Created a new Expo app

@@ -20,6 +20,7 @@ export default function Login({navigation}){
     const handleSubmit = () => {
       login({dni, password})
     }
+    
     const loading = (<Text style = {styles.textSubtitulo}> Validando dni y password.... </Text>)
     const error = (<Text style = {styles.textSubtitulo}> Los datos ingresados no son correctos.... </Text>)
     
