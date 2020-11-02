@@ -18,8 +18,6 @@ export default function Login({navigation}){
     }, [isLogged])
     
     const handleSubmit = () => {
-      console.log(dni)
-      console.log(password)
       login({dni, password})
     }
     const loading = (<Text style = {styles.textSubtitulo}> Validando dni y password.... </Text>)

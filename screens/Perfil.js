@@ -2,19 +2,10 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity, Alert } from 'react-native';
 
 export default function Home({navigation}){
-  const [nombre, setNombre] = useState()
-  const [apellido, setApellido] = useState()
-  const [lastAlert, setLastAlert] = useState()
-  const [dni, setDni] = useState()
-
-  useEffect(() => {
-    setLastAlert("12/10/2020 17:22")
-    setNombre("Santiago")
-    setApellido("Galván")
-    setDni("38692907")
-    return () => {
-    }
-  }, [])
+  const [nombre, setNombre] = useState("Santiago")
+  const [apellido, setApellido] = useState("Galvan")
+  const [lastAlert, setLastAlert] = useState("12/10/2020 17:22")
+  const [dni, setDni] = useState("38692907")
 
     return(
       <View style={styles.container}>

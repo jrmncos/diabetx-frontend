@@ -9,7 +9,7 @@ import FormPass from '../components/FormPass';
 import { RegistroContext, RegistroProvider }  from '../context/RegistroContext';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {createUser} from '../api/ApiRegistro'
+import {createUser} from '../services/createUser'
 
 const RegistroMaestro = ({navegation}) => {
 

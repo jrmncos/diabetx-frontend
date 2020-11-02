@@ -1,5 +1,5 @@
 
-export function loginUser({dni, password}){
+export function getPaciente({dni, password}){
     console.log("Estoy en la funcion login")
    
     let client_id = "dc4Q6Ecmlwo6WCdZkmwsNX8zr19EH1IhgyCaJbpo"

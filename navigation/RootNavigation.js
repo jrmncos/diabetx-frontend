@@ -8,11 +8,7 @@ import Panel from '../screens/Panel';
 import Registro from '../screens/Registro';
 import Perfil from '../screens/Perfil';
 import DniScanner from '../components/DniScanner';
-<<<<<<< HEAD
 import Notificacion from '../screens/Notificacion';
-=======
-import FormACDiabetes from '../components/FormACDiabetes';
->>>>>>> a0e74ca4f7b99bc8d7bf4cf60d892aaa9c61f357
 
 const Stack = createStackNavigator()
 
@@ -29,17 +25,13 @@ export default function RootNavigation(){
         },
       }}>
         <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Home" component={Home} options={{title: 'Bienvenido al Sistema'}}/>
+        <Stack.Screen name="Home" component={Home} options={{title: 'Home'}}/>
         <Stack.Screen name="Geolocalizacion" component={Geolocalizacion}/>
         <Stack.Screen name="Panel" component={Panel}/>
         <Stack.Screen name="Registro" component={Registro} />
         <Stack.Screen name="Perfil" component={Perfil} />
         <Stack.Screen name="DniScanner" component={DniScanner} />
-<<<<<<< HEAD
         <Stack.Screen name="Notificacion" component={Notificacion} />
-=======
-        <Stack.Screen name="FormACDiabetes" component={FormACDiabetes} />
->>>>>>> a0e74ca4f7b99bc8d7bf4cf60d892aaa9c61f357
       </Stack.Navigator>
       )
 }

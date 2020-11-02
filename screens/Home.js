@@ -6,11 +6,14 @@ import { CheckBox, Divider } from 'react-native-elements';
 import doctor from '../assets/docto.png'
 import paciente from '../assets/abuelo.png'
 
+import useUser from '../hooks/useUser';
 
 export default function Home({navigation}){
   const [opcionesRol, cambiarVistaOPCRol] = useState(true)
   const [textoRol, setTextoRol] = useState("Profesional de la salud")
   const [imagenRol, setImagenRol] = useState(doctor)
+  
+  const {logout} = useUser()
 
   function cambiarTextos() {
     if(opcionesRol){
@@ -50,19 +53,6 @@ export default function Home({navigation}){
         />
       </View>
 
-<<<<<<< HEAD
-        <View style={{flexDirection: 'row', alignSelf: 'flex-start', width:"90%", padding: "2%"}}>
-        <Image
-          style={{ width: 70, height: 70, backgroundColor:"#5cc101"}}
-          source={require('../assets/mapa.png')} 
-        />
-          <Button 
-            titleStyle={styles.botonTexto}    
-            buttonStyle={styles.botonVerdeClaro}
-            title="Enviar notificacion" 
-            onPress={()=> navigation.navigate('Notificacion')}/> 
-        </View>
-=======
       <Divider style={styles.divisorInferior} />
       
       {
@@ -79,7 +69,6 @@ export default function Home({navigation}){
             <Text h2 style={styles.textoRol}>Mapa Interactivo</Text> 
           </View>
         </TouchableOpacity>
->>>>>>> a0e74ca4f7b99bc8d7bf4cf60d892aaa9c61f357
         
         <TouchableOpacity 
           style={{width:"100%", padding: "2%"}}       
@@ -135,6 +124,21 @@ export default function Home({navigation}){
       </TouchableOpacity>
       </>
       }
+      <TouchableOpacity
+        style={{width:"100%", padding: "2%"}}       
+        onPress={() => {
+          logout()
+          navigation.navigate('Login')
+        }}
+      >
+                <View style={styles.botonMenuHome}>
+          <Image
+            style={{ width: 50, height: 50, margin:"2%"}}
+            source={require('../assets/archivo-medico.png')} 
+          />
+          <Text h2 style={styles.textoRol}>Salir</Text> 
+        </View>
+      </TouchableOpacity>
       <StatusBar style="auto" />
     </View>
   )
