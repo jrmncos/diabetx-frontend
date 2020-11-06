@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { StyleSheet, Text, View, FlatList, Button } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import ImageUploader from '../components/ImageUploader'
+import ImageUploader from 'components/ImageUploader'
 import { useForm, Controller } from "react-hook-form";
 import { Input, Icon, Header, Divider } from "react-native-elements";
 

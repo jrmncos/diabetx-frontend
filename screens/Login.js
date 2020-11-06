@@ -3,7 +3,7 @@ import { StyleSheet, Text, TextInput, View, Image, Platform  } from 'react-nativ
 import { StatusBar } from 'expo-status-bar';
 
 import { Button, Input, Icon, Header, Divider } from 'react-native-elements';
-import useUser from '../hooks/useUser';
+import useUser from 'hooks/useUser';
 
 export default function Login({navigation}){
 

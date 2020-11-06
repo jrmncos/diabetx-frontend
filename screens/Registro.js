@@ -2,14 +2,14 @@ import React, { useState, useContext, useEffect } from "react";
 import Stepper from "react-native-stepper-ui";
 import { View, Alert, Text, StyleSheet, Image } from "react-native";
 
-import FormDatosPersonales from '../components/FormDatosPersonales';
-import GeoUsuario from '../components/GeoUsuario';
-import FormPass from '../components/FormPass';
+import FormDatosPersonales from 'components/FormDatosPersonales';
+import GeoUsuario from 'components/GeoUsuario';
+import FormPass from 'components/FormPass';
 
-import { RegistroContext, RegistroProvider }  from '../context/RegistroContext';
+import { RegistroContext, RegistroProvider }  from 'context/RegistroContext';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {createUser} from '../services/createUser'
+import {createUser} from 'services/createUser'
 
 const RegistroMaestro = ({navegation}) => {
 

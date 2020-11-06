@@ -3,10 +3,10 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
 import { CheckBox, Divider } from 'react-native-elements';
-import doctor from '../assets/docto.png'
-import paciente from '../assets/abuelo.png'
+import doctor from 'assets/docto.png'
+import paciente from 'assets/abuelo.png'
 
-import useUser from '../hooks/useUser';
+import useUser from 'hooks/useUser';
 
 export default function Home({navigation}){
   const [opcionesRol, cambiarVistaOPCRol] = useState(true)
@@ -14,6 +14,11 @@ export default function Home({navigation}){
   const [imagenRol, setImagenRol] = useState(doctor)
   
   const {logout} = useUser()
+
+  const handleExit = () => {
+    logout()
+    navigation.navigate('Login')
+  }
 
   function cambiarTextos() {
     if(opcionesRol){
@@ -126,10 +131,7 @@ export default function Home({navigation}){
       }
       <TouchableOpacity
         style={{width:"100%", padding: "2%"}}       
-        onPress={() => {
-          logout()
-          navigation.navigate('Login')
-        }}
+        onPress={() => { handleExit()}}
       >
                 <View style={styles.botonMenuHome}>
           <Image

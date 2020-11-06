@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { StyleSheet, Text, View, Image, Alert } from "react-native";
 
 import { Divider, CheckBox } from "react-native-elements";
-import { RegistroContext } from '../context/RegistroContext'
+import { RegistroContext } from 'context/RegistroContext'
 
 export default function FormECNT({ navigation }) {
 

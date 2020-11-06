@@ -1,22 +1,20 @@
-export function getUser({dni, password}){
-    console.log("Estoy en la funcion login")
-   
-    let client_id = "dc4Q6Ecmlwo6WCdZkmwsNX8zr19EH1IhgyCaJbpo"
-    
-    let _data = "grant_type=password&username="+String(dni)
-    +"&password="+String(password)
-    +"&client_id="+ client_id
-    console.log(_data)
+import {URL_ROOT, USER} from './settings'
 
-    const request = new Request("http://192.168.1.38:8000/o/token/", {
-        method: 'POST',
+const validate = apiResponse => {
+    return apiResponse
+}
+
+export default function getUser({token}){
+
+    const request = new Request(URL_ROOT+USER, {
+        method: 'GET',
         headers: new Headers({ 
-            'Content-Type': 'application/x-www-form-urlencoded',}),
-        body : _data,
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Bearer '+ token,
+            }), 
     })
 
     return fetch(request)
-    .then(res => {
-        return res.json()
-    })
+    .then(res =>res.json())
+    .then(validate)
 }

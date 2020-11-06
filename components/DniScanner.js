@@ -3,8 +3,8 @@ import { Text, View, StyleSheet, Image, Alert } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { Button} from 'react-native-elements';
 
-import dniBordeScanner from '../assets/dd.png'
-import dniEjemplo from '../assets/dniScannerExample.png'
+import dniBordeScanner from 'assets/dd.png'
+import dniEjemplo from 'assets/dniScannerExample.png'
 
 export default function DniScanner({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null);

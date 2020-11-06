@@ -4,7 +4,7 @@ import { TextInputMask } from 'react-native-masked-text'
 import {Picker} from '@react-native-picker/picker';
 import { Button, Input, Icon, Divider } from "react-native-elements";
 import { useForm, Controller } from "react-hook-form";
-import { RegistroContext } from '../context/RegistroContext'
+import { RegistroContext } from 'context/RegistroContext'
 
 export default function FormPass({ navigation }) {
   const { control, handleSubmit, errors } = useForm();

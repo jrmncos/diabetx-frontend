@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useContext } from 'react'
-import { UserContext } from '../context/UserContext'
-import  loginUserService from '../services/login'
-import getUserService from '../services/getUser'
+import { UserContext } from 'context/UserContext'
+import  loginUserService from 'services/login'
+import getUserService from 'services/getUser'
 import * as SecureStore from 'expo-secure-store';
 
 
