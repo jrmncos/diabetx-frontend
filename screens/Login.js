@@ -12,6 +12,8 @@ export default function Login({navigation}){
     const {isLogged, login, isLoginLoading, hasLoginError} = useUser()
 
     useEffect(() => {
+      console.log("Effect Login")
+      console.log("Estoy logeado?: " +  String(isLogged))
       if(isLogged){
         navigation.navigate('Home')
       }

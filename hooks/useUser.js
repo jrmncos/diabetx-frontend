@@ -10,16 +10,14 @@ export default function useUser(){
     const [state, setState] = useState({loading: false, error: false})
     
     const login = useCallback(({dni, password}) => {
-        console.log("Hola")
-        setState({loading: false, error: false})
-        console.log("Adios")
+        setState({loading: true, error: false})
         loginUserService({dni, password})
         .then(token => {
             console.log(token)
             SecureStore.setItemAsync('accessToken', token.access_token)
-            //Falta el refresh token?
+            // Falta el refresh token
             setState({loading: false, error: false})
-            setAccessToken(token)
+            setAccessToken(token.access_token)
             setDni(dni)
         })
         .catch(err =>{
@@ -42,7 +40,7 @@ export default function useUser(){
     }
     */
     return{
-        isLogged: Boolean(accessToken),
+        isLogged: typeof accessToken == 'string',
         isLoginLoading: state.loading,
         hasLoginError: state.error,
         login,

@@ -9,13 +9,15 @@ export const UserProvider = ({children}) =>{
     const [dni, setDni] = useState('')
 
     useEffect(()=>{
-        if(!accessToken){
-            return setUser(null)
+        console.log("Effect Context User")
+        console.log("Tengo el token?: " +  String(typeof accessToken == 'string'))
+
+        if(typeof accessToken == 'string'){
+            console.log(accessToken)
+            getUser({accessToken, dni})
+            .then(user => setUser(user))
         }
-        getUser({dni, accessToken})
-        .then(user => setUser(user))
-        
-    }, [accessToken, dni])
+    }, [accessToken])
 
     return (<UserContext.Provider value={{
         accessToken,
