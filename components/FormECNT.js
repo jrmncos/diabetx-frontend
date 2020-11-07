@@ -1,35 +1,31 @@
-import React, { useState, useContext } from "react";
+import React, { useState, use} from "react";
 import { StyleSheet, Text, View, Image, Alert } from "react-native";
-
 import { Divider, CheckBox } from "react-native-elements";
-import { RegistroContext } from 'context/RegistroContext'
 
 export default function FormECNT({ navigation }) {
 
   const [ diabetes, setDiabetes ] = useState(false);
   const [ hipertension, setHipertension ] = useState(false);
-  const context = useContext(RegistroContext)
 
   return (
     
     <View style={styles.container}>
      
-
       <Text h2 style={styles.registrarse}>
         Enfermedad crónica no transmisibles
       </Text>
       <View style={styles.cajaCheckBox}>
         <CheckBox
           title={<Text style={styles.textoCheckBox}>Diabetes</Text>}
-          checked={context.diabetes}
-          onPress={() => context.setDiabetes(!context.diabetes)}
+          checked={diabetes}
+          onPress={() => setDiabetes(!diabetes)}
         />
       </View>
       <View style={styles.cajaCheckBox}>
         <CheckBox
           title={<Text style={styles.textoCheckBox}>Hipertensión</Text>}
-          checked={context.hipertension}
-          onPress={() => context.setHipertension(!context.hipertension)}
+          checked={hipertension}
+          onPress={() => setHipertension(!hipertension)}
         />
       </View>
       <Divider style={styles.divisorInferior} />

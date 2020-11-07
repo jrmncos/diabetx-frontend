@@ -17,8 +17,8 @@ export default function useUser(){
             SecureStore.setItemAsync('accessToken', token.access_token)
             // Falta el refresh token
             setState({loading: false, error: false})
-            setAccessToken(token.access_token)
             setDni(dni)
+            setAccessToken(token.access_token)
         })
         .catch(err =>{
             setState({loading: false, error: true})
@@ -43,6 +43,7 @@ export default function useUser(){
         isLogged: typeof accessToken == 'string',
         isLoginLoading: state.loading,
         hasLoginError: state.error,
+        user: user,
         login,
         logout,
     }

@@ -1,11 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity, Alert } from 'react-native';
+import useUser from 'hooks/useUser';
+import getPaciente from 'services/getPaciente';
+import * as SecureStore from 'expo-secure-store';
+import FormECNT from 'components/FormECNT'
 
-export default function Home({navigation}){
-  const [nombre, setNombre] = useState("Santiago")
-  const [apellido, setApellido] = useState("Galvan")
-  const [lastAlert, setLastAlert] = useState("12/10/2020 17:22")
-  const [dni, setDni] = useState("38692907")
+export default function Perfil({navigation}){
+    /*
+    const [nombre, setNombre] = useState("Santiago")
+    const [apellido, setApellido] = useState("Galvan")
+    const [lastAlert, setLastAlert] = useState("12/10/2020 17:22")
+    const [dni, setDni] = useState("38692907")
+    */
+    const {user} = useUser()
+    const [paciente, setPaciente] = useState(null)
+
+    useEffect(()=> {
+      async function fetchPaciente() {
+        const dni = user.dni
+        console.log(user)
+        const accessToken = await SecureStore.getItemAsync('accessToken')
+        const paciente = await getPaciente({dni, accessToken})
+        setPaciente(paciente)
+      }
+      fetchPaciente()
+    },[])
 
     return(
       <View style={styles.container}>
@@ -14,9 +33,10 @@ export default function Home({navigation}){
             style={{ width: 70, height: 70, backgroundColor:"#00a7ba"}}
             source={require('../assets/paciente.png')} 
           />
-          <Text h2 style={styles.textoRol}>{nombre} {apellido}</Text> 
+          <Text h2 style={styles.textoRol}>{user.first_name} {user.last_name}</Text> 
         </View>
-
+        
+        {/*
         <TouchableOpacity 
           style={{width:"100%", marginBottom:"5%"}}       
           onPress={() => Alert.alert("Menu alertas", "Deberían listarse")}>
@@ -32,6 +52,7 @@ export default function Home({navigation}){
             <Text h2 style={styles.textoAlerta}>Resultado: </Text> 
           </View>
         </TouchableOpacity>
+        */}
          
         <TouchableOpacity 
           style={{width:"100%", marginBottom:"5%"}}       
@@ -45,16 +66,15 @@ export default function Home({navigation}){
           </View>
           <View style={{borderWidth:1, borderColor: '#5cc101', width:"100%"}}>
             <Text h2 style={styles.textoAlertaCabecera}>Datos personales:</Text> 
-            <Text h2 style={styles.textoDatos}>{apellido}, {nombre} </Text> 
-            <Text h2 style={styles.textoDatos}>DNI: {dni}</Text> 
-            <Text h2 style={styles.textoDatos}>Bla bla bla </Text> 
+            <Text h2 style={styles.textoDatos}>{user.last_name}, {user.first_name} </Text> 
+            <Text h2 style={styles.textoDatos}>DNI: {user.dni}</Text> 
           </View>
         </TouchableOpacity>
 
         <TouchableOpacity 
           style={{width:"100%", marginBottom:"5%"}}       
           onPress={() => Alert.alert("Menu CNT", "Deberían listarse")}>
-          <View style={{flexDirection: 'row', alignSelf: 'center', width:"100%", backgroundColor: '#00a7ba'}}>
+          {/*<View style={{flexDirection: 'row', alignSelf: 'center', width:"100%", backgroundColor: '#00a7ba'}}>
             <Image
               style={{ width: 70, height: 70}}
               source={require('../assets/archivo-medico.png')} 
@@ -64,7 +84,10 @@ export default function Home({navigation}){
           <View style={{borderWidth:1, borderColor: '#00a7ba', width:"100%"}}>
             <Text h2 style={styles.textoAlertaCabecera}>ECNT asignadas:</Text> 
             <Text h2 style={styles.textoAlerta}>Diabetes, Hipertensión</Text> 
-          </View>
+          </View>*/}
+          <FormECNT>
+            
+          </FormECNT>
         </TouchableOpacity>
       
 

@@ -1,12 +1,17 @@
-import {URL_ROOT, USER} from 'services/settings'
+import {URL_ROOT, PACIENTE_BY_DNI} from 'services/settings.js'
 
 const validate = apiResponse => {
+    console.log(apiResponse)
     return apiResponse
 }
 
-export default function getUser({dni, accessToken}){
-    console.log("Voy a pedir el usuario")
-    const request = new Request(URL_ROOT+USER+String(dni), {
+export default function getPaciente({dni, accessToken}){
+
+    console.log("Voy a pedir el paciente con dni: " + String(dni))
+    console.log("El token: " + accessToken)
+    console.log(URL_ROOT+ PACIENTE_BY_DNI+String(dni))
+
+    const request = new Request(URL_ROOT+ PACIENTE_BY_DNI +String(dni), {
         method: 'GET',
         headers: new Headers({ 
             'Content-Type': 'application/x-www-form-urlencoded',
