@@ -32,7 +32,7 @@ export default function Login({navigation}){
 
         <Text h2 style={styles.ingresar}>INGRESAR</Text> 
         
-        <TextInput
+        <Input
           placeholder='DNI' 
           style={styles.textoFormulario}
           keyboardType = 'numeric'
@@ -47,7 +47,7 @@ export default function Login({navigation}){
           value={dni}
         />
 
-        <TextInput placeholder="Password" 
+        <Input placeholder="Password" 
         style={styles.textoFormulario}
           leftIcon={
             <Icon
@@ -67,7 +67,7 @@ export default function Login({navigation}){
           <> 
           <StatusBar/>
           <Button 
-            buttonStyle={styles.botonAzulMarino}
+            buttonStyle={styles.botonMenuHomeAzul}
             titleStyle={styles.botonTexto}
             title="Ingresar" 
             onPress={()=> handleSubmit()}/> 
@@ -75,13 +75,13 @@ export default function Login({navigation}){
           <Divider style={styles.divisorInferior} />
           
           <Button 
-            buttonStyle={styles.botonVerdeClaro}
+            buttonStyle={styles.botonMenuHomeVerde}
             titleStyle={styles.botonTexto}
             title="Registrarse" 
             onPress={()=> navigation.navigate('Registro')}/> 
 
           <Button 
-            buttonStyle={styles.botonVerdeClaro}
+            buttonStyle={styles.botonMenuHomeVerde}
             titleStyle={styles.botonTexto}
             title="Recuperar Clave" 
           /> 
@@ -103,6 +103,8 @@ const styles = StyleSheet.create({
     },
 
     botonMenuHomeVerde: {
+      margin: "2%",
+      padding:"5%",
       borderRadius:10, 
       flexDirection: 'row', 
       alignSelf: 'center', 
@@ -118,6 +120,8 @@ const styles = StyleSheet.create({
     },
 
     botonMenuHomeAzul: {
+      margin: "2%",
+      padding:"5%",
       borderRadius:10, 
       flexDirection: 'row', 
       alignSelf: 'center', 

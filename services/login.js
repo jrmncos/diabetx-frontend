@@ -1,15 +1,17 @@
 
+import {DEV_IP, CLIENT_ID} from 'services/settings'
+
 export default function loginUserService({dni, password}){
     console.log("Estoy en la funcion login")
    
-    let client_id = "16KovzsaSPYWEoUov98zTnNb12KUNqctAk4CfWCn"
+    let client_id = CLIENT_ID
     
     let _data = "grant_type=password&username="+String(dni)
     +"&password="+String(password)
     +"&client_id="+ client_id
     console.log(_data)
 
-    const request = new Request("http://192.168.1.38:8000/o/token/", {
+    const request = new Request("http://"+DEV_IP+":8000/o/token/", {
         method: 'POST',
         headers: new Headers({ 
             'Content-Type': 'application/x-www-form-urlencoded',}),
