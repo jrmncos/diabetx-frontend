@@ -12,7 +12,6 @@ export default function Panel({navigation}){
       <>
         <Text onPress={()=> navigation.navigate('Paciente', {dni:"40861249"})}>{"German"}</Text>
         <Text>{dniPaciente}</Text>
-        
       </>
       )
 

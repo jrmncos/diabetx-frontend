@@ -1,24 +1,21 @@
-import React, { useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from "react-native";
 import { TextInputMask } from 'react-native-masked-text'
 import {Picker} from '@react-native-picker/picker';
-import { Button, Input, Icon, Header, Divider } from "react-native-elements";
-import { useForm, Controller } from "react-hook-form";
+import { Divider } from "react-native-elements";
 import { RegistroContext } from 'context/RegistroContext'
 
+import DniScanner from 'components/DniScanner'
+
 export default function FormDatosPersonales({ navigation }) {
-  const { control, handleSubmit, errors } = useForm();
-  const context = useContext(RegistroContext)
-
-  function mascaraPass(value){
-    return new Array(value.length + 1).join('*');
-  }
-  //Llama a set dni del context
-
+  const {dni, setDni, nombre, setNombre, apellido, setApellido, bod, setBod, genero, setGenero } = useContext(RegistroContext)
+  const [isScanning, setIsScanning] = useState(false)
+  
   return (
     <View style={styles.container}>
-     
 
+    {!isScanning && 
+    <>
       <Text h2 style={styles.registrarse}>
         Registrarse
       </Text>
@@ -27,169 +24,100 @@ export default function FormDatosPersonales({ navigation }) {
       Por favor, ingresá tus datos, también podes ingresarlos tocando en "Escanear DNI".
       </Text>
     
-
-    <Text style={styles.encabezado}> Nombres</Text>
-    <View style={styles.vistaTituloForm}>
-    <Image
-        style={{marginTop:"2%", marginLeft:"2%", width:"10%", height:"80%"}}
-        source={require('../assets/archivo-medico.png')} 
-      />
-    <Controller
-        control={control}
-        name={"nombre"}
-        defaultValue=""
-        render={({ onChange, onBlur, value }) => (
-          <TextInput
-            style={styles.textoFormulario}
-            onBlur={onBlur}
-            onChangeText={nombreInput => { 
-              onChange(nombreInput)
-              context.setNombre(nombreInput)}
-            }
-            value={value}
+      <Text style={styles.encabezado}> Nombres</Text>
+      <View style={styles.vistaTituloForm}>
+        <Image
+            style={{marginTop:"2%", marginLeft:"2%", width:"10%", height:"80%"}}
+            source={require('../assets/archivo-medico.png')} 
           />
-        )}
-      />
-    </View>   
+        <TextInput
+          style={styles.textoFormulario}
+          onChangeText={value => { 
+            setNombre(value)
+          }}
+          value={nombre}
+        />
+     </View>   
 
     <Text style={styles.encabezado}> Apellidos</Text>
     <View style={styles.vistaTituloForm}>
-    <Image
-        style={{marginTop:"2%", marginLeft:"2%", width:"10%", height:"80%"}}
-        source={require('../assets/Registro/name.png')}
-      />
-    <Controller
-        control={control}
-        name={"apellido"}
-        defaultValue=""
-        render={({ onChange, onBlur, value }) => (
-          <TextInput
-            style={styles.textoFormulario}
-            onBlur={onBlur}
-            onChangeText={apellidoInput => { 
-              onChange(apellidoInput)
-              context.setApellido(apellidoInput)}
-            }
-            value={value}
-          />
-        )}
+      <Image
+          style={{marginTop:"2%", marginLeft:"2%", width:"10%", height:"80%"}}
+          source={require('../assets/Registro/name.png')}
+        />
+      <TextInput
+        style={styles.textoFormulario}
+        onChangeText={value => { 
+          setApellido(value)}
+        }
+        value={apellido}
       />
     </View>
 
     <Text style={styles.encabezado}> Género que figura en tu DNI</Text>
     <View style={styles.vistaTituloForm}>
-    <Image
-        style={{marginTop:"2%", marginLeft:"2%", width:"10%", height:"80%"}}
-        source={require('../assets/Registro/genero.png')}
-      />
-    <Controller
-        control={control}
-        name={"genero"}
-        defaultValue=""
-        render={({ onChange, onBlur, value }) => (
-          <View style={{borderColor: 'gray', borderColor: 'rgba(0, 167, 186, 0.2)',
-          borderWidth: 1, width: "86%" }}>
-          <Picker
-            selectedValue={context.genero}
-            onValueChange={(itemValue) => context.setGenero(itemValue)}
-          >
-            <Picker.Item fontSize="20" label="Selecciona tu género" value="" />
-            <Picker.Item label="Femenino" value="Femenino" />
-            <Picker.Item label="Masculino" value="Masculino" />
-          </Picker>
-    
-        </View>
-        )}
-      />
+      <Image
+          style={{marginTop:"2%", marginLeft:"2%", width:"10%", height:"80%"}}
+          source={require('../assets/Registro/genero.png')}
+        />
+
+      <View style={{borderColor: 'gray', borderColor: 'rgba(0, 167, 186, 0.2)',
+      borderWidth: 1, width: "86%" }}>
+        <Picker
+          selectedValue={genero}
+          onValueChange={(value) => setGenero(value)}
+        >
+          <Picker.Item fontSize="20" label="Selecciona tu género" value="" />
+          <Picker.Item label="Femenino" value="Femenino" />
+          <Picker.Item label="Masculino" value="Masculino" />
+        </Picker>
+      </View>
     </View>    
     
-   
     <Text style={styles.encabezado}> DNI</Text>
     <View style={styles.vistaTituloForm}>
-    <Image
-        style={{marginTop:"2%", marginLeft:"2%", width:"10%", height:"80%"}}
-        source={require('../assets/Registro/dni.png')}
-      />
-    <Controller
-        control={control}
-        name={"dni"}
-        defaultValue=""
-        render={({ onChange, onBlur, value }) => (
-          <TextInputMask
-            type={'only-numbers'}
-            onBlur={onBlur}
-            style={styles.textoFormulario}
-            value={context.dni}
-          onChangeText={dniInput => {
-            if(dniInput.length < 9){
-              context.setDni(dniInput)
-            }}}
-          />
-        )}
-      />
+      <Image
+          style={{marginTop:"2%", marginLeft:"2%", width:"10%", height:"80%"}}
+          source={require('../assets/Registro/dni.png')}
+        />
+        <TextInputMask
+          type={'only-numbers'}
+          style={styles.textoFormulario}
+          value={dni}
+          onChangeText={value => {
+            setDni(value)
+          }}
+        />
     </View>    
 
     <Text style={styles.encabezado}> Día de nacimiento</Text>
     <View style={styles.vistaTituloForm}>
-    <Image
-        style={{ marginLeft:"2%", width:"10%", height:"100%"}}
-        source={require('../assets/Registro/nacimiento.png')}
-      />
-    <Controller
-        control={control}
-        name={"bod"}
-        defaultValue=""
-        render={({ onChange, onBlur, value }) => (
-          <TextInputMask
-            type={'datetime'}
-            options={{
-              format: 'DD/MM/YYYY'
-            }}
-            style={styles.textoFormulario}
-            value={context.bod}
-            onBlur={onBlur}
-          onChangeText={bodInput => {
-              context.setBod(bodInput)
-            }}
-          />
-        )}
-      />
+      <Image
+          style={{ marginLeft:"2%", width:"10%", height:"100%"}}
+          source={require('../assets/Registro/nacimiento.png')}
+        />
+        <TextInputMask
+          type={'datetime'}
+          options={{
+            format: 'DD/MM/YYYY'
+          }}
+          style={styles.textoFormulario}
+          onChangeText={bod => {
+            setBod(bod)
+          }}
+        />
     </View>    
-
-    {/* <Text style={styles.encabezado}> Contraseña</Text>
-    <View style={{width:"100%", flexDirection:"row", marginBottom:"3%"}}>
-    <Image
-        style={{ marginLeft:"2%", width:"10%", height:"100%"}}
-        source={require('../assets/Registro/clave.png')}
-      />
-    <Controller
-        control={control}
-        name={"password"}
-        defaultValue=""
-        render={({ onChange, onBlur, value }) => (
-          <TextInputMask
-            type={'custom'}
-            options={{
-              mask: '************',
-            }}
-            style={styles.textoFormulario}
-            value={mascaraPass(context.password)}
-            onBlur={onBlur}
-          onChangeText={passInput => {
-              context.setPassword(passInput)
-            }}
-          />
-        )}
-      />
-    </View>     */}
     <Divider style={styles.divisorInferior} />
 
     <View style={styles.botonEscanerDNI}>
         <TouchableOpacity
-          onPress={() => navigation.navigate('DniScanner')}> 
+          onPress={() => setIsScanning(!isScanning)}> 
           <Image style={{height: 100, width: 100}} source={require('../assets/Registro/escanea.png')} />
         </TouchableOpacity>
     </View>
+    </>
+    }
+    {isScanning && <DniScanner isScanning={setIsScanning}/>}
     </View>
   );
 }

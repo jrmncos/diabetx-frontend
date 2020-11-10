@@ -1,6 +1,6 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import Stepper from "react-native-stepper-ui";
-import { View, Alert, Text, StyleSheet, Image } from "react-native";
+import { View, Alert, StyleSheet, ScrollView } from "react-native";
 
 import FormDatosPersonales from 'components/FormDatosPersonales';
 import GeoUsuario from 'components/GeoUsuario';
@@ -41,28 +41,31 @@ const RegistroMaestro = ({navegation}) => {
     } 
 
  return (
-  <View style={{ flex:1, backgroundColor:"rgba(255,255,255,1)", marginHorizontal: 0 }}>
+    <ScrollView style={styles.scrollView}>
+    <View style={{ flex:1, backgroundColor:"rgba(255,255,255,1)", marginHorizontal: 0 }}>
 
-    <Stepper
-      style={styles.stepperStyle}
-      buttonStyle={styles.botonAzulMarino}
-      buttonTextStyle={styles.botonTexto}
-      active={active}
-      content={content}
-      onNext={() => {
-        console.log(context)
-        setActive((p) => p + 1)
-      }}
-      onBack={() =>{ 
-        console.log(context)
-        setActive((p) => p - 1)
-      }}
-      onFinish={() => {
-        Alert.alert("Formulario finalizado")
-        onSubmit()
-      }}
-    />
-  </View>
+      <Stepper
+        style={styles.stepperStyle}
+        buttonStyle={styles.botonAzulMarino}
+        buttonTextStyle={styles.botonTexto}
+        active={active}
+        content={content}
+        onNext={() => {
+          console.log(context)
+          setActive((p) => p + 1)
+        }}
+        onBack={() =>{ 
+          console.log(context)
+          setActive((p) => p - 1)
+        }}
+        onFinish={() => {
+          Alert.alert("Formulario finalizado")
+          onSubmit()
+        }}
+      />
+    </View>
+  </ScrollView>
+  
 );
 };
 
@@ -76,6 +79,11 @@ export default function Registro({navegation}){
 
 
 const styles = StyleSheet.create({
+  scrollView: {
+      backgroundColor:"#FFFFFF",
+      marginRight: 0,
+  },
+
   botonTexto:{
     textAlign:"center",
      color: "white",

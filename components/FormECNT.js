@@ -10,11 +10,14 @@ export default function FormECNT({ navigation }) {
   return (
     
     <View style={styles.container}>
-     
-      <Text h2 style={styles.registrarse}>
-        Enfermedad crónica no transmisibles
-      </Text>
-      <View style={styles.cajaCheckBox}>
+     <View style={{flexDirection: 'row', alignSelf: 'center', width:"100%", backgroundColor: '#00a7ba'}}>
+            <Image
+              style={{ width: 70, height: 70}}
+              source={require('../assets/archivo-medico.png')} 
+            />
+            <Text h2 style={styles.textoRol}>Enfermedades crónicas no transmisibles</Text> 
+          </View>
+          <View style={styles.cajaCheckBox}>
         <CheckBox
           title={<Text style={styles.textoCheckBox}>Diabetes</Text>}
           checked={diabetes}
@@ -28,8 +31,7 @@ export default function FormECNT({ navigation }) {
           onPress={() => setHipertension(!hipertension)}
         />
       </View>
-      <Divider style={styles.divisorInferior} />
-    </View>
+   </View>
   );
 }
 
@@ -59,7 +61,11 @@ const styles = StyleSheet.create({
     marginTop: "2%",
     marginBottom: "2%",
   },
-
+  textoRol:{
+    paddingLeft:"3%",
+    color: "white",
+    fontSize: 30,
+  },
   botonVerdeClaro: {
     width: "95%",
     padding: "5%",

@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity, Alert } from 'react-native';
+import {Button} from 'react-native-elements';
 import useUser from 'hooks/useUser';
 import getPaciente from 'services/getPaciente';
 import * as SecureStore from 'expo-secure-store';
 import FormECNT from 'components/FormECNT'
+import { UserContext } from "../context/UserContext";
 
 export default function Perfil({navigation}){
     /*
@@ -15,7 +17,12 @@ export default function Perfil({navigation}){
     const {user} = useUser()
     const [paciente, setPaciente] = useState(null)
 
+    const handleSubmitSave = () => { 
+
+    }
+
     useEffect(()=> {
+      console.log("MIRA EL CONTEXT DEL PERFIL:" +context)
       async function fetchPaciente() {
         const dni = user.dni
         console.log(user)
@@ -29,10 +36,19 @@ export default function Perfil({navigation}){
     return(
       <View style={styles.container}>
         <View style={{marginBottom:"5%", flexDirection: 'row', alignSelf: 'center', width:"100%", backgroundColor: '#00a7ba'}}>
+          {context.gender == "M" && 
           <Image
             style={{ width: 70, height: 70, backgroundColor:"#00a7ba"}}
-            source={require('../assets/paciente.png')} 
+            source={require('../assets/abuelo.png')} 
           />
+          }
+          {console.log("genero: "+context.dni)}
+          {context.gender == "F" && 
+          <Image
+            style={{ width: 70, height: 70, backgroundColor:"#00a7ba"}}
+            source={require('../assets/abuela.png')} 
+          />
+          }
           <Text h2 style={styles.textoRol}>{user.first_name} {user.last_name}</Text> 
         </View>
         
@@ -89,8 +105,15 @@ export default function Perfil({navigation}){
             
           </FormECNT>
         </TouchableOpacity>
-      
+        <View style={{alignContent:'center'}}>
+          <Button 
+              buttonStyle={styles.botonMenuHomeAzul}
+              titleStyle={styles.botonTexto}
+              title="Guardar cambios" 
+              onPress={()=> handleSubmitSave() }
+          /> 
 
+        </View>
       </View>
     )
 }
@@ -102,20 +125,24 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
     },
 
-    botonAzulMarino:{
-      width: '95%',
-      padding: '5%',
+    botonMenuHomeAzul: {
+      textAlign:'center',
+      margin: "2%",
+      padding:"3%",
+      borderRadius:10, 
+      flexDirection: 'row', 
+      alignSelf: 'center', 
+      width:"100%", 
       backgroundColor: '#00a7ba',
-      justifyContent: 'space-evenly',
+      borderWidth: 1,
+      borderColor: "#00707d",
+      shadowColor: 'rgba(0, 0, 0, 1)',
+      shadowOpacity: 1,
+      elevation: 5,
+      shadowRadius: 15 ,
+      shadowOffset : { width: 1, height: 13},
     },
-
-    botonVerdeClaro:{
-      width: '95%',
-      padding: '5%',
-      backgroundColor: '#5cc101',
-      justifyContent: 'space-evenly',
-    },
-
+    
     botonTexto:{
       color: "white",
       fontSize: 30,

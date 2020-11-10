@@ -1,20 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Image, Alert } from 'react-native';
+import React, { useContext, useState, useEffect } from 'react';
+import { Button, Text, View, StyleSheet, Image, Alert } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
-import { Button} from 'react-native-elements';
-
 import dniBordeScanner from 'assets/dd.png'
 import dniEjemplo from 'assets/dniScannerExample.png'
+import { RegistroContext } from 'context/RegistroContext'
 
-export default function DniScanner({ navigation }) {
+export default function DniScanner({ isScanning }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
  
-  const [dni, setDni] = useState()
-  const [lastName, setLastName] = useState()
-  const [name, setName] = useState()
-  const [genero, setGenero] = useState()
-  const [bod, setBod] = useState()
+  const {setDni, setNombre, setApellido, setBod, setGenero} = useContext(RegistroContext)
 
   useEffect(() => {
     (async () => {
@@ -24,33 +19,24 @@ export default function DniScanner({ navigation }) {
   }, []);
 
   const handleBarCodeScanned = ({ type, data }) => {
-    console.log(data)
     if(type == 2048){
         const datosDNI = data.split("@")
         console.log(datosDNI)
-
         setDni(datosDNI[4])
-        setName(datosDNI[2])
-        setLastName(datosDNI[1])
+        setNombre(datosDNI[2])
+        setApellido(datosDNI[1])
         setGenero(datosDNI[3])
         setBod(datosDNI[6])
-        
         setScanned(true);
+        isScanning(false);
     }
     else{
         Alert.alert("Debe escanear un DNI argentino.")
         setScanned(true)
     }
 
-    console.log("Documento Argentino escaneado: \n"+
-    "DNI: "+dni+
-    "\nApellido: "+lastName+
-    "\nNombre: "+name+
-    "\nGenero(estamos en los 90?): "+genero+
-    "\nFecha de Nacimiento: "+bod
-    )
   };
-
+  
   if (hasPermission === null) {
     return <Text>Solicitando permisos de cámara.</Text>;
   }
@@ -59,16 +45,13 @@ export default function DniScanner({ navigation }) {
   }
 
   return (
-    <View
-      style={{
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
-      }}>
+    <View>
+      
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-        style={StyleSheet.absoluteFillObject}
+        style={styles.container}
       />
+      {/*
       <View style={styles.textoCam}>
         <Text h2 style={styles.informacion}>
             Apuntá con tu cámara a tu DNI
@@ -80,15 +63,8 @@ export default function DniScanner({ navigation }) {
       <View style={styles.centroCam}>
           <Image style={styles.bordeCam} source={dniBordeScanner} />
       </View>
-    
-      {scanned && 
-      <View style={styles.botonCentro}>
-        <Button 
-            buttonStyle={styles.botonAzulMarino}
-            titleStyle={styles.botonTexto}
-            title="Reintentar" 
-            onPress={()=> setScanned(false)}/>
-      </View>}
+      */}
+      <Button title="Click" onPress={()=>isScanning(false)}></Button>
     </View>
   );
 }
