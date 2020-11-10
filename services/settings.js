@@ -8,4 +8,4 @@ export const USER_BY_DNI = 'api/users/dni/'
 
 export const PACIENTE_BY_DNI = 'api/pacientes/dni/'
 
-export const CLIENT_ID = 'lrGD5Tvri3YvJia4FfkfHdXuV7920CfcUC3gmDGT'
+export const CLIENT_ID = 'A5POfmnDWyqLifPEHyVzZ2ch2CvTittia2ks8W3G'

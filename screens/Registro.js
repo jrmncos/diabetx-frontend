@@ -42,7 +42,7 @@ const RegistroMaestro = ({navegation}) => {
 
  return (
     <ScrollView style={styles.scrollView}>
-    <View style={{ flex:1, backgroundColor:"rgba(255,255,255,1)", marginHorizontal: 0 }}>
+    <View style={{ height:'100%',backgroundColor:"rgba(255,255,255,1)", marginHorizontal: 0 }}>
 
       <Stepper
         style={styles.stepperStyle}
@@ -91,6 +91,8 @@ const styles = StyleSheet.create({
    },
 
    stepperStyle:{
+    height:'100%',
+    width:'100%',
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',

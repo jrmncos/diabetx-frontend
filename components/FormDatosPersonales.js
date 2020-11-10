@@ -101,9 +101,10 @@ export default function FormDatosPersonales({ navigation }) {
           options={{
             format: 'DD/MM/YYYY'
           }}
+          value={bod}
           style={styles.textoFormulario}
-          onChangeText={bod => {
-            setBod(bod)
+          onChangeText={input => {
+            setBod(input)
           }}
         />
     </View>    
@@ -115,14 +116,22 @@ export default function FormDatosPersonales({ navigation }) {
           <Image style={{height: 100, width: 100}} source={require('../assets/Registro/escanea.png')} />
         </TouchableOpacity>
     </View>
-    </>
+    </>  
+    
     }
-    {isScanning && <DniScanner isScanning={setIsScanning}/>}
+    <View style={styles.pantallaCompleta}>
+      {isScanning && <DniScanner isScanning={setIsScanning}/>}
+    </View>
+    
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  pantallaCompleta: {
+    width:"100%"
+
+  },
   container: {
     backgroundColor: "#fff",
     alignItems: "center",
