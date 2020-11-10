@@ -1,3 +1,4 @@
+import {DEV_IP} from 'services/settings'
 
 export function createUser(user, token){
     console.log(user)
@@ -16,7 +17,7 @@ export function createUser(user, token){
     console.log("Mando al backend: ")
     console.log(data)
     
-    fetch('http://192.168.1.38:8000/api/users/',{
+    fetch('http://'+DEV_IP+':8000/api/users/',{
         method: 'POST',
         headers:{
             Accept: 'application/json',
