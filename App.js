@@ -11,7 +11,7 @@ import * as Permissions from 'expo-permissions';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import {UserProvider} from './context/UserContext'
+import {AuthProvider} from 'context/AuthContext'
 
 export default function App() {
     const [expoPushToken, setExpoPushToken] = useState('');
@@ -50,11 +50,11 @@ export default function App() {
     }, []);
 
     return (
-      <UserProvider>
+      <AuthProvider>
         <NavigationContainer>    
           <RootNavigation/>
         </NavigationContainer>
-      </UserProvider>
+      </AuthProvider>
     );
 }
 

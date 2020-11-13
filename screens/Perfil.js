@@ -1,28 +1,18 @@
 import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity, Alert } from 'react-native';
 import {Button} from 'react-native-elements';
-import useUser from 'hooks/useUser';
 import getPaciente from 'services/getPaciente';
 import * as SecureStore from 'expo-secure-store';
 import FormECNT from 'components/FormECNT'
-import { UserContext } from "../context/UserContext";
 
 export default function Perfil({navigation}){
-    /*
-    const [nombre, setNombre] = useState("Santiago")
-    const [apellido, setApellido] = useState("Galvan")
-    const [lastAlert, setLastAlert] = useState("12/10/2020 17:22")
-    const [dni, setDni] = useState("38692907")
-    */
-    const {user} = useUser()
     const [paciente, setPaciente] = useState(null)
-
+    
     const handleSubmitSave = () => { 
 
     }
 
     useEffect(()=> {
-      console.log("MIRA EL CONTEXT DEL PERFIL:" +context)
       async function fetchPaciente() {
         const dni = user.dni
         console.log(user)
@@ -42,8 +32,7 @@ export default function Perfil({navigation}){
             source={require('../assets/abuelo.png')} 
           />
           }
-          {console.log("genero: "+context.dni)}
-          {context.gender == "F" && 
+          {
           <Image
             style={{ width: 70, height: 70, backgroundColor:"#00a7ba"}}
             source={require('../assets/abuela.png')} 
