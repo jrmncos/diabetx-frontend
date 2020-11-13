@@ -6,16 +6,15 @@ import * as SecureStore from 'expo-secure-store';
 import FormECNT from 'components/FormECNT'
 
 export default function Perfil({navigation}){
-   const {user} = useUser()
    const [paciente, setPaciente] = useState()
    const [loadingPaciente, isLoadingPaciente] = useState(true)
+   const [user, setUser] = useState({dni:40861249, first_name:"Ger", last_name: "Cos", gender:"Masculino"})
    const handleSubmitSave = () => { 
  
    }
    useEffect(()=> {
      async function fetchPaciente() {
        const dni = user.dni
-       console.log("YENDO A BUSCAR EL PACIENTE...")
        const accessToken = await SecureStore.getItemAsync('accessToken')
        const paciente = await getPaciente({dni, accessToken})
        setPaciente(paciente)

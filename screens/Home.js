@@ -11,13 +11,8 @@ export default function Home({navigation}){
   const [opcionesRol, cambiarVistaOPCRol] = useState(true)
   const [textoRol, setTextoRol] = useState("Profesional de la salud")
   const [imagenRol, setImagenRol] = useState(doctor)
-<<<<<<< HEAD
-
-  const {logout, user} = useUser()
-=======
   const {logout} = useAuth()
   
->>>>>>> e0c0d5827010d7f87d2d56e6301872ac8bf318e5
 
   const handleExit = () => {
     logout()

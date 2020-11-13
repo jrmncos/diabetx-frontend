@@ -4,22 +4,35 @@ import { Divider, CheckBox } from "react-native-elements";
 import getECNTS from 'services/getECNT';
 
 export default function FormECNT(paciente) {
-  const [ diabetes, setDiabetes ] = useState(false);
-  const [ hipertension, setHipertension ] = useState(false);
-  const [ ecnts, setECNTS ] = useState()
+  const [ checkedMap, setCheckedMap ] = useState([]);
   const [ loadingECNT, setLoadingECNT ] = useState(true)
  
   useEffect(()=> {
-    console.log("ME LLEGA A ECNT EL PACIENTE: "+paciente.ecnts)
     async function fetchECNT() {
       const response = await getECNTS()
-      setECNTS(response)
+      response.map((ecnt) => {  
+        setCheckedMap(prevState => [...prevState, {
+          "id": ecnt.id,
+          "checked": false,
+          "nombre": ecnt.nombre,
+        }])
+      })
       setLoadingECNT(false)
     } 
   fetchECNT()
   },[])
 
-
+  const handleChange = (id, nombre, checked) => {
+    let index = checkedMap.findIndex((elem) => elem.id == id)
+    let newCheckBox = {
+      id: id,
+      nombre: nombre,
+      checked: !checked
+    }
+    checkedMap[index] = newCheckBox
+    console.log(checkedMap)
+    //setCheckedMap(prevState => [...prevState, newCheckBox])
+  }
   
   return (
     <View style={styles.container}>
@@ -30,29 +43,15 @@ export default function FormECNT(paciente) {
         />
         <Text h2 style={styles.textoRol}>Enfermedades crónicas no transmisibles</Text> 
       </View>
-      {/* <View style={styles.cajaCheckBox}>
-        <CheckBox
-          title={<Text style={styles.textoCheckBox}>Diabetes</Text>}
-          checked={diabetes}
-          onPress={() => setDiabetes(!diabetes)}
-        />
-      </View>
-      <View style={styles.cajaCheckBox}>
-        <CheckBox
-          title={<Text style={styles.textoCheckBox}>Hipertensión</Text>}
-          checked={hipertension}
-          onPress={() => 
-            setHipertension(!hipertension)}
-        />
-      </View> */}
+      
       <>{!loadingECNT && 
-      ecnts.map(ecnt => 
-      <View style={styles.cajaCheckBox}>
+      checkedMap.map(ecnt => 
+      <View key={ecnt.id} style={styles.cajaCheckBox}>
         <CheckBox
+          name={ecnt.id}
           title={<Text style={styles.textoCheckBox}>{ecnt.nombre}</Text>}
-          checked={hipertension}
-          onPress={() => 
-            setHipertension(!hipertension)}
+          checked={ecnt.checked}
+          onPress={() => handleChange(ecnt.id, ecnt.nombre, ecnt.checked)}
         />
       </View>)}</>
    </View>

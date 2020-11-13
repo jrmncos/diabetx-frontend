@@ -1,7 +1,6 @@
 import { URL_ROOT, ECNTS } from './settings'
 
 const validate = apiResponse => {
-    console.log(apiResponse)
     return apiResponse
 }
 
