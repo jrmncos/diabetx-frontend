@@ -3,21 +3,20 @@ import { StyleSheet, Text, TextInput, View, Image, Platform  } from 'react-nativ
 import { StatusBar } from 'expo-status-bar';
 
 import { Button, Input, Icon, Header, Divider } from 'react-native-elements';
-import useUser from 'hooks/useUser';
+import {useAuth} from 'hooks/useAuth';
 
 export default function Login({navigation}){
 
     const [dni, setDni] = useState('')
     const [password, setPassword] = useState('')
-    const {isLogged, login, isLoginLoading, hasLoginError} = useUser()
-
+    const {status, login, isLoginLoading, hasLoginError} = useAuth()
+    
     useEffect(() => {
-      console.log("Effect Login")
-      console.log("Estoy logeado?: " +  String(isLogged))
-      if(isLogged){
-        navigation.navigate('Home')
+      console.log(status)
+      if(status == "signIn"){
+        navigation.navigate('Inicio')
       }
-    }, [isLogged])
+    }, [status])
     
     const handleSubmit = () => {
       login({dni, password})
@@ -178,4 +177,3 @@ const styles = StyleSheet.create({
       height: 1,
     }
   });
-  

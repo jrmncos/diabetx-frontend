@@ -5,19 +5,23 @@ import { StatusBar } from 'expo-status-bar';
 import { CheckBox, Divider } from 'react-native-elements';
 import doctor from 'assets/docto.png'
 import paciente from 'assets/abuelo.png'
-
-import useUser from 'hooks/useUser';
+import {useAuth} from 'hooks/useAuth'
 
 export default function Home({navigation}){
   const [opcionesRol, cambiarVistaOPCRol] = useState(true)
   const [textoRol, setTextoRol] = useState("Profesional de la salud")
   const [imagenRol, setImagenRol] = useState(doctor)
+<<<<<<< HEAD
 
   const {logout, user} = useUser()
+=======
+  const {logout} = useAuth()
+  
+>>>>>>> e0c0d5827010d7f87d2d56e6301872ac8bf318e5
 
   const handleExit = () => {
     logout()
-    navigation.navigate('Login')
+    navigation.navigate('Iniciar sesion')
   }
 
   function cambiarTextos() {

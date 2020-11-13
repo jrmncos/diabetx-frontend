@@ -16,7 +16,7 @@ const Stack = createStackNavigator()
 export default function RootNavigation(){
 
     return(
-    <Stack.Navigator initialRouteName={'Login'} screenOptions={{
+    <Stack.Navigator initialRouteName={'Iniciar sesion'} screenOptions={{
         headerStyle: {
           backgroundColor:"#5cc101",
         },
@@ -25,13 +25,12 @@ export default function RootNavigation(){
           fontWeight: 'bold',
         },
       }}>
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Home" component={Home} options={{title: 'Home'}}/>
+        <Stack.Screen name="Iniciar sesion" component={Login} />
+        <Stack.Screen name="Inicio" component={Home} options={{title: 'Home'}}/>
         <Stack.Screen name="Geolocalizacion" component={Geolocalizacion}/>
         <Stack.Screen name="Panel" component={Panel}/>
         <Stack.Screen name="Registro" component={Registro} />
         <Stack.Screen name="Perfil" component={Perfil} />
-        <Stack.Screen name="DniScanner" component={DniScanner} />
         <Stack.Screen name="Notificacion" component={Notificacion} />
         <Stack.Screen name="FormACDiabetes" component={FormACDiabetes} />
       </Stack.Navigator>

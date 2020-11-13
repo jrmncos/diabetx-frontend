@@ -1,36 +1,28 @@
 import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity, Alert } from 'react-native';
 import {Button} from 'react-native-elements';
-import useUser from 'hooks/useUser';
 import getPaciente from 'services/getPaciente';
 import * as SecureStore from 'expo-secure-store';
 import FormECNT from 'components/FormECNT'
 
 export default function Perfil({navigation}){
-    /*
-    const [nombre, setNombre] = useState("Santiago")
-    const [apellido, setApellido] = useState("Galvan")
-    const [lastAlert, setLastAlert] = useState("12/10/2020 17:22")
-    const [dni, setDni] = useState("38692907")
-    */
-  const {user} = useUser()
-  const [paciente, setPaciente] = useState()
-  const [loadingPaciente, isLoadingPaciente] = useState(true)
-  const handleSubmitSave = () => { 
-
-  }
-  useEffect(()=> {
-    async function fetchPaciente() {
-      const dni = user.dni
-      console.log("YENDO A BUSCAR EL PACIENTE...")
-      const accessToken = await SecureStore.getItemAsync('accessToken')
-      const paciente = await getPaciente({dni, accessToken})
-      setPaciente(paciente)
-      isLoadingPaciente(false)
-    } 
-    fetchPaciente()
-  },[])
-
+   const {user} = useUser()
+   const [paciente, setPaciente] = useState()
+   const [loadingPaciente, isLoadingPaciente] = useState(true)
+   const handleSubmitSave = () => { 
+ 
+   }
+   useEffect(()=> {
+     async function fetchPaciente() {
+       const dni = user.dni
+       console.log("YENDO A BUSCAR EL PACIENTE...")
+       const accessToken = await SecureStore.getItemAsync('accessToken')
+       const paciente = await getPaciente({dni, accessToken})
+       setPaciente(paciente)
+       isLoadingPaciente(false)
+     } 
+     fetchPaciente()
+   },[])
     return(
       <View style={styles.container}>
         {!loadingPaciente && console.log("PACI PACI: "+paciente)}
