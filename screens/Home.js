@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
@@ -12,8 +12,8 @@ export default function Home({navigation}){
   const [opcionesRol, cambiarVistaOPCRol] = useState(true)
   const [textoRol, setTextoRol] = useState("Profesional de la salud")
   const [imagenRol, setImagenRol] = useState(doctor)
-  
-  const {logout} = useUser()
+
+  const {logout, user} = useUser()
 
   const handleExit = () => {
     logout()
@@ -30,11 +30,9 @@ export default function Home({navigation}){
       setImagenRol(doctor)
     }
   }
+
   return(
-      <View style={styles.container}>
-
-      
-
+    <View style={styles.container}>
       <View style={{flexDirection: 'row', alignSelf: 'center', width:"100%", backgroundColor: '#00a7ba'}}>
           <Image
             style={{ width: 70, height: 70, backgroundColor:"#00a7ba"}}
@@ -42,10 +40,9 @@ export default function Home({navigation}){
           />
           <Text h2 style={styles.textoRol}>{textoRol}</Text> 
       </View>
-      
-
+   
       <Text h2 style={styles.textoBienvenida}>Bienvenido!</Text> 
-      <Text h2 style={styles.textoNombreUsuario}>Santiago Galván</Text> 
+      <Text h2 style={styles.textoNombreUsuario}>{/*user.first_name+" "+user.last_name*/}</Text> 
       <Text h2 style={styles.textoBienvenida}>Selecciona una acción para continuar.</Text> 
 
       <View>
@@ -129,11 +126,11 @@ export default function Home({navigation}){
       </TouchableOpacity>
       </>
       }
+
       <TouchableOpacity
         style={{width:"100%", padding: "2%"}}       
-        onPress={() => { handleExit()}}
-      >
-                <View style={styles.botonMenuHome}>
+        onPress={() => { handleExit()}}>
+        <View style={styles.botonSalir}>
           <Image
             style={{ width: 50, height: 50, margin:"2%"}}
             source={require('../assets/archivo-medico.png')} 
@@ -141,6 +138,7 @@ export default function Home({navigation}){
           <Text h2 style={styles.textoRol}>Salir</Text> 
         </View>
       </TouchableOpacity>
+      
       <StatusBar style="auto" />
     </View>
   )
@@ -161,6 +159,21 @@ const styles = StyleSheet.create({
       backgroundColor: '#5cc101',
       borderWidth: 1,
       borderColor: "#479801",
+      shadowColor: 'rgba(0, 0, 0, 1)',
+      shadowOpacity: 1,
+      elevation: 5,
+      shadowRadius: 15 ,
+      shadowOffset : { width: 1, height: 13},
+    },
+
+    botonSalir: {
+      borderRadius:10, 
+      flexDirection: 'row', 
+      alignSelf: 'center', 
+      width:"100%", 
+      backgroundColor: '#fcad03',
+      borderWidth: 1,
+      borderColor: "#d99400",
       shadowColor: 'rgba(0, 0, 0, 1)',
       shadowOpacity: 1,
       elevation: 5,

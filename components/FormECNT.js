@@ -1,23 +1,36 @@
-import React, { useState, use} from "react";
+import React, { useState, useEffect} from "react";
 import { StyleSheet, Text, View, Image, Alert } from "react-native";
 import { Divider, CheckBox } from "react-native-elements";
+import getECNTS from 'services/getECNT';
 
-export default function FormECNT({ navigation }) {
-
+export default function FormECNT(paciente) {
   const [ diabetes, setDiabetes ] = useState(false);
   const [ hipertension, setHipertension ] = useState(false);
+  const [ ecnts, setECNTS ] = useState()
+  const [ loadingECNT, setLoadingECNT ] = useState(true)
+ 
+  useEffect(()=> {
+    console.log("ME LLEGA A ECNT EL PACIENTE: "+paciente.ecnts)
+    async function fetchECNT() {
+      const response = await getECNTS()
+      setECNTS(response)
+      setLoadingECNT(false)
+    } 
+  fetchECNT()
+  },[])
 
+
+  
   return (
-    
     <View style={styles.container}>
      <View style={{flexDirection: 'row', alignSelf: 'center', width:"100%", backgroundColor: '#00a7ba'}}>
-            <Image
-              style={{ width: 70, height: 70}}
-              source={require('../assets/archivo-medico.png')} 
-            />
-            <Text h2 style={styles.textoRol}>Enfermedades crónicas no transmisibles</Text> 
-          </View>
-          <View style={styles.cajaCheckBox}>
+        <Image
+          style={{ width: 70, height: 70}}
+          source={require('../assets/archivo-medico.png')} 
+        />
+        <Text h2 style={styles.textoRol}>Enfermedades crónicas no transmisibles</Text> 
+      </View>
+      {/* <View style={styles.cajaCheckBox}>
         <CheckBox
           title={<Text style={styles.textoCheckBox}>Diabetes</Text>}
           checked={diabetes}
@@ -28,9 +41,20 @@ export default function FormECNT({ navigation }) {
         <CheckBox
           title={<Text style={styles.textoCheckBox}>Hipertensión</Text>}
           checked={hipertension}
-          onPress={() => setHipertension(!hipertension)}
+          onPress={() => 
+            setHipertension(!hipertension)}
         />
-      </View>
+      </View> */}
+      <>{!loadingECNT && 
+      ecnts.map(ecnt => 
+      <View style={styles.cajaCheckBox}>
+        <CheckBox
+          title={<Text style={styles.textoCheckBox}>{ecnt.nombre}</Text>}
+          checked={hipertension}
+          onPress={() => 
+            setHipertension(!hipertension)}
+        />
+      </View>)}</>
    </View>
   );
 }

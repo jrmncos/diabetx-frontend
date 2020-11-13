@@ -5,7 +5,6 @@ import useUser from 'hooks/useUser';
 import getPaciente from 'services/getPaciente';
 import * as SecureStore from 'expo-secure-store';
 import FormECNT from 'components/FormECNT'
-import { UserContext } from "../context/UserContext";
 
 export default function Perfil({navigation}){
     /*
@@ -14,36 +13,35 @@ export default function Perfil({navigation}){
     const [lastAlert, setLastAlert] = useState("12/10/2020 17:22")
     const [dni, setDni] = useState("38692907")
     */
-    const {user} = useUser()
-    const [paciente, setPaciente] = useState(null)
+  const {user} = useUser()
+  const [paciente, setPaciente] = useState()
+  const [loadingPaciente, isLoadingPaciente] = useState(true)
+  const handleSubmitSave = () => { 
 
-    const handleSubmitSave = () => { 
-
-    }
-
-    useEffect(()=> {
-      console.log("MIRA EL CONTEXT DEL PERFIL:" +context)
-      async function fetchPaciente() {
-        const dni = user.dni
-        console.log(user)
-        const accessToken = await SecureStore.getItemAsync('accessToken')
-        const paciente = await getPaciente({dni, accessToken})
-        setPaciente(paciente)
-      }
-      fetchPaciente()
-    },[])
+  }
+  useEffect(()=> {
+    async function fetchPaciente() {
+      const dni = user.dni
+      console.log("YENDO A BUSCAR EL PACIENTE...")
+      const accessToken = await SecureStore.getItemAsync('accessToken')
+      const paciente = await getPaciente({dni, accessToken})
+      setPaciente(paciente)
+      isLoadingPaciente(false)
+    } 
+    fetchPaciente()
+  },[])
 
     return(
       <View style={styles.container}>
+        {!loadingPaciente && console.log("PACI PACI: "+paciente)}
         <View style={{marginBottom:"5%", flexDirection: 'row', alignSelf: 'center', width:"100%", backgroundColor: '#00a7ba'}}>
-          {context.gender == "M" && 
+          {user.gender == "Masculino" && 
           <Image
             style={{ width: 70, height: 70, backgroundColor:"#00a7ba"}}
             source={require('../assets/abuelo.png')} 
           />
           }
-          {console.log("genero: "+context.dni)}
-          {context.gender == "F" && 
+          {user.gender == "Femenino" && 
           <Image
             style={{ width: 70, height: 70, backgroundColor:"#00a7ba"}}
             source={require('../assets/abuela.png')} 
@@ -81,30 +79,16 @@ export default function Perfil({navigation}){
             <Text h2 style={styles.textoRol}>Datos personales</Text> 
           </View>
           <View style={{borderWidth:1, borderColor: '#5cc101', width:"100%"}}>
-            <Text h2 style={styles.textoAlertaCabecera}>Datos personales:</Text> 
             <Text h2 style={styles.textoDatos}>{user.last_name}, {user.first_name} </Text> 
             <Text h2 style={styles.textoDatos}>DNI: {user.dni}</Text> 
           </View>
         </TouchableOpacity>
 
         <TouchableOpacity 
-          style={{width:"100%", marginBottom:"5%"}}       
-          onPress={() => Alert.alert("Menu CNT", "Deberían listarse")}>
-          {/*<View style={{flexDirection: 'row', alignSelf: 'center', width:"100%", backgroundColor: '#00a7ba'}}>
-            <Image
-              style={{ width: 70, height: 70}}
-              source={require('../assets/archivo-medico.png')} 
-            />
-            <Text h2 style={styles.textoRol}>Menú ECNT</Text> 
-          </View>
-          <View style={{borderWidth:1, borderColor: '#00a7ba', width:"100%"}}>
-            <Text h2 style={styles.textoAlertaCabecera}>ECNT asignadas:</Text> 
-            <Text h2 style={styles.textoAlerta}>Diabetes, Hipertensión</Text> 
-          </View>*/}
-          <FormECNT>
-            
-          </FormECNT>
+          style={{width:"100%", marginBottom:"5%"}}>
+        <FormECNT paciente={paciente}/>
         </TouchableOpacity>
+
         <View style={{alignContent:'center'}}>
           <Button 
               buttonStyle={styles.botonMenuHomeAzul}
