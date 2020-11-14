@@ -13,19 +13,19 @@ export default function Home({navigation}){
   const [textoRol, setTextoRol] = useState("Profesional de la salud")
   const [imagenRol, setImagenRol] = useState(doctor)
   const {logout} = useAuth()
-  const {dni} = useUser()
-
+  const {user} = useUser()
+  /*
   useEffect(()=>{
-    console.log("Effect del user")
-    console.log(dni)
+    console.log("Effect del home")
+    console.log(user)
   },[])
-
+  */
   const handleExit = () => {
     logout()
     navigation.navigate('Iniciar sesion')
   }
 
-  function cambiarTextos() {
+  const cambiarTextos = () => {
     if(opcionesRol){
       setTextoRol("Paciente")
       setImagenRol(paciente) 
@@ -45,9 +45,10 @@ export default function Home({navigation}){
           />
           <Text h2 style={styles.textoRol}>{textoRol}</Text> 
       </View>
-   
-      <Text h2 style={styles.textoBienvenida}>Bienvenido!</Text> 
-      <Text h2 style={styles.textoNombreUsuario}>{/*user.first_name+" "+user.last_name*/}</Text> 
+
+      <Text h2 style={styles.textoBienvenida}>Bienvenido!</Text>
+      {user &&<Text h2 style={styles.textoNombreUsuario}>{user.first_name}</Text>}
+      {user && <Text h2 style={styles.textoNombreUsuario}>{user.dni}</Text>} 
       <Text h2 style={styles.textoBienvenida}>Selecciona una acción para continuar.</Text> 
 
       <View>

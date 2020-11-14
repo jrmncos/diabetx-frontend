@@ -1,16 +1,20 @@
 import React, { useState, useEffect} from "react";
 import { StyleSheet, Text, View, Image, Alert } from "react-native";
-import { Divider, CheckBox } from "react-native-elements";
-import getECNTS from 'services/getECNT';
+import { Divider, CheckBox, Button } from "react-native-elements";
 
-export default function FormECNT(paciente) {
+import {useAuth} from 'hooks/useAuth'
+import getECNTS from 'services/getECNTS';
+import addECNT from 'services/addECNT'
+
+export default function FormECNT(idPaciente) {
   const [ checkedMap, setCheckedMap ] = useState([]);
   const [ loadingECNT, setLoadingECNT ] = useState(true)
- 
+  const {accessToken} = useAuth()
+
   useEffect(()=> {
     async function fetchECNT() {
-      const response = await getECNTS()
-      response.map((ecnt) => {  
+      const ecnts = await getECNTS()
+      ecnts.map((ecnt) => {  
         setCheckedMap(prevState => [...prevState, {
           "id": ecnt.id,
           "checked": false,
@@ -19,7 +23,7 @@ export default function FormECNT(paciente) {
       })
       setLoadingECNT(false)
     } 
-  fetchECNT()
+    fetchECNT()
   },[])
 
   const handleChange = (id) => {
@@ -27,6 +31,11 @@ export default function FormECNT(paciente) {
     let newArray = [...checkedMap]
     newArray[index] = {...newArray[index], checked:!newArray[index].checked}
     setCheckedMap(newArray)
+  }
+
+  const handleSubmitSave = () => { 
+    let ecnts = checkedMap.filter(ecnt=>ecnt.checked).map((ecnt) => {return {id: ecnt.id, nombre: ecnt.nombre}})
+    addECNT( idPaciente, ecnts, accessToken)
   }
   
   return (
@@ -39,16 +48,27 @@ export default function FormECNT(paciente) {
         <Text h2 style={styles.textoRol}>Enfermedades crónicas no transmisibles</Text> 
       </View>
       
-      <>{!loadingECNT && 
-      checkedMap.map(ecnt => 
-      <View key={ecnt.id} style={styles.cajaCheckBox}>
-        <CheckBox
-          name={ecnt.id}
-          title={<Text style={styles.textoCheckBox}>{ecnt.nombre}</Text>}
-          checked={ecnt.checked}
-          onPress={() => handleChange(ecnt.id, ecnt.nombre, ecnt.checked)}
-        />
-      </View>)}</>
+      <>
+        {!loadingECNT && checkedMap.map(ecnt => 
+          <View key={ecnt.id} style={styles.cajaCheckBox}>
+            <CheckBox
+              name={ecnt.id}
+              title={<Text style={styles.textoCheckBox}>{ecnt.nombre}</Text>}
+              checked={ecnt.checked}
+              onPress={() => handleChange(ecnt.id, ecnt.nombre, ecnt.checked)}
+            />
+          </View>)
+        }
+      </>
+
+      <View style={{alignContent:'center'}}>
+          <Button 
+              buttonStyle={styles.botonMenuHomeAzul}
+              titleStyle={styles.botonTexto}
+              title="Guardar cambios" 
+              onPress={()=> handleSubmitSave() }
+          /> 
+      </View>
    </View>
   );
 }

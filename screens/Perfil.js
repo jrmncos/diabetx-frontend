@@ -2,37 +2,40 @@ import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity, Alert } from 'react-native';
 import {Button} from 'react-native-elements';
 import getPaciente from 'services/getPaciente';
-import * as SecureStore from 'expo-secure-store';
+
 import FormECNT from 'components/FormECNT'
+import {useUser} from 'hooks/useUser'
+import {useAuth} from 'hooks/useAuth'
+import {usePaciente} from 'hooks/usePaciente'
 
 export default function Perfil({navigation}){
    const [paciente, setPaciente] = useState()
-   const [loadingPaciente, isLoadingPaciente] = useState(true)
-   const [user, setUser] = useState({dni:40861249, first_name:"Ger", last_name: "Cos", gender:"Masculino"})
-   const handleSubmitSave = () => { 
- 
-   }
+   const [loadingPaciente, setLoadingPaciente] = useState(true)   
+   const {dni, user} = useUser()
+   const {accessToken} = useAuth()
+
    useEffect(()=> {
-     async function fetchPaciente() {
-       const dni = user.dni
-       const accessToken = await SecureStore.getItemAsync('accessToken')
-       const paciente = await getPaciente({dni, accessToken})
-       setPaciente(paciente)
-       isLoadingPaciente(false)
-     } 
-     fetchPaciente()
-   },[])
-    return(
+      async function fetchPaciente() {       
+        const paciente = await getPaciente({dni, accessToken})
+        setPaciente(paciente)
+        setLoadingPaciente(false)
+      } 
+      fetchPaciente()
+    },[])
+
+   const spinnerPaciente = <Text>Cargando datos del paciente</Text>
+
+   return(
       <View style={styles.container}>
-        {!loadingPaciente && console.log("PACI PACI: "+paciente)}
+        {loadingPaciente && spinnerPaciente}
         <View style={{marginBottom:"5%", flexDirection: 'row', alignSelf: 'center', width:"100%", backgroundColor: '#00a7ba'}}>
-          {user.gender == "Masculino" && 
+          {user && user.gender == "Masculino" && 
           <Image
             style={{ width: 70, height: 70, backgroundColor:"#00a7ba"}}
             source={require('../assets/abuelo.png')} 
           />
           }
-          {user.gender == "Femenino" && 
+          {user && user.gender == "Femenino" && 
           <Image
             style={{ width: 70, height: 70, backgroundColor:"#00a7ba"}}
             source={require('../assets/abuela.png')} 
@@ -77,18 +80,9 @@ export default function Perfil({navigation}){
 
         <TouchableOpacity 
           style={{width:"100%", marginBottom:"5%"}}>
-        <FormECNT paciente={paciente}/>
+          {paciente && <FormECNT idPaciente={paciente.id}/>}
         </TouchableOpacity>
 
-        <View style={{alignContent:'center'}}>
-          <Button 
-              buttonStyle={styles.botonMenuHomeAzul}
-              titleStyle={styles.botonTexto}
-              title="Guardar cambios" 
-              onPress={()=> handleSubmitSave() }
-          /> 
-
-        </View>
       </View>
     )
 }

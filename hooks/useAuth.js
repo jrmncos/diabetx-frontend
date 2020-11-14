@@ -1,12 +1,12 @@
 import React, { useState, useCallback, useContext, useEffect } from 'react'
 import { AuthContext } from 'context/AuthContext'
-import { UserContext } from 'context/UserContext'
+import { useUser } from 'hooks/useUser'
 import  loginUserService from 'services/login'
 
 
 export const useAuth = ()=>{
     const {signIn, signOut, status, userToken} = React.useContext(AuthContext)
-    const {saveDni} = React.useContext(UserContext)
+    const {saveDni, removeDni, dni} = useUser()
     const [logginInfo, setLogginInfo] = useState({loading: false, error: false})
 
     const login = ({dni, password}) => {
@@ -26,6 +26,7 @@ export const useAuth = ()=>{
 
     const logout = () => {
         signOut()
+        removeDni(dni)
     }
 
     return {

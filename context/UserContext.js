@@ -1,6 +1,6 @@
 import React, {useState, createContext} from 'react'
-import 'services/getUser'
-import { getDni, setDni, removeDni } from 'services/tokenStorage.js';
+import  getUser  from 'services/getUser'
+import { getDni, setDni, getToken, removeDni } from 'services/tokenStorage.js';
 
 export const UserContext = React.createContext({
     status: 'idle',
@@ -12,19 +12,21 @@ export const UserContext = React.createContext({
 export const UserRef = React.createRef();
 
 export const UserProvider = ({children}) => {
-    //const {accessToken} = useAuth()
     const [state, dispatch] = React.useReducer(UserReducer, {
         dni: 'idle',
         user: null,
     })
-    //getUser({dni, accesToken})
 
     React.useEffect(() => {
         const initState = async () => {
           try {
             const userDni = await getDni();
+            console.log("Effect del User Context")
+            console.log(userDni)
             if (userDni !== null) {
-              dispatch({ type: 'DNI_EXIST', dni: userDni });
+              const accessToken = await getToken()
+              const user = await getUser({dni: userDni, accessToken})
+              dispatch({ type: 'DNI_EXIST', dni: userDni, user: user });
             } else {
               dispatch({ type: 'DNI_NOT_EXIST' });
             }
@@ -40,8 +42,12 @@ export const UserProvider = ({children}) => {
 
     const userActions = React.useMemo(() => ({
             saveDni: async (dni) => {
-                dispatch({ type: 'DNI_EXIST', dni });
-                await setToken(dni);
+                const accessToken = await getToken()
+                const user = await getUser({dni: dni, accessToken})
+                console.log("Action")
+                console.log(user)
+                dispatch({ type: 'DNI_EXIST', dni: dni, user: user });
+                await setDni(dni);
             },
             removeDni: async(dni) =>{
                 dispatch({ type: 'DNI_NOT_EXIST' });
@@ -62,11 +68,13 @@ const UserReducer = (prevState, action) => {
         return {
           ...prevState,
           dni: action.dni,
+          user: action.user
         };
       case 'DNI_NOT_EXIST':
         return {
           ...prevState,
           dni: 'idle',
+          user: null
         };
     }
   };
