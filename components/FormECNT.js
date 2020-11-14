@@ -22,16 +22,11 @@ export default function FormECNT(paciente) {
   fetchECNT()
   },[])
 
-  const handleChange = (id, nombre, checked) => {
+  const handleChange = (id) => {
     let index = checkedMap.findIndex((elem) => elem.id == id)
-    let newCheckBox = {
-      id: id,
-      nombre: nombre,
-      checked: !checked
-    }
-    checkedMap[index] = newCheckBox
-    console.log(checkedMap)
-    //setCheckedMap(prevState => [...prevState, newCheckBox])
+    let newArray = [...checkedMap]
+    newArray[index] = {...newArray[index], checked:!newArray[index].checked}
+    setCheckedMap(newArray)
   }
   
   return (

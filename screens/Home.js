@@ -6,13 +6,19 @@ import { CheckBox, Divider } from 'react-native-elements';
 import doctor from 'assets/docto.png'
 import paciente from 'assets/abuelo.png'
 import {useAuth} from 'hooks/useAuth'
+import { useUser } from 'hooks/useUser';
 
 export default function Home({navigation}){
   const [opcionesRol, cambiarVistaOPCRol] = useState(true)
   const [textoRol, setTextoRol] = useState("Profesional de la salud")
   const [imagenRol, setImagenRol] = useState(doctor)
   const {logout} = useAuth()
-  
+  const {dni} = useUser()
+
+  useEffect(()=>{
+    console.log("Effect del user")
+    console.log(dni)
+  },[])
 
   const handleExit = () => {
     logout()

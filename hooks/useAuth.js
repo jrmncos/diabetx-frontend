@@ -1,19 +1,21 @@
 import React, { useState, useCallback, useContext, useEffect } from 'react'
 import { AuthContext } from 'context/AuthContext'
+import { UserContext } from 'context/UserContext'
 import  loginUserService from 'services/login'
-import * as SecureStore from 'expo-secure-store';
 
 
 export const useAuth = ()=>{
     const {signIn, signOut, status, userToken} = React.useContext(AuthContext)
+    const {saveDni} = React.useContext(UserContext)
     const [logginInfo, setLogginInfo] = useState({loading: false, error: false})
-    
+
     const login = ({dni, password}) => {
         setLogginInfo({loading: true, error: false})
         loginUserService({dni, password})
         .then(token => {
             console.log(token)
             signIn(token.access_token)
+            saveDni(dni)
             setLogginInfo({loading: false, error: false})
         })
         .catch(err =>{
@@ -32,6 +34,7 @@ export const useAuth = ()=>{
         logout: logout,
         isLoginLoading: logginInfo.loading,
         hasLoginError: logginInfo.error,
+        userToken: userToken
 
     }
 }

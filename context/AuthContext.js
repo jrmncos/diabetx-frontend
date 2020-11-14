@@ -44,7 +44,7 @@ export const AuthProvider = ({children}) => {
                 await removeToken(); // TODO: use Vars
                 dispatch({ type: 'SIGN_OUT' });
             },
-        }),[]);
+    }),[]);
     
     return (
         <AuthContext.Provider value={{ ...state, ...authActions }}>

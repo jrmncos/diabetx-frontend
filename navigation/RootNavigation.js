@@ -36,6 +36,3 @@ export default function RootNavigation(){
       </Stack.Navigator>
       )
 }
-/*
-        <Stack.Screen name="Paciente" component={Paciente} options={({ route }) => ({ title: route.params.name })}/>
-*/
