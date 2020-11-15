@@ -9,10 +9,11 @@ export default function addECNT({id, accessToken, ecnts}){
     console.log("Voy agregarle una ecnt al paciente: " + String(id))
     console.log("El token: " + accessToken)
     console.log("Las ecnts: "+ ecnts)
-    const request = new Request(URL_ROOT+ PACIENTE +id, {
+    console.log(URL_ROOT+ PACIENTE +id+"/")
+    const request = new Request(URL_ROOT+ PACIENTE +id+"/", {
         method: 'PATCH',
         headers: new Headers({ 
-            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Type': 'application/json',
             'Authorization': 'Bearer '+ accessToken,
             }), 
         body: JSON.stringify(ecnts)

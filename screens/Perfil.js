@@ -17,7 +17,7 @@ export default function Perfil({navigation}){
    useEffect(()=> {
      console.log("Effect del Perfil")
       async function fetchPaciente() {       
-        const paciente = await getPaciente({dni, accessToken})
+        const paciente = await getPaciente({dni, accessToken:userToken})
         console.log(paciente)
         setPaciente(paciente)
         setLoadingPaciente(false)

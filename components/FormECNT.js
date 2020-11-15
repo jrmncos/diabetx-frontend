@@ -35,7 +35,11 @@ export default function FormECNT(idPaciente) {
 
   const handleSubmitSave = () => { 
     let ecnts = checkedMap.filter(ecnt=>ecnt.checked).map((ecnt) => {return {id: ecnt.id, nombre: ecnt.nombre}})
-    addECNT( {id:idPaciente, accessToken: userToken, ecnts: ecnts})
+    console.log('Hii')
+    console.log(userToken)
+    console.log(idPaciente['idPaciente'])
+    console.log(ecnts)
+    addECNT( {id:idPaciente['idPaciente'], accessToken: userToken, ecnts: ecnts})
     
   }
   
