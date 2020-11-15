@@ -27,7 +27,6 @@ const RegistroMaestro = ({navegation}) => {
       try {
         const value = await AsyncStorage.getItem('@token')
         if(value !== null) {
-          console.log('hola!')
           setToken(value)
         }
       } catch(e) {
@@ -51,11 +50,16 @@ const RegistroMaestro = ({navegation}) => {
         active={active}
         content={content}
         onNext={() => {
-          console.log(context)
+          console.log("active: "+active)
+          console.log("steppererror? "+context.errStepper1)
+          console.log("condicion? "+active == 0 && context.errStepper1)
+          // if(active == 0 && !context.errStepper1){
+          //   Alert.alert("Por favor, verifique los datos ingresados")
+          //   return
+          // }
           setActive((p) => p + 1)
         }}
         onBack={() =>{ 
-          console.log(context)
           setActive((p) => p - 1)
         }}
         onFinish={() => {

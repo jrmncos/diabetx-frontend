@@ -1,19 +1,47 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from "react-native";
 import { TextInputMask } from 'react-native-masked-text'
 import {Picker} from '@react-native-picker/picker';
 import { Divider } from "react-native-elements";
 import { RegistroContext } from 'context/RegistroContext'
 
+import validar from 'validator/formDP';
+
 import DniScanner from 'components/DniScanner'
 
 export default function FormDatosPersonales({ navigation }) {
-  const {dni, setDni, nombre, setNombre, apellido, setApellido, bod, setBod, genero, setGenero } = useContext(RegistroContext)
-  const [isScanning, setIsScanning] = useState(false)
-  
+  const {dni, setDni, nombre, setNombre, apellido, setApellido, bod, setBod, genero, setGenero, errStepper1, setErrorStepper1 } = useContext(RegistroContext)
+  const [ isScanning, setIsScanning ] = useState(false)
+
+  const [ nombreError, setNombreError ] = useState("")
+  const [ apellidoError, setApellidoError ] = useState("")
+  const [ generoError, setGeneroError ] = useState("")
+  const [ dniError, setDniError ] = useState("")
+  const [ bodError, setBodError ] = useState("")
+  const [ sinCamposVacios, setSinCamposVacios] = useState(false)
+
+  function validarGenero(value) {
+    validar('genero', value, setGeneroError)
+    setGenero(value)
+  }
+
+  function validarFormDP(){
+    validar('nombre', nombre, setNombreError)
+    validar('apellido', apellido, setApellidoError)
+    validarGenero(genero)
+    validar('dni', dni, setDniError)
+    validar('bod', bod, setBodError)
+    
+    setErrorStepper1(
+      nombreError == "" && 
+      apellidoError == "" && 
+      generoError == "" &&
+      dniError == "" &&
+      bodError == "")
+  }
+
   return (
     <View style={styles.container}>
-
     {!isScanning && 
     <>
       <Text h2 style={styles.registrarse}>
@@ -21,10 +49,11 @@ export default function FormDatosPersonales({ navigation }) {
       </Text>
 
       <Text h2 style={styles.textSubtitulo}>
-      Por favor, ingresá tus datos, también podes ingresarlos tocando en "Escanear DNI".
+      Ingrese sus datos, o bien puede escanear su DNI
       </Text>
-    
-      <Text style={styles.encabezado}> Nombres</Text>
+      
+      {nombreError.length === 0 && <Text style={styles.encabezado}> Nombres</Text>}
+      {nombreError.length > 0 && <Text style={styles.encabezadoError}> Nombres </Text>}
       <View style={styles.vistaTituloForm}>
         <Image
             style={{marginTop:"2%", marginLeft:"2%", width:"10%", height:"80%"}}
@@ -32,14 +61,18 @@ export default function FormDatosPersonales({ navigation }) {
           />
         <TextInput
           style={styles.textoFormulario}
+          onBlur={()=>  validar('nombre', nombre, setNombreError)}
           onChangeText={value => { 
+            validar('nombre', nombre, setNombreError)
             setNombre(value)
           }}
           value={nombre}
         />
      </View>   
+    {nombreError.length > 0 && <Text style={styles.textoError}> {nombreError} </Text>}
 
-    <Text style={styles.encabezado}> Apellidos</Text>
+    {apellidoError.length === 0 && <Text style={styles.encabezado}> Apellidos</Text>}
+    {apellidoError.length > 0 && <Text style={styles.encabezadoError}> Apellidos </Text>}
     <View style={styles.vistaTituloForm}>
       <Image
           style={{marginTop:"2%", marginLeft:"2%", width:"10%", height:"80%"}}
@@ -47,14 +80,18 @@ export default function FormDatosPersonales({ navigation }) {
         />
       <TextInput
         style={styles.textoFormulario}
+        onBlur={()=> validar('apellido', apellido, setApellidoError)}
         onChangeText={value => { 
+          validar('apellido', apellido, setApellidoError)
           setApellido(value)}
         }
         value={apellido}
       />
     </View>
+    {apellidoError.length > 0 && <Text style={styles.textoError}> {apellidoError} </Text>}
 
-    <Text style={styles.encabezado}> Género que figura en tu DNI</Text>
+    {generoError.length === 0 && <Text style={styles.encabezado}> Género que figura en tu DNI</Text>}
+    {generoError.length > 0 && <Text style={styles.encabezadoError}> Género que figura en tu DNI </Text>}
     <View style={styles.vistaTituloForm}>
       <Image
           style={{marginTop:"2%", marginLeft:"2%", width:"10%", height:"80%"}}
@@ -65,7 +102,9 @@ export default function FormDatosPersonales({ navigation }) {
       borderWidth: 1, width: "86%" }}>
         <Picker
           selectedValue={genero}
-          onValueChange={(value) => setGenero(value)}
+          onValueChange={ (value) => 
+            validarGenero(value)
+          }
         >
           <Picker.Item fontSize="20" label="Selecciona tu género" value="" />
           <Picker.Item label="Femenino" value="Femenino" />
@@ -73,8 +112,10 @@ export default function FormDatosPersonales({ navigation }) {
         </Picker>
       </View>
     </View>    
+    {generoError.length > 0 && <Text style={styles.textoError}> {generoError} </Text>}
     
-    <Text style={styles.encabezado}> DNI</Text>
+    {dniError.length === 0 && <Text style={styles.encabezado}> DNI</Text>}
+    {dniError.length > 0 && <Text style={styles.encabezadoError}> DNI</Text>}
     <View style={styles.vistaTituloForm}>
       <Image
           style={{marginTop:"2%", marginLeft:"2%", width:"10%", height:"80%"}}
@@ -82,15 +123,19 @@ export default function FormDatosPersonales({ navigation }) {
         />
         <TextInputMask
           type={'only-numbers'}
+          onBlur={()=> validar('dni', dni, setDniError)}
           style={styles.textoFormulario}
           value={dni}
           onChangeText={value => {
+            validar('dni', dni, setDniError)
             setDni(value)
           }}
         />
     </View>    
-
-    <Text style={styles.encabezado}> Día de nacimiento</Text>
+    {dniError.length > 0 && <Text style={styles.textoError}> {dniError} </Text>}
+    
+    {bodError.length === 0 && <Text style={styles.encabezado}> Fecha de nacimiento</Text>}
+    {bodError.length > 0 && <Text style={styles.encabezadoError}> Fecha de nacimiento</Text>}
     <View style={styles.vistaTituloForm}>
       <Image
           style={{ marginLeft:"2%", width:"10%", height:"100%"}}
@@ -101,13 +146,17 @@ export default function FormDatosPersonales({ navigation }) {
           options={{
             format: 'DD/MM/YYYY'
           }}
+          onBlur={()=> validar('bod', bod, setBodError)}
           value={bod}
           style={styles.textoFormulario}
           onChangeText={input => {
+            validar('bod', bod, setBodError)
             setBod(input)
           }}
         />
     </View>    
+    {bodError.length > 0 && <Text style={styles.textoError}> {bodError} </Text>}
+    
     <Divider style={styles.divisorInferior} />
 
     <View style={styles.botonEscanerDNI}>
@@ -121,6 +170,7 @@ export default function FormDatosPersonales({ navigation }) {
     }
     <View style={styles.pantallaCompleta}>
       {isScanning && <DniScanner isScanning={setIsScanning}/>}
+      {sinCamposVacios && validarFormDP()}
     </View>
     
     </View>
@@ -159,12 +209,27 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     color: "#FFFFFF",
   },
+  encabezadoError:{
+    fontSize: 25,
+    backgroundColor:"#fcad03",
+    width:"98%",
+    alignSelf: "flex-start",
+    color: "#FFFFFF",
+  },
    textSubtitulo:{
       fontSize: 22,
       textAlign: "center",
-      marginTop: "2%",
-      marginBottom: "2%",
+      margin: "3%",
       color: "#696969",
+    },
+
+    textoError:{
+      fontSize: 18,
+      marginLeft:"2%",
+      marginBottom:"1%",
+      alignSelf:'flex-start',
+      textAlign: "center",
+      color: 'red',
     },
 
   botonAzulMarino: {

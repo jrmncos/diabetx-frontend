@@ -17,6 +17,7 @@ module.exports = function(api) {
             screens: './screens',
             hooks: './hooks',
             services: './services',
+            validator: './validator',
           },
         },
       ],
