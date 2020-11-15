@@ -35,8 +35,11 @@ const RegistroMaestro = ({navegation}) => {
     }
 
     const onSubmit = () => {
+      var response
       getToken()
       .then(() => createUser(context, token))
+      .then((gg) => console.log("RESP: "+gg))
+
     } 
 
  return (

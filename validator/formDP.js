@@ -7,9 +7,9 @@ export default function validar(aValidar, input, setInput){
             setInput("El nombre no puede ser vacio") 
             errores++
         }
-        else if(input.length <= 3 || input.length >= 30) {
+        else if(input.length < 3 || input.length > 30) {
             setInput("El nombre debe contener entre 3 y 30 caracteres")
-             errores++
+            errores++
         }
     }
     else if(aValidar == 'apellido'){
@@ -17,7 +17,7 @@ export default function validar(aValidar, input, setInput){
             setInput("El apellido no puede ser vacio") 
             errores++
         }
-        else if(input.length <= 3 || input.length >= 30) {
+        else if(input.length < 3 || input.length > 30) {
             setInput("El apellido debe contener entre 3 y 30 caracteres")
             errores++
         }
@@ -33,17 +33,7 @@ export default function validar(aValidar, input, setInput){
             setInput("El DNI no puede ser vacio") 
             errores++
         }
-        else if(input.length <= 5 || input.length >= 9) {
-            setInput("El DNI debe contener entre 6 y 8 caracteres")
-            errores++
-        }
-    }
-    else if(aValidar == 'dni'){
-        if(input.length == 0){ 
-            setInput("El DNI no puede ser vacio") 
-            errores++
-        }
-        else if(input.length <= 5 || input.length >= 9) {
+        else if(input.length < 6 || input.length > 8) {
             setInput("El DNI debe contener entre 6 y 8 caracteres")
             errores++
         }
@@ -65,3 +55,4 @@ export default function validar(aValidar, input, setInput){
     }
     return errores>0
 }
+

@@ -14,6 +14,8 @@ export default function Home({navigation}){
   const [imagenRol, setImagenRol] = useState(doctor)
   const {logout, userToken} = useAuth()
   const {user} = useUser()
+
+  const [ isSelectingRole, setIsSelectingRole ] = useState()
   /*
   useEffect(()=>{
     console.log("Effect del home")
@@ -38,6 +40,7 @@ export default function Home({navigation}){
 
   return(
     <View style={styles.container}>
+     
       <View style={{flexDirection: 'row', alignSelf: 'center', width:"100%", backgroundColor: '#00a7ba'}}>
           <Image
             style={{ width: 70, height: 70, backgroundColor:"#00a7ba"}}
@@ -148,7 +151,8 @@ export default function Home({navigation}){
       
       <StatusBar style="auto" />
     </View>
-  )
+    )
+  
 }
 
 const styles = StyleSheet.create({

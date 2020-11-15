@@ -63,7 +63,7 @@ export default function FormDatosPersonales({ navigation }) {
           style={styles.textoFormulario}
           onBlur={()=>  validar('nombre', nombre, setNombreError)}
           onChangeText={value => { 
-            validar('nombre', nombre, setNombreError)
+            validar('nombre', value, setNombreError)
             setNombre(value)
           }}
           value={nombre}
@@ -82,7 +82,7 @@ export default function FormDatosPersonales({ navigation }) {
         style={styles.textoFormulario}
         onBlur={()=> validar('apellido', apellido, setApellidoError)}
         onChangeText={value => { 
-          validar('apellido', apellido, setApellidoError)
+          validar('apellido', value, setApellidoError)
           setApellido(value)}
         }
         value={apellido}
@@ -127,7 +127,7 @@ export default function FormDatosPersonales({ navigation }) {
           style={styles.textoFormulario}
           value={dni}
           onChangeText={value => {
-            validar('dni', dni, setDniError)
+            validar('dni', value, setDniError)
             setDni(value)
           }}
         />
@@ -150,7 +150,7 @@ export default function FormDatosPersonales({ navigation }) {
           value={bod}
           style={styles.textoFormulario}
           onChangeText={input => {
-            validar('bod', bod, setBodError)
+            validar('bod', input, setBodError)
             setBod(input)
           }}
         />
