@@ -9,7 +9,7 @@ import addECNT from 'services/addECNT'
 export default function FormECNT(idPaciente) {
   const [ checkedMap, setCheckedMap ] = useState([]);
   const [ loadingECNT, setLoadingECNT ] = useState(true)
-  const {accessToken} = useAuth()
+  const {userToken} = useAuth()
 
   useEffect(()=> {
     async function fetchECNT() {
@@ -35,7 +35,8 @@ export default function FormECNT(idPaciente) {
 
   const handleSubmitSave = () => { 
     let ecnts = checkedMap.filter(ecnt=>ecnt.checked).map((ecnt) => {return {id: ecnt.id, nombre: ecnt.nombre}})
-    addECNT( idPaciente, ecnts, accessToken)
+    addECNT( {id:idPaciente, accessToken: userToken, ecnts: ecnts})
+    
   }
   
   return (

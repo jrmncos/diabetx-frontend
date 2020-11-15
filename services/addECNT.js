@@ -8,7 +8,7 @@ const validate = apiResponse => {
 export default function addECNT({id, accessToken, ecnts}){
     console.log("Voy agregarle una ecnt al paciente: " + String(id))
     console.log("El token: " + accessToken)
-
+    console.log("Las ecnts: "+ ecnts)
     const request = new Request(URL_ROOT+ PACIENTE +id, {
         method: 'PATCH',
         headers: new Headers({ 

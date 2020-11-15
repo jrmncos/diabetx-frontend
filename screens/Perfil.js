@@ -12,11 +12,13 @@ export default function Perfil({navigation}){
    const [paciente, setPaciente] = useState()
    const [loadingPaciente, setLoadingPaciente] = useState(true)   
    const {dni, user} = useUser()
-   const {accessToken} = useAuth()
+   const {userToken} = useAuth()
 
    useEffect(()=> {
+     console.log("Effect del Perfil")
       async function fetchPaciente() {       
         const paciente = await getPaciente({dni, accessToken})
+        console.log(paciente)
         setPaciente(paciente)
         setLoadingPaciente(false)
       } 
@@ -27,6 +29,7 @@ export default function Perfil({navigation}){
 
    return(
       <View style={styles.container}>
+        {userToken && <Text> userToken </Text>} 
         {loadingPaciente && spinnerPaciente}
         <View style={{marginBottom:"5%", flexDirection: 'row', alignSelf: 'center', width:"100%", backgroundColor: '#00a7ba'}}>
           {user && user.gender == "Masculino" && 

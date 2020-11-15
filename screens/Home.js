@@ -12,7 +12,7 @@ export default function Home({navigation}){
   const [opcionesRol, cambiarVistaOPCRol] = useState(true)
   const [textoRol, setTextoRol] = useState("Profesional de la salud")
   const [imagenRol, setImagenRol] = useState(doctor)
-  const {logout} = useAuth()
+  const {logout, userToken} = useAuth()
   const {user} = useUser()
   /*
   useEffect(()=>{
@@ -48,7 +48,8 @@ export default function Home({navigation}){
 
       <Text h2 style={styles.textoBienvenida}>Bienvenido!</Text>
       {user &&<Text h2 style={styles.textoNombreUsuario}>{user.first_name}</Text>}
-      {user && <Text h2 style={styles.textoNombreUsuario}>{user.dni}</Text>} 
+      {user && <Text h2 style={styles.textoNombreUsuario}>{user.dni}</Text>}
+      {userToken && <Text h2 style={styles.textoNombreUsuario}>{userToken}</Text>}
       <Text h2 style={styles.textoBienvenida}>Selecciona una acción para continuar.</Text> 
 
       <View>

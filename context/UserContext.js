@@ -22,7 +22,6 @@ export const UserProvider = ({children}) => {
           try {
             const userDni = await getDni();
             console.log("Effect del User Context")
-            console.log(userDni)
             if (userDni !== null) {
               const accessToken = await getToken()
               const user = await getUser({dni: userDni, accessToken})
@@ -44,8 +43,6 @@ export const UserProvider = ({children}) => {
             saveDni: async (dni) => {
                 const accessToken = await getToken()
                 const user = await getUser({dni: dni, accessToken})
-                console.log("Action")
-                console.log(user)
                 dispatch({ type: 'DNI_EXIST', dni: dni, user: user });
                 await setDni(dni);
             },

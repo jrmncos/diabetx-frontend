@@ -2,15 +2,8 @@
 import {DEV_IP, CLIENT_ID} from 'services/settings'
 
 export default function loginUserService({dni, password}){
-    console.log("Estoy en la funcion login")
-   
     let client_id = CLIENT_ID
-    
-    let _data = "grant_type=password&username="+String(dni)
-    +"&password="+String(password)
-    +"&client_id="+ client_id
-    console.log(_data)
-
+    let _data = "grant_type=password&username="+String(dni)+"&password="+String(password)+"&client_id="+ client_id
     const request = new Request("http://"+DEV_IP+":8000/o/token/", {
         method: 'POST',
         headers: new Headers({ 
