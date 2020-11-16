@@ -1,36 +1,43 @@
 import React, {useState, useEffect} from 'react'
-import { StyleSheet, Text, View, FlatList, Button } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
-
-const pacientesBackend = [{dni: '40861249'}, {dni: '40861248'}]
+import { StyleSheet, Text, View, Button } from 'react-native';
+import { useUser } from 'hooks/useUser'
 
 export default function Panel({navigation}){
+  const {user} = useUser()
+  const {userToken} = useAuth()
+  const [profesional, setProfesional] = useState(null)
+  const [dni, setDni] = useState('')
 
-    const [pacientes, setPacientes] = useState(pacientesBackend)
+  useEffect(()=>{
+    async function getProfesional(){
+      const prof = await getProfesional({dni: user.dni, accessToken: userToken })
+      setProfesional(prof)      
+    }
+    getProfesional()
+  },[])
 
-    const PreviewPaciente = ({dniPaciente})=>(
-      <>
-        <Text onPress={()=> navigation.navigate('Paciente', {dni:"40861249"})}>{"German"}</Text>
-        <Text>{dniPaciente}</Text>
-      </>
-      )
+  const handleAddPaciente = ()=>{
+    addPaciente({id: profesional.id, dni:dni, accessToken: userToken})
+    .then(resp=> console.log(resp))
+  }
 
-    const renderPacientePreview = ({paciente}) =>(
-      <PreviewPaciente dni={paciente}/>
-    )
-    
-    return(
-        <View style={styles.container}>
-        <Text>El Panel de control</Text>
-        <FlatList
-          data={pacientes}
-          renderItem={renderPacientePreview}
-          keyExtractor={paciente => paciente.dni}
-        >
-        </FlatList>
-        <StatusBar style="auto" />
-      </View>
-    )
+  return(
+    <View>
+      <Text>Agregar Paciente</Text>
+      <Input
+          placeholder='DNI' 
+          keyboardType = 'numeric'         
+          onChangeText={(value) => setDni(value)}
+          value={dni}
+      />
+      <Button onPress={handleAddPaciente}>Agregar</Button>
+
+      {profesional && profesional.pacientes.map((paciente) => {
+        <Text>{paciente.user.first_name}</Text>
+      }) }
+    </View>
+  )
+
 }
 
 const styles = StyleSheet.create({

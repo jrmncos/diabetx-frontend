@@ -1,22 +1,21 @@
-import {URL_ROOT, PACIENTE} from 'services/settings.js'
+import {URL_ROOT, PROFESIONAL} from 'services/settings.js'
 
 const validate = apiResponse => {
     console.log(apiResponse)
     return apiResponse
 }
 
-export default function addECNT({id, accessToken, ecnts}){
+export default function addPaciente({id, accessToken, dni}){
     console.log("Voy agregarle una ecnt al paciente: " + String(id))
     console.log("El token: " + accessToken)
-    console.log("Las ecnts: "+ ecnts)
-    console.log(URL_ROOT+ PACIENTE +id+"/")
-    const request = new Request(URL_ROOT+ PACIENTE +id+"/", {
+    console.log("El dni: "+ dni)
+    console.log(URL_ROOT+ PROFESIONAL +String(id)+ "/dni/"+String(dni) + "/")
+    const request = new Request(URL_ROOT+ PROFESIONAL +String(id)+ "/dni/"+String(dni) + "/", {
         method: 'PATCH',
         headers: new Headers({ 
             'Content-Type': 'application/json',
             'Authorization': 'Bearer '+ accessToken,
             }), 
-        body: JSON.stringify({"ecnts" : ecnts})
     })
 
     return fetch(request)
