@@ -55,7 +55,7 @@ export default function FormDatosPersonales({ navigation }) {
       </Text>
 
       <Text h2 style={styles.textSubtitulo}>
-      Ingrese sus datos, o bien puede escanear su DNI
+      Ingrese sus datos, o escanee su DNI
       </Text>
       
       {nombreError.length === 0 && <Text style={styles.encabezado}> Nombres</Text>}
