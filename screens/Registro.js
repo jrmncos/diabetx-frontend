@@ -34,12 +34,21 @@ const RegistroMaestro = ({navegation}) => {
       }
     }
 
-    const onSubmit = () => {
-      var response
-      getToken()
-      .then(() => createUser(context, token))
-      .then((gg) => console.log("RESP: "+gg))
-
+    const onSubmit = async() => {
+      console.log("NAVIGATION: "+navegation)
+      await getToken()
+        .then(() => createUser(context, token))
+          .then( response =>{
+            if(response === 201){
+              Alert.alert("La cuenta fue creada satisfactoriamente")
+              navegation.navigate('Iniciar sesion')
+            }
+            else{
+              Alert.alert("Error al crear usuario!")
+              //Me gustaria tipo saber porque no se pudo crear el usuario (ej: dni repetido) y mostrarlo, eso se puede hacer con el fetch en general
+            }
+          }
+        )
     } 
 
  return (
@@ -54,20 +63,25 @@ const RegistroMaestro = ({navegation}) => {
         content={content}
         onNext={() => {
           console.log("active: "+active)
-          console.log("steppererror? "+context.errStepper1)
-          console.log("condicion? "+active == 0 && context.errStepper1)
-          // if(active == 0 && !context.errStepper1){
-          //   Alert.alert("Por favor, verifique los datos ingresados")
-          //   return
-          // }
-          setActive((p) => p + 1)
+          console.log("hay error en el primer formulario? "+context.errorEnPrimerFormulario)
+          console.log("condicion? "+active == 0 && context.errorEnPrimerFormulario)
+          if(active == 0 && context.errorEnPrimerFormulario){
+            Alert.alert("Por favor, verifique los datos ingresados")
+            return
+          }
+          else{
+          setActive((p) => p + 1)}
         }}
         onBack={() =>{ 
           setActive((p) => p - 1)
         }}
         onFinish={() => {
-          Alert.alert("Formulario finalizado")
-          onSubmit()
+          if(active == 2 && context.errorEnPass){
+            Alert.alert("Por favor, verifique las contraseñas ingresadas")
+          }
+          else{
+            onSubmit()
+          }
         }}
       />
     </View>

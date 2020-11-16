@@ -9,10 +9,12 @@ export default function validar(password, confirmPassword, setErrorPassword){
         setErrorPassword("Las contraseñas no coinciden")
     }
   
+    
     if(errores == 0){
         setErrorPassword("")
         return true
     }
-    return errores>0
-    
+    else{
+        return false
+    }
   }

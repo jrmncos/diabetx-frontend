@@ -6,7 +6,7 @@ import dniBordeScanner from 'assets/dd.png'
 import dniEjemplo from 'assets/dniScannerExample.png'
 import { RegistroContext } from 'context/RegistroContext'
 
-export default function DniScanner({ isScanning }) {
+export default function DniScanner({ isScanning, validador }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
  

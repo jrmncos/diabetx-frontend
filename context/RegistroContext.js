@@ -5,12 +5,13 @@ export const RegistroContext = createContext()
 export const RegistroProvider = ({ children }) => {
     const [bod, setBod] = useState('')
     const [genero, setGenero] = useState('')
-    const [dni, setDni] = useState('')
-    const [nombre, setNombre] = useState('')
-    const [apellido, setApellido] = useState('')
-    const [location, setLocation] = useState(null)
-    const [password, setPassword] = useState('')
-    const [errStepper1, setErrorStepper1 ] = useState(false)
+    const [ dni, setDni] = useState('')
+    const [ nombre, setNombre] = useState('')
+    const [ apellido, setApellido] = useState('')
+    const [ location, setLocation] = useState(null)
+    const [ password, setPassword] = useState('')
+    const [ errorEnPrimerFormulario, setErrorEnPrimerFormulario ] = useState(true)
+    const [ errorEnPass, setErrorEnPass ] = useState(true)
 
     return(
         <RegistroContext.Provider value={{
@@ -28,8 +29,10 @@ export const RegistroProvider = ({ children }) => {
             setPassword: setPassword,
             location: location,
             setLocation: setLocation,
-            errStepper1: errStepper1, 
-            setErrorStepper1: setErrorStepper1, 
+            errorEnPrimerFormulario: errorEnPrimerFormulario, 
+            setErrorEnPrimerFormulario: setErrorEnPrimerFormulario, 
+            errorEnPass: errorEnPass,
+            setErrorEnPass: setErrorEnPass,
         }}>
             {children}
         </RegistroContext.Provider>

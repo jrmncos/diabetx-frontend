@@ -6,7 +6,7 @@ import { RegistroContext } from 'context/RegistroContext'
 import validar from 'validator/formPass';
 
 export default function FormPass({ navigation }) {
-  const {setPassword} = useContext(RegistroContext)
+  const {setPassword,setErrorEnPass} = useContext(RegistroContext)
   const [pass, setPass] = useState('')
   const [confirmarPass, setConfirmarPass] = useState('')
 
@@ -37,11 +37,11 @@ export default function FormPass({ navigation }) {
           />
           }
           secureTextEntry={true}
-          onBlur={()=> validar(pass, confirmarPass, setPassError)}
+          onBlur={()=> setErrorEnPass(!validar(pass, confirmarPass, setPassError))}
           onChangeText={(value)=> {
             setPass(value)
             setPassword(value)
-            validar(value, confirmarPass, setPassError)
+            setErrorEnPass(!validar(value, confirmarPass, setPassError))
           }}
           value={pass}
         />
@@ -64,10 +64,10 @@ export default function FormPass({ navigation }) {
         />
         }
         secureTextEntry={true}
-        onBlur={()=> validar(pass, confirmarPass, setPassError)}
+        onBlur={()=> setErrorEnPass(!validar(pass, confirmarPass, setPassError))}
         onChangeText={(value)=> {
           setConfirmarPass(value)
-          validar(pass, value, setPassError)
+          setErrorEnPass(!validar(pass, value, setPassError))
         }}
         value={confirmarPass}
     />

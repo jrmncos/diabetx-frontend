@@ -10,7 +10,7 @@ import validar from 'validator/formDP';
 import DniScanner from 'components/DniScanner'
 
 export default function FormDatosPersonales({ navigation }) {
-  const {dni, setDni, nombre, setNombre, apellido, setApellido, bod, setBod, genero, setGenero, errStepper1, setErrorStepper1 } = useContext(RegistroContext)
+  const {dni, setDni, nombre, setNombre, apellido, setApellido, bod, setBod, genero, setGenero, setErrorEnPrimerFormulario } = useContext(RegistroContext)
   const [ isScanning, setIsScanning ] = useState(false)
 
   const [ nombreError, setNombreError ] = useState("")
@@ -18,26 +18,32 @@ export default function FormDatosPersonales({ navigation }) {
   const [ generoError, setGeneroError ] = useState("")
   const [ dniError, setDniError ] = useState("")
   const [ bodError, setBodError ] = useState("")
-  const [ sinCamposVacios, setSinCamposVacios] = useState(false)
+  const [ primerEjecucion, setprimerEjecucion ] = useState(true)
 
   function validarGenero(value) {
     validar('genero', value, setGeneroError)
     setGenero(value)
   }
 
-  function validarFormDP(){
-    validar('nombre', nombre, setNombreError)
-    validar('apellido', apellido, setApellidoError)
-    validarGenero(genero)
-    validar('dni', dni, setDniError)
-    validar('bod', bod, setBodError)
+  function validate(formInput, input, setter){
+    switch (formInput) {
+      case "nombre":    validar(formInput, input, setter)
+      case "apellido":  validar(formInput, input, setter)
+      case "dni":       validar(formInput, input, setter)
+      case "bod":       validar(formInput, input, setter)
+        
+        break;
     
-    setErrorStepper1(
-      nombreError == "" && 
-      apellidoError == "" && 
-      generoError == "" &&
-      dniError == "" &&
-      bodError == "")
+      default:
+        break;
+    }
+
+    setErrorEnPrimerFormulario(
+        nombreError != "" ||
+        apellidoError != "" || 
+        generoError != "" ||
+        dniError != "" ||
+        bodError != "")
   }
 
   return (
@@ -61,9 +67,9 @@ export default function FormDatosPersonales({ navigation }) {
           />
         <TextInput
           style={styles.textoFormulario}
-          onBlur={()=>  validar('nombre', nombre, setNombreError)}
+          onBlur={()=>  validate('nombre', nombre, setNombreError)}
           onChangeText={value => { 
-            validar('nombre', value, setNombreError)
+            validate('nombre', value, setNombreError)
             setNombre(value)
           }}
           value={nombre}
@@ -80,9 +86,9 @@ export default function FormDatosPersonales({ navigation }) {
         />
       <TextInput
         style={styles.textoFormulario}
-        onBlur={()=> validar('apellido', apellido, setApellidoError)}
+        onBlur={()=> validate('apellido', apellido, setApellidoError)}
         onChangeText={value => { 
-          validar('apellido', value, setApellidoError)
+          validate('apellido', value, setApellidoError)
           setApellido(value)}
         }
         value={apellido}
@@ -123,11 +129,11 @@ export default function FormDatosPersonales({ navigation }) {
         />
         <TextInputMask
           type={'only-numbers'}
-          onBlur={()=> validar('dni', dni, setDniError)}
+          onBlur={()=> validate('dni', dni, setDniError)}
           style={styles.textoFormulario}
           value={dni}
           onChangeText={value => {
-            validar('dni', value, setDniError)
+            validate('dni', value, setDniError)
             setDni(value)
           }}
         />
@@ -146,11 +152,11 @@ export default function FormDatosPersonales({ navigation }) {
           options={{
             format: 'DD/MM/YYYY'
           }}
-          onBlur={()=> validar('bod', bod, setBodError)}
+          onBlur={()=> validate('bod', bod, setBodError)}
           value={bod}
           style={styles.textoFormulario}
           onChangeText={input => {
-            validar('bod', input, setBodError)
+            validate('bod', input, setBodError)
             setBod(input)
           }}
         />
@@ -170,7 +176,6 @@ export default function FormDatosPersonales({ navigation }) {
     }
     <View style={styles.pantallaCompleta}>
       {isScanning && <DniScanner isScanning={setIsScanning}/>}
-      {sinCamposVacios && validarFormDP()}
     </View>
     
     </View>
