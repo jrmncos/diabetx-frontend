@@ -2,8 +2,8 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Image, Alert, Dimensions } from 'react-native';
 import {Button} from 'react-native-elements'
 import { BarCodeScanner } from 'expo-barcode-scanner';
-import dniBordeScanner from 'assets/dd.png'
-import dniEjemplo from 'assets/dniScannerExample.png'
+import dniBordeScanner from 'recursos/dd.png'
+import dniEjemplo from 'recursos/dniScannerExample.png'
 import { RegistroContext } from 'context/RegistroContext'
 
 export default function DniScanner({ isScanning, validador }) {

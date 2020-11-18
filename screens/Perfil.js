@@ -34,13 +34,13 @@ export default function Perfil({navigation}){
           {user && user.gender == "Masculino" && 
           <Image
             style={{ width: 70, height: 70, backgroundColor:"#00a7ba"}}
-            source={require('../assets/abuelo.png')} 
+            //source={require('../assets/abuelo.png')} 
           />
           }
           {user && user.gender == "Femenino" && 
           <Image
             style={{ width: 70, height: 70, backgroundColor:"#00a7ba"}}
-            source={require('../assets/abuela.png')} 
+            //source={require('../assets/abuela.png')} 
           />
           }
           <Text h2 style={styles.textoRol}>{user.first_name} {user.last_name}</Text> 

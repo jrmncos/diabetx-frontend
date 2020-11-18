@@ -1,5 +1,5 @@
 import React, {useState, createContext} from 'react'
-import  getUser  from 'services/getUser'
+import   getUser  from 'services/getUser'
 import { getDni, setDni, getToken, removeDni } from 'services/tokenStorage.js';
 
 export const UserContext = React.createContext({
@@ -22,11 +22,18 @@ export const UserProvider = ({children}) => {
           try {
             const userDni = await getDni();
             console.log("Effect del User Context")
-            if (userDni !== null) {
+            console.log(userDni)
+            if (userDni != null) {
+              console.log('Hi del effect')
               const accessToken = await getToken()
-              const user = await getUser({dni: userDni, accessToken})
-              dispatch({ type: 'DNI_EXIST', dni: userDni, user: user });
-            } else {
+              console.log('El token')
+              console.log(accessToken)
+              getUser(dni, accessToken)
+              .then((user) => { 
+                dispatch({ type: 'DNI_EXIST', dni: userDni, user: user });
+              })
+            } 
+            else {
               dispatch({ type: 'DNI_NOT_EXIST' });
             }
           } catch (e) {
