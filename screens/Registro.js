@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import Stepper from "react-native-stepper-ui";
-import { View, Alert, StyleSheet, ScrollView } from "react-native";
+import { View, Alert, StyleSheet, ScrollView, Text } from "react-native";
 
 import FormDatosPersonales from 'components/FormDatosPersonales';
 import GeoUsuario from 'components/GeoUsuario';
@@ -10,12 +10,13 @@ import { RegistroContext, RegistroProvider }  from 'context/RegistroContext';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {createUser} from 'services/createUser'
+import { useNavigation } from '@react-navigation/native';
 
-const RegistroMaestro = ({navegation}) => {
+const RegistroMaestro = () => {
 
     const [active, setActive] = useState(0);
     const context = useContext(RegistroContext)
-    const [token, setToken] = useState('')
+    const navigation = useNavigation()
 
     const content = [
         <FormDatosPersonales title="Datos personales" />,
@@ -23,38 +24,24 @@ const RegistroMaestro = ({navegation}) => {
         <FormPass title="Establecer contraseña" />,
     ];
 
-    const getToken = async () => {
-      try {
-        const value = await AsyncStorage.getItem('@token')
-        if(value !== null) {
-          setToken(value)
-        }
-      } catch(e) {
-        // error reading value
-      }
-    }
-
     const onSubmit = async() => {
-      console.log("NAVIGATION: "+navegation)
-      await getToken()
-        .then(() => createUser(context, token))
-          .then( response =>{
-            if(response === 201){
-              Alert.alert("La cuenta fue creada satisfactoriamente")
-              navegation.navigate('Iniciar sesion')
-            }
-            else{
-              Alert.alert("Error al crear usuario!")
-              //Me gustaria tipo saber porque no se pudo crear el usuario (ej: dni repetido) y mostrarlo, eso se puede hacer con el fetch en general
-            }
-          }
-        )
+      const token = await AsyncStorage.getItem('@token')
+      createUser(context, token)
+      .then( response =>{
+        if(response === 201){
+          Alert.alert("La cuenta fue creada satisfactoriamente")
+          navigation.navigate('Iniciar sesion')
+        }
+        else{
+          Alert.alert("Error al crear usuario!")
+          //Me gustaria tipo saber porque no se pudo crear el usuario (ej: dni repetido) y mostrarlo, eso se puede hacer con el fetch en general
+        }
+      })
     } 
 
  return (
     <ScrollView style={styles.scrollView}>
     <View style={{ height:'100%',backgroundColor:"rgba(255,255,255,1)", marginHorizontal: 0 }}>
-
       <Stepper
         style={styles.stepperStyle}
         buttonStyle={styles.botonAzulMarino}
@@ -93,7 +80,7 @@ const RegistroMaestro = ({navegation}) => {
 export default function Registro({navegation}){
   return(
     <RegistroProvider>
-      <RegistroMaestro navegation = {navegation}/>
+      <RegistroMaestro/>
     </RegistroProvider>
   )
 }

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { StyleSheet, Text, View, Button} from 'react-native';
 import { Input, SearchBar, ListItem} from 'react-native-elements'
-import Paciente from 'components/Paciente'
+import PacienteList from 'components/PacienteList'
 import { useUser } from 'hooks/useUser'
 import { useAuth } from 'hooks/useAuth'
 import getProfesional from 'services/getProfesional'
@@ -11,14 +11,17 @@ export default function Panel({navigation}){
   const {user} = useUser()
   const {userToken} = useAuth()
   const [profesional, setProfesional] = useState(null)
+  const [pacientesFiltered, setPacientesFiltered] = useState([])
   const [dni, setDni] = useState('')
   const [search, setSearch] = useState('')
-
+  
   useEffect(()=>{
     async function getProf(){
       const prof = await getProfesional({dni: user.dni, accessToken: userToken })
-      if(prof)
+      if(prof != undefined){
         setProfesional(prof)
+        setPacientesFiltered(prof.pacientes)
+      }
     }
     getProf()
   },[])
@@ -29,7 +32,11 @@ export default function Panel({navigation}){
   }
 
   const handleSearchBar = (value) => {
+    const filtered = profesional.pacientes.filter(paciente  => {
+          return String(paciente.user.dni).toLowerCase().includes(value.toLowerCase())
+     })
     setSearch(value)
+    setPacientesFiltered(filtered)
   }
 
   return(
@@ -43,15 +50,9 @@ export default function Panel({navigation}){
         inputStyle={{color:"white"}}
         placeholderTextColor={"white"}
         searchIcon={{color:"white"}}
-        
       />
 
-
-      {profesional && profesional.pacientes.map((paciente) => {
-        return(
-            <Paciente key={paciente.user.dni} paciente={paciente}/>
-        )
-      })}
+      <PacienteList pacientesFiltered={ pacientesFiltered }/>
 
       <Text>Agregar Paciente</Text>
         <Input
@@ -63,7 +64,6 @@ export default function Panel({navigation}){
         <Button onPress={handleAddPaciente} title='Agregar'/>
     </View>
   )
-
 }
 
 const styles = StyleSheet.create({

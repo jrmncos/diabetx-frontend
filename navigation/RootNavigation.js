@@ -26,7 +26,7 @@ export default function RootNavigation(){
         },
       }}>
         <Stack.Screen name="Iniciar sesion" component={Login} />
-        <Stack.Screen name="Inicio" component={Home} options={{title: 'Home'}}/>
+        <Stack.Screen name="Inicio" component={Home}/>
         <Stack.Screen name="Geolocalizacion" component={Geolocalizacion}/>
         <Stack.Screen name="Panel" component={Panel}/>
         <Stack.Screen name="Registro" component={Registro} />

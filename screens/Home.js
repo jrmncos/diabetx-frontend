@@ -42,17 +42,15 @@ export default function Home({navigation}){
     <View style={styles.container}>
      
       <View style={{flexDirection: 'row', alignSelf: 'center', width:"100%", backgroundColor: '#00a7ba'}}>
-          <Image
+          {/*<Image
             style={{ width: 70, height: 70, backgroundColor:"#00a7ba"}}
             source={imagenRol} 
-          />
+          />*/}
           <Text h2 style={styles.textoRol}>{textoRol}</Text> 
       </View>
 
       <Text h2 style={styles.textoBienvenida}>Bienvenido!</Text>
       {user &&<Text h2 style={styles.textoNombreUsuario}>{user.first_name}</Text>}
-      {user && <Text h2 style={styles.textoNombreUsuario}>{user.dni}</Text>}
-      {userToken && <Text h2 style={styles.textoNombreUsuario}>{userToken}</Text>}
       <Text h2 style={styles.textoBienvenida}>Selecciona una acción para continuar.</Text> 
 
       <View>
@@ -115,10 +113,10 @@ export default function Home({navigation}){
         style={{width:"100%", padding: "2%"}}       
         onPress={() => navigation.navigate('Perfil')}>
         <View style={styles.botonMenuHome}>
-          <Image
+          {/*<Image
             style={{ width: 60, height: 60, margin:"1%"}}
             source={require('../assets/abuelos.png')} 
-          />
+          />*/}
           <Text h2 style={styles.textoRol}>Perfil de usuario</Text> 
         </View>
       </TouchableOpacity>

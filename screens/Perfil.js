@@ -29,9 +29,8 @@ export default function Perfil({navigation}){
 
    return(
       <View style={styles.container}>
-        {userToken && <Text> userToken </Text>} 
         {loadingPaciente && spinnerPaciente}
-        <View style={{marginBottom:"5%", flexDirection: 'row', alignSelf: 'center', width:"100%", backgroundColor: '#00a7ba'}}>
+        {/*<View style={{marginBottom:"5%", flexDirection: 'row', alignSelf: 'center', width:"100%", backgroundColor: '#00a7ba'}}>
           {user && user.gender == "Masculino" && 
           <Image
             style={{ width: 70, height: 70, backgroundColor:"#00a7ba"}}
@@ -45,7 +44,7 @@ export default function Perfil({navigation}){
           />
           }
           <Text h2 style={styles.textoRol}>{user.first_name} {user.last_name}</Text> 
-        </View>
+        </View>*/}
         
         {/*
         <TouchableOpacity 
