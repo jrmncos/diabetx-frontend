@@ -59,9 +59,6 @@ export default function Home({navigation}){
   return(
 
     <View style={styles.container}>
-      <>
-        {console.log(user)}
-      </>
     
     {isSelectingRole && 
     <>
@@ -72,15 +69,15 @@ export default function Home({navigation}){
     <Text h2 style={styles.textoBienvenida}>Seleccione un rol para continuar</Text>
     {user && user.groups.map(rol => 
       {return (<TouchableOpacity 
-        key={rol}
+        key={rol.name}
         style={{width:"100%", padding: "2%"}}       
-        onPress={() => selectRole(rol)}>
+        onPress={() => selectRole(rol.name)}>
         <View style={styles.botonMenuHome}>
           <Image
             style={{ width: 50, height: 50, margin:"2%"}}
             // source={require('../assets/locationGeo.png')} 
           />
-          <Text h2 style={styles.textoRol}>{rol}</Text> 
+          <Text h2 style={styles.textoRol}>{rol.name}</Text> 
         </View>
       </TouchableOpacity>)})}
       

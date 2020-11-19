@@ -12,6 +12,7 @@ export async function getItem(key) {
 export async function setItem(key, value){
   return SecureStore.setItemAsync(key, value)
 }
+
 export async function removeItem(key){
   return SecureStore.deleteItemAsync(key)
 }

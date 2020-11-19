@@ -21,17 +21,11 @@ export const UserProvider = ({children}) => {
         const initState = async () => {
           try {
             const userDni = await getDni();
-            console.log("Effect del User Context")
-            console.log(userDni)
             if (userDni != null) {
               console.log('Hi del effect')
               const accessToken = await getToken()
-              console.log('El token')
-              console.log(accessToken)
-              getUser(dni, accessToken)
-              .then((user) => { 
-                dispatch({ type: 'DNI_EXIST', dni: userDni, user: user });
-              })
+              const user = await getUser({dni:userDni, accessToken})
+              dispatch({ type: 'DNI_EXIST', dni: userDni, user: user });
             } 
             else {
               dispatch({ type: 'DNI_NOT_EXIST' });
