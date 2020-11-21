@@ -136,6 +136,22 @@ const styles = StyleSheet.create({
     fontSize: 40,
   },
 
+  botonMenuHomeAzul: {
+    padding:"5%",
+    borderRadius:10, 
+    flexDirection: 'row', 
+    alignSelf: 'center', 
+    width:"97%", 
+    backgroundColor: '#00a7ba',
+    borderWidth: 1,
+    borderColor: "#00707d",
+    shadowColor: 'rgba(0, 0, 0, 1)',
+    shadowOpacity: 1,
+    elevation: 5,
+    shadowRadius: 15 ,
+    shadowOffset : { width: 1, height: 13},
+  },
+
   divisorInferior: {
     backgroundColor: "#00a7ba",
     width: "95%",

@@ -22,7 +22,6 @@ export const UserProvider = ({children}) => {
           try {
             const userDni = await getDni();
             if (userDni != null) {
-              console.log('Hi del effect')
               const accessToken = await getToken()
               const user = await getUser({dni:userDni, accessToken})
               dispatch({ type: 'DNI_EXIST', dni: userDni, user: user });

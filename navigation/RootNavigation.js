@@ -25,14 +25,14 @@ export default function RootNavigation(){
           fontWeight: 'bold',
         },
       }}>
-        <Stack.Screen name="Iniciar sesion" component={Login} />
-        <Stack.Screen name="Inicio" component={Home}/>
-        <Stack.Screen name="Geolocalizacion" component={Geolocalizacion}/>
-        <Stack.Screen name="Panel" component={Panel}/>
-        <Stack.Screen name="Registro" component={Registro} />
-        <Stack.Screen name="Perfil" component={Perfil} />
-        <Stack.Screen name="Notificacion" component={Notificacion} />
-        <Stack.Screen name="FormACDiabetes" component={FormACDiabetes} />
+        <Stack.Screen name="Iniciar sesion" component={Login} title="Iniciar Sesión"/>
+        <Stack.Screen name="Inicio" component={Home} title="Página Principal"/>
+        <Stack.Screen name="Geolocalizacion" component={Geolocalizacion} title="Mapa ECNT"/>
+        <Stack.Screen name="Panel" component={Panel} title="Panel de Control"/>
+        <Stack.Screen name="Registro" component={Registro} title="Registrar Usuario"/>
+        <Stack.Screen name="Perfil" component={Perfil} title="Perfil de Usuario"/>
+        <Stack.Screen name="Notificacion" component={Notificacion} title="Notificaciones" />
+        <Stack.Screen name="FormACDiabetes" component={FormACDiabetes} title="Formulario Autocontrol Diabetes" />
       </Stack.Navigator>
       )
 }

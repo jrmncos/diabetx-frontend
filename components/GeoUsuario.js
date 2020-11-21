@@ -61,7 +61,7 @@ export default function GeoUsuario({navigation}){
     <Text h2 style={styles.textSubtitulo}>
       Selecciona la ubicación de tu domicilio.
     </Text>
-    <View style={{margin:"1%",overflow: 'hidden' ,borderWidth:2, borderColor:"rgba(0, 204, 0, 0.5)", flex:1, borderRadius: 10}}>
+    <View style={{margin:"1%", overflow: 'hidden' ,borderWidth:2, borderColor:"rgba(0, 204, 0, 0.5)", flex:1, borderRadius: 10}}>
       <MapView 
         provider={PROVIDER_GOOGLE}
         style={styles.mapStyle} 

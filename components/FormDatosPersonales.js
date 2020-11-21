@@ -18,7 +18,13 @@ export default function FormDatosPersonales({ navigation }) {
   const [ generoError, setGeneroError ] = useState("")
   const [ dniError, setDniError ] = useState("")
   const [ bodError, setBodError ] = useState("")
-  const [ primerEjecucion, setprimerEjecucion ] = useState(true)
+
+  const validadoEnSDNI = {
+    'setNombreError': setNombreError,
+    'setApellidoError': setApellidoError,
+    'setDniError': setDniError,
+    'setBodError': setBodError
+  }
 
   function validarGenero(value) {
     validar('genero', value, setGeneroError)
@@ -175,7 +181,7 @@ export default function FormDatosPersonales({ navigation }) {
     
     }
     <View style={styles.pantallaCompleta}>
-      {isScanning && <DniScanner isScanning={setIsScanning}/>}
+      {isScanning && <DniScanner isScanning={setIsScanning} setError={setErrorEnPrimerFormulario} />}
     </View>
     
     </View>
