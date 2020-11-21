@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { Button, StyleSheet, Text, View, Dimensions, Image, Alert, ScrollView, SafeAreaView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Image, SafeAreaView, TouchableOpacity } from 'react-native';
 import MapView, { Circle } from 'react-native-maps';
-import CheckBox from '@react-native-community/checkbox';
+import {URL_ROOT, USERS} from 'services/settings.js'
 
 const ecnt = ['diabetes', 'hipertension', 'epoc']
 
@@ -11,6 +11,7 @@ export default function Geolocalizacion({navigation}){
     const [checkDiabetes, setCheckDiabetes] = useState(false)
     const [checkEpoc, setCheckEpoc] = useState(false)
     const [checkHipertension, setCheckHipertension] = useState(false)
+    const [botonState, setBotonState ] = useState(false)
 
     const checks = [checkEpoc, checkHipertension, checkDiabetes]
 
@@ -26,14 +27,9 @@ export default function Geolocalizacion({navigation}){
     colores.set('hipertension', '#D922DC');
     
     useEffect(()=>{
-      fetch('http://192.168.1.38:8000/hospital/users/')
+      fetch(URL_ROOT+USERS)
       .then(response => response.json())
       .then(data => {
-        //console.log(data)
-        //console.log(parseFloat(data[0].latitude))
-        //console.log({latitude: parseFloat(data[0].latitude), longitude: parseFloat(data[0].longitude)})
-        //console.log({latitude: -34.784509, longitude: -58.834529})
-        //Hardcoding de ECNT
         let pacientesBackend = data.map((paciente) => {
           paciente.ecnt = ecnt[Math.floor(Math.random() * ecnt.length)] 
           return paciente
@@ -42,12 +38,9 @@ export default function Geolocalizacion({navigation}){
         setPacientes(pacientesBackend)
         console.log(pacientes)
       })
-      //getLocationPermissions()
     }, [])
 
-  
     return(
-
       <View>
         <Text h2 style={styles.registrarse}>
           Mapa ECNTS
@@ -81,60 +74,51 @@ export default function Geolocalizacion({navigation}){
           })}
           </MapView>
         </View>
+
       <SafeAreaView style={styles.footerTop}>
+        <View style={{ alignContent:"center",flexDirection: "row", alignSelf: "baseline", width: "100%" }}>
+          <TouchableOpacity 
+            style={{width:"100%", paddingTop:"1%"}}       
+            onPress={() => setCheckDiabetes(!checkDiabetes)}>
+            <View style={checkDiabetes ? styles.botonFiltroECNTActivado : styles.botonFiltroECNTDesactivado}>
+              <Image
+                style={{ width: 30, height: 30, margin:"2%"}}
+                source={require('recursos/cambiarRol.png')} 
+              />
+              <Text h2 style={styles.textoBotonFiltroECNT}>Diabetes</Text> 
+            </View>
+          </TouchableOpacity>
+        </View>        
+
+        <View style={{ alignContent:"center",flexDirection: "row", alignSelf: "baseline", width: "100%" }}>
+          <TouchableOpacity 
+            style={{width:"100%", paddingTop:"1%"}}       
+            onPress={() => setCheckHipertension(!checkHipertension)}>
+            <View style={checkHipertension ? styles.botonFiltroECNTActivado : styles.botonFiltroECNTDesactivado}>
+              <Image
+                style={{ width: 30, height: 30, margin:"2%"}}
+                source={require('recursos/cambiarRol.png')} 
+              />
+              <Text h2 style={styles.textoBotonFiltroECNT}>Hipertensión</Text> 
+            </View>
+          </TouchableOpacity>
+        </View>   
         
-       {/*<View style={{ alignContent:"center",flexDirection: "row", alignSelf: "baseline", width: "100%" }}>
-      <TouchableOpacity 
-          style={{width:"100%", paddingTop:"5%"}}       
-          onPress={(newValue) => setCheckDiabetes(newValue)}>
-          {checkDiabetes && <View style={styles.botonFiltroECNTActivado}>
-            <Image
-              style={{ width: 30, height: 30, margin:"2%"}}
-              source={require('recursos/cambiarRol.png')} 
-            />
-            <Text h2 style={styles.textoBotonFiltroECNT}>Diabetes</Text> 
-          </View>}
-          {!checkDiabetes && <View style={styles.botonFiltroECNTDesactivado}>
-            <Image
-              style={{ width: 30, height: 30, margin:"2%"}}
-              source={require('recursos/cambiarRol.png')} 
-            />
-            <Text h2 style={styles.textoBotonFiltroECNT}>Diabetes</Text> 
-          </View>}
-        </TouchableOpacity>
-        </View>         */}
-
-        <View style={{ flexDirection: "row", alignSelf: "baseline", width: "50%" }}>
-            <CheckBox
-              title={<Text style={styles.textoCheckBox}>Diabetes</Text>}
-              value={checkDiabetes}
-              onValueChange={(newValue) => setCheckDiabetes(newValue)}
-            />
-            <Text style={styles.textoCheckBox}>Diabetes</Text>
-        </View>
-
-        <View style={{ flexDirection: "row", alignSelf: "baseline", width: "50%" }}>
-          <CheckBox
-            disabled={false}
-            value={checkEpoc}
-            onValueChange={(newValue) => setCheckEpoc(newValue)}
-          />
-          <Text style={styles.textoCheckBox}>Epoc</Text>
-        </View>
-
-        <View style={{ flexDirection: "row", alignSelf: "baseline", width: "80%" }}>
-         
-        <CheckBox
-          disabled={false}
-          value={checkHipertension}
-          onValueChange={(newValue) => setCheckHipertension(newValue)}
-        />
-          <Text style={styles.textoCheckBox}>Hipertensión</Text>
-        </View>
-
+        <View style={{ alignContent:"center",flexDirection: "row", alignSelf: "baseline", width: "100%" }}>
+          <TouchableOpacity 
+            style={{width:"100%", paddingTop:"1%"}}       
+            onPress={() => setCheckEpoc(!checkEpoc)}>
+            <View style={checkEpoc ? styles.botonFiltroECNTActivado : styles.botonFiltroECNTDesactivado}>
+              <Image
+                style={{ width: 30, height: 30, margin:"2%"}}
+                source={require('recursos/cambiarRol.png')} 
+              />
+              <Text h2 style={styles.textoBotonFiltroECNT}>Epoc</Text> 
+            </View>
+          </TouchableOpacity>
+        </View> 
       </SafeAreaView>
-
-      </View>
+    </View>
     )
 
   }
@@ -150,6 +134,7 @@ const styles = StyleSheet.create({
   
   botonFiltroECNTActivado: {
     borderRadius:10, 
+    margin:1,
     flexDirection: 'row', 
     alignSelf: 'center', 
     width:"100%", 
@@ -165,6 +150,7 @@ const styles = StyleSheet.create({
 
   botonFiltroECNTDesactivado:{
     borderRadius:10, 
+    margin:1,
     flexDirection: 'row', 
     alignSelf: 'center', 
     width:"100%", 
@@ -174,13 +160,14 @@ const styles = StyleSheet.create({
     elevation: 5,
     shadowRadius: 15 ,
     shadowOffset : { width: 1, height: 13},
-    backgroundColor: '#5cc101',
-    borderColor: "#479801",
+    backgroundColor: '#fcad03',
+    borderColor: "#c28400",
   },
 
   textoBotonFiltroECNT:{
     paddingLeft:"5%",
     paddingTop:"4%",
+    width:"100%",
     color: "white",
     fontSize: 20,
   },
@@ -209,11 +196,12 @@ const styles = StyleSheet.create({
     paddingLeft: 6,
   },
   footerTop: {
-  backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  top: Dimensions.get('window').height -Dimensions.get('window').height*0.25,
-  left:10,
-  position: 'absolute',
-  width: '50%'
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    top: Dimensions.get('window').height -Dimensions.get('window').height*0.85,
+    left:10,
+    position: 'absolute',
+    width: '45%',
+    borderRadius: 10
   },
   
   footer: {

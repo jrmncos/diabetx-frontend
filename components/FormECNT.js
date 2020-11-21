@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from "react";
 import { StyleSheet, Text, View, Image, Alert } from "react-native";
-import { Divider, CheckBox, Button } from "react-native-elements";
+import { CheckBox, Button } from "react-native-elements";
 
 import {useAuth} from 'hooks/useAuth'
 import getECNTS from 'services/getECNTS';
