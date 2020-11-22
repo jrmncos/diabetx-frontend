@@ -1,127 +1,121 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, Dimensions, Image, SafeAreaView, TouchableOpacity } from 'react-native';
 import MapView, { Circle } from 'react-native-maps';
-import {URL_ROOT, USERS} from 'services/settings.js'
 
-const ecnt = ['diabetes', 'hipertension', 'epoc']
+import CheckBox from '@react-native-community/checkbox';
+import getPacientesECNT from 'services/getPacientesECNT'
+import getECNTS from 'services/getECNTS';
+import { useAuth } from 'hooks/useAuth'
 
-export default function Geolocalizacion({navigation}){
+export default function Geolocalizacion({ navigation }) {
+  const { userToken } = useAuth()
+  const [pacientesEcnts, setPacientesEcnts] = useState([])
+  const [pacientesEcntsFiltrados, setPacientesEcntsFiltrados] = useState([])
+  const [checkedMap, setCheckedMap] = useState([]);
 
-    const [pacientes, setPacientes] = useState([])
-    const [checkDiabetes, setCheckDiabetes] = useState(false)
-    const [checkEpoc, setCheckEpoc] = useState(false)
-    const [checkHipertension, setCheckHipertension] = useState(false)
-    const checks = [checkEpoc, checkHipertension, checkDiabetes]
+  let colores = new Map();
+  colores.set('Diabetes', '#50DC22');
+  colores.set('Epoc', '#DC4D22');
+  colores.set('Epoc3', '#D922DC');
 
-    let  filterEcnt = new Map();
-    // asignando valores
-    filterEcnt.set('diabetes', checkDiabetes);
-    filterEcnt.set('epoc', checkEpoc);
-    filterEcnt.set('hipertension', checkHipertension);
-
-    let colores = new Map();
-    colores.set('diabetes', 'rgba(250, 229, 127,0.7)');
-    colores.set('hipertension', 'rgba(0, 246, 252,0.7)');
-    colores.set('epoc', 'rgba(217, 77, 245, 0.7)');
-    
-    useEffect(()=>{
-      fetch(URL_ROOT+USERS)
-      .then(response => response.json())
-      .then(data => {
-        let pacientesBackend = data.map((paciente) => {
-          paciente.ecnt = ecnt[Math.floor(Math.random() * ecnt.length)] 
-          return paciente
-        })
-
-        setPacientes(pacientesBackend)
-        console.log(pacientes)
+  useEffect(() => {
+    getPacientesECNT({ accessToken: userToken })
+      .then(pacientesEcnts => {
+        setPacientesEcnts(pacientesEcnts)
+        setPacientesEcntsFiltrados(pacientesEcnts)
       })
-    }, [])
+  }, [])
 
-    return(
-      <View>
-        <Text h2 style={styles.registrarse}>
-          Mapa ECNT
-        </Text>
+  useEffect(() => {
+    async function fetchECNT() {
+      const ecnts = await getECNTS()
+      ecnts.map((ecnt) => {
+        setCheckedMap(prevState => [...prevState, {
+          "id": ecnt.id,
+          "checked": false,
+          "nombre": ecnt.nombre,
+        }])
+      })
+    }
+    fetchECNT()
+  }, [])
 
-        <Text h2 style={styles.textSubtitulo}>
-          Use los filtros para ver los pacientes en el mapa
-        </Text>
-        <View style={{margin:"1%", overflow: 'hidden' ,borderWidth:2, borderColor:"rgba(0, 204, 0, 0.5)", borderRadius: 10}}>
-          <MapView style={styles.mapStyle} 
-          initialRegion={{
-            latitude: -34.558654,
-            longitude: -58.744867,
-            latitudeDelta: 0.015,
-            longitudeDelta: 0.015,
-        }}
-        >
-          {pacientes && pacientes.map(paciente => {
-            {console.log("HOLA")}
-            {console.log(paciente)}
-            return (<Circle
-                    key={paciente.dni}
-                    center = {{latitude: parseFloat(paciente.latitude), longitude: parseFloat(paciente.longitude)}}
-                    radius = { 80 }
-                    strokeColor={'rgba(0,0, 0)'}
-                    strokeWidth = { 1 }
-                    strokeColor = { '#0000' }
-                    fillColor = { filterEcnt.get(paciente.ecnt) ? colores.get(paciente.ecnt) : 'rgba(0,0,0,0)'  }
-                    
-                    />
-              )  
-          })}
-          </MapView>
-        </View>
+  useEffect(() => {
+    let filtered = pacientesEcnts.filter(paciente => {
+      for (let i = 0; i < checkedMap.length; i++) {
+        if (checkedMap[i].checked && paciente.ecnts.filter(ecnt => { ecnt.nombre == checkedMap[i].nombre }))
+          return true
+      }
+      return false
+    })
+    setPacientesEcntsFiltrados(filtered)
+  }, [checkedMap])
 
-      <SafeAreaView style={styles.footerTop}>
-        <View style={{ alignContent:"center",flexDirection: "row", alignSelf: "baseline", width: "100%" }}>
-          <TouchableOpacity 
-            style={{width:"100%", paddingTop:"1%"}}       
-            onPress={() => setCheckDiabetes(!checkDiabetes)}>
-            <View style={checkDiabetes ? styles.botonFiltroECNTActivado : styles.botonFiltroECNTDesactivado}>
-              <Image
-                style={{ width: 30, height: 30, margin:"2%"}}
-                source={require('recursos/sqAmarillo.png')} 
-              />
-              <Text h2 style={styles.textoBotonFiltroECNT}>Diabetes</Text> 
-            </View>
-          </TouchableOpacity>
-        </View>        
-
-        <View style={{ alignContent:"center",flexDirection: "row", alignSelf: "baseline", width: "100%" }}>
-          <TouchableOpacity 
-            style={{width:"100%", paddingTop:"1%"}}       
-            onPress={() => setCheckHipertension(!checkHipertension)}>
-            <View style={checkHipertension ? styles.botonFiltroECNTActivado : styles.botonFiltroECNTDesactivado}>
-              <Image
-                style={{ width: 30, height: 30, margin:"2%"}}
-                source={require('recursos/sqCian.png')} 
-              />
-              <Text h2 style={styles.textoBotonFiltroECNT}>Hipertensión</Text> 
-            </View>
-          </TouchableOpacity>
-        </View>   
-        
-        <View style={{ alignContent:"center",flexDirection: "row", alignSelf: "baseline", width: "100%" }}>
-          <TouchableOpacity 
-            style={{width:"100%", paddingTop:"1%"}}       
-            onPress={() => setCheckEpoc(!checkEpoc)}>
-            <View style={checkEpoc ? styles.botonFiltroECNTActivado : styles.botonFiltroECNTDesactivado}>
-              <Image
-                style={{ width: 30, height: 30, margin:"2%"}}
-                source={require('recursos/sqVioleta.png')} 
-              />
-              <Text h2 style={styles.textoBotonFiltroECNT}>Epoc</Text> 
-            </View>
-          </TouchableOpacity>
-        </View> 
-      </SafeAreaView>
-    </View>
-    )
-
+  const handleChange = (id) => {
+    let index = checkedMap.findIndex((elem) => elem.id == id)
+    let newArray = [...checkedMap]
+    newArray[index] = { ...newArray[index], checked: !newArray[index].checked }
+    setCheckedMap(newArray)
   }
-  
+
+  const getColor = (ecnts) =>{
+    for(let i=0; i<ecnts.length; i ++){
+      for(let j=0; j < checkedMap.length; j++){
+        if(checkedMap[j].checked && checkedMap[j].nombre == ecnts[i].nombre)
+          return colores.get(ecnts[i].nombre)
+      }
+    }
+    return '#0000'
+  }
+
+  return (
+    <View style={{ flex: 1 }}>
+
+      <MapView style={styles.mapStyle}
+        initialRegion={{
+          latitude: -34.558654,
+          longitude: -58.744867,
+          latitudeDelta: 0.015,
+          longitudeDelta: 0.015,
+        }}
+      >
+
+        {pacientesEcntsFiltrados.map((paciente, idx) => {
+          return (
+            <Circle
+              key={idx}
+              center={{ latitude: parseFloat(paciente.latitude), longitude: parseFloat(paciente.longitude) }}
+              radius={150}
+              strokeWidth={1}
+              strokeColor={'#0000'}
+              fillColor={paciente.ecnts.length > 0? getColor(paciente.ecnts): '#0000'}
+            />
+          )
+        })}
+
+      </MapView>
+      <SafeAreaView style={styles.footerTop}>
+        {checkedMap.map(checkbox => {
+          return (
+            <View key={checkbox.id} style={{ flexDirection: "row", alignSelf: "baseline", width: "50%" }}>
+              <CheckBox
+                name={checkbox.id}
+                title={checkbox.nombre}
+                value={checkbox.checked}
+                onValueChange={() => handleChange(checkbox.id)}
+              />
+              <Text style={styles.textoCheckBox}>{checkbox.nombre}</Text>
+            </View>
+          )
+        })
+        }
+      </SafeAreaView>
+
+    </View>
+  )
+
+}
+
 
 const styles = StyleSheet.create({
   container: {
@@ -130,79 +124,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  
-  botonFiltroECNTActivado: {
-    borderRadius:10, 
-    margin:1,
-    flexDirection: 'row', 
-    alignSelf: 'center', 
-    width:"100%", 
-    backgroundColor: '#5cc101',
-    borderWidth: 1,
-    borderColor: "#479801",
-    shadowColor: 'rgba(0, 0, 0, 1)',
-    shadowOpacity: 1,
-    elevation: 5,
-    shadowRadius: 15 ,
-    shadowOffset : { width: 1, height: 13},
-  },
-
-  botonFiltroECNTDesactivado:{
-    borderRadius:10, 
-    margin:1,
-    flexDirection: 'row', 
-    alignSelf: 'center', 
-    width:"100%", 
-    borderWidth: 1,
-    shadowColor: 'rgba(0, 0, 0, 1)',
-    shadowOpacity: 1,
-    elevation: 5,
-    shadowRadius: 15 ,
-    shadowOffset : { width: 1, height: 13},
-    backgroundColor: '#fcad03',
-    borderColor: "#c28400",
-  },
-
-  textoBotonFiltroECNT:{
-    paddingLeft:"5%",
-    paddingTop:"4%",
-    width:"100%",
-    color: "white",
-    fontSize: 20,
-  },
-
-  registrarse: {
-    color: "#00a7ba",
-    alignSelf:"center",
-    fontSize: 35,
-    paddingTop: "1%",
-  },
-  textSubtitulo:{
-    fontSize: 22,
-    textAlign: "center",
-    marginTop: "2%",
-    marginBottom: "2%",
-    color: "#696969",
-  },
   mapStyle: {
-    alignSelf:"center",
     width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height -Dimensions.get('window').height*0.25,
+    height: Dimensions.get('window').height - 80,
   },
-  textoCheckBox: { 
+  textoCheckBox: {
     color: "white",
     fontSize: 23,
     paddingLeft: 6,
   },
   footerTop: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    top: Dimensions.get('window').height -Dimensions.get('window').height*0.85,
-    left:10,
+    top: 10,
+    left: 10,
     position: 'absolute',
-    width: '45%',
-    borderRadius: 10
+    width: '50%'
   },
-  
+
   footer: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     bottom: 0,
@@ -210,4 +148,3 @@ const styles = StyleSheet.create({
     width: '100%'
   },
 });
-  

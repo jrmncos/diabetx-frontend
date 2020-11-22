@@ -1,50 +1,47 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, View, FlatList, Button } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
 import ImageUploader from 'components/ImageUploader'
-import { useForm, Controller } from "react-hook-form";
 import { Input, Icon, Header, Divider } from "react-native-elements";
+export default function Notificacion({ navigation }) {
 
-export default function Notificacion({navigation}){
+  const [imageNotificacion, setImageNotificacion] = useState(null);
+  const [title, setTitle] = useState('')
+  const [edades, setEdades] = useState('')
+  const onSubmit = () => {
+    console.log('Hola')
+    console.log(title)
+    console.log(imageNotificacion)
 
-    const [imageNotificacion, setImageNotificacion] = useState(null);
-    const [title, setTitle] = useState('')
-    
-    const onSubmit = () => {
-      console.log('Hola')
-      console.log(title)
-      console.log(imageNotificacion)
-      
-      let localUri = imageNotificacion;
-      let filename = localUri.split('/').pop();
+    let localUri = imageNotificacion;
+    let filename = localUri.split('/').pop();
 
-      // Infer the type of the image
-      let match = /\.(\w+)$/.exec(filename);
-      let type = match ? `image/${match[1]}` : `image`;
+    // Infer the type of the image
+    let match = /\.(\w+)$/.exec(filename);
+    let type = match ? `image/${match[1]}` : `image`;
 
-      // Upload the image using the fetch and FormData APIs
-      let formData = new FormData();
-      // Assume "photo" is the name of the form field the server expects
-      formData.append('imagen', { uri: localUri, name: filename, type });
-      formData.append('texto', title)
-      fetch('http://192.168.1.38:8000/api/notification/', {
-        method: 'POST',
-        body: formData,
-        headers: {
-          'content-type': 'multipart/form-data',
-        },
-      });
-      
-    }
+    // Upload the image using the fetch and FormData APIs
+    let formData = new FormData();
+    // Assume "photo" is the name of the form field the server expects
+    formData.append('imagen', { uri: localUri, name: filename, type });
+    formData.append('texto', title)
+    fetch('http://192.168.1.38:8000/api/notification/', {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
+    });
 
-    return(
-      <View style={styles.container}>
-      
+  }
+
+  return (
+    <View style={styles.container}>
+
       <Text h2 style={styles.registrarse}>
         Enviar notificacion
       </Text>
 
-      <View style={{ flexDirection: "row", alignSelf: "baseline"}}>
+      <View style={{ flexDirection: "row", alignSelf: "baseline" }}>
         <Input
           placeholder="Titulo"
           style={styles.textoFormularioNA}
@@ -59,13 +56,13 @@ export default function Notificacion({navigation}){
       </View>
 
 
-      <View style={{ flexDirection: "row", alignSelf: "baseline"}}>
-        <ImageUploader setImageNotificacion={setImageNotificacion}/>
+      <View style={{ flexDirection: "row", alignSelf: "baseline" }}>
+        <ImageUploader setImageNotificacion={setImageNotificacion} />
       </View>
 
-          
-      <Button title={"Enviar notificacion"} onPress={() => onSubmit()}/>
-      
+
+      <Button title={"Enviar notificacion"} onPress={() => onSubmit()} />
+
     </View>
   );
 }
