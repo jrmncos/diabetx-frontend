@@ -10,17 +10,19 @@ export default function Login({navigation}){
     const [dni, setDni] = useState('')
     const [password, setPassword] = useState('')
     const {status, login, isLoginLoading, hasLoginError} = useAuth()
-    
+    /*
     useEffect(() => {
       if(status == "signIn"){
         navigation.navigate('Inicio')
       }
     }, [status])
-    
+    */
     const handleSubmit = () => {
+      console.log('asd')
       login({dni, password})
     }
     
+
     const loading = (<Text style = {styles.textSubtitulo}> Validando dni y password.... </Text>)
     const error = (<Text style = {styles.textSubtitulo}> Los datos ingresados no son correctos.... </Text>)
     
@@ -86,7 +88,7 @@ export default function Login({navigation}){
           </>
         }
         {
-          hasLoginError && Alert.alert("Las credenciales no son correctas")
+          hasLoginError && error
         }
       <Text style = {styles.textFirma}> Todos los derechos reservados 2020: Gerc0s, Dub.</Text>
       </View>

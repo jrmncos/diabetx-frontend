@@ -37,7 +37,6 @@ export default function Home({navigation}){
 
   const handleExit = () => {
     logout()
-    navigation.navigate('Iniciar sesion')
   }
 
   const selectRole = (rol) => {

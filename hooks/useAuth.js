@@ -10,6 +10,8 @@ export const useAuth = ()=>{
     const [logginInfo, setLogginInfo] = useState({loading: false, error: false})
 
     const login = ({dni, password}) => {
+        console.log(dni)
+        console.log(password)
         setLogginInfo({loading: true, error: false})
         loginUserService({dni, password})
         .then(token => {
