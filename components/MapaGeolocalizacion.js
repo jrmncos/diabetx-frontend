@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, StyleSheet, Text, View, Dimensions, Image, Alert, ScrollView, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Image, SafeAreaView, TouchableOpacity } from 'react-native';
 import MapView, { Circle } from 'react-native-maps';
 import CheckBox from '@react-native-community/checkbox';
 import getPacientesECNT from 'services/getPacientesECNT'

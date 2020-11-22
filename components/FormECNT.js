@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from "react";
 import { StyleSheet, Text, View, Image, Alert } from "react-native";
-import { Divider, CheckBox, Button } from "react-native-elements";
+import { CheckBox, Button } from "react-native-elements";
 
 import {useAuth} from 'hooks/useAuth'
 import getECNTS from 'services/getECNTS';
@@ -134,6 +134,22 @@ const styles = StyleSheet.create({
   textoFormularioNA: {
     color: "#00a7ba",
     fontSize: 40,
+  },
+
+  botonMenuHomeAzul: {
+    padding:"5%",
+    borderRadius:10, 
+    flexDirection: 'row', 
+    alignSelf: 'center', 
+    width:"97%", 
+    backgroundColor: '#00a7ba',
+    borderWidth: 1,
+    borderColor: "#00707d",
+    shadowColor: 'rgba(0, 0, 0, 1)',
+    shadowOpacity: 1,
+    elevation: 5,
+    shadowRadius: 15 ,
+    shadowOffset : { width: 1, height: 13},
   },
 
   divisorInferior: {

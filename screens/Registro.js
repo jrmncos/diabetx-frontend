@@ -49,9 +49,6 @@ const RegistroMaestro = () => {
         active={active}
         content={content}
         onNext={() => {
-          console.log("active: "+active)
-          console.log("hay error en el primer formulario? "+context.errorEnPrimerFormulario)
-          console.log("condicion? "+active == 0 && context.errorEnPrimerFormulario)
           if(active == 0 && context.errorEnPrimerFormulario){
             Alert.alert("Por favor, verifique los datos ingresados")
             return

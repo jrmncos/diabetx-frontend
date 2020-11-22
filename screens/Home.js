@@ -8,8 +8,8 @@ import { useUser } from 'hooks/useUser';
 
 import paciente_f from 'imgUsuario/paciente_mujer.png'
 import paciente_m from 'imgUsuario/paciente_hombre.png'
-import profds_f from 'imgUsuario/pds_hombre.png'
-import profds_m from 'imgUsuario/pds_mujer.png'
+import profds_f from 'imgUsuario/pds_mujer.png'
+import profds_m from 'imgUsuario/pds_hombre.png'
 import corazon from 'recursos/corazon.png'
 
 export default function Home({navigation}){
@@ -20,10 +20,20 @@ export default function Home({navigation}){
   const {user} = useUser()
 
   const [ isSelectingRole, setIsSelectingRole ] = useState(true)
-  const [ selectedRole, setSelectedRole ] = useState(null)
+  const [ selectedRole, setSelectedRole ] = useState()
   const [ iconSelectedRole, setIconSelectedRole ] = useState(corazon) 
+  const [ isLoadingUser, setLoadingUser ] = useState(true)
 
-  const roles = [ "Paciente", "Profesional de Salud", "Promotor de Salud" ]
+  useEffect(() => {
+    if(user !== null && user.groups !== undefined){
+      setLoadingUser(false)
+      if(user.groups.length == 1){
+        selectRole(user.groups[0].name)
+        setSelectedRole(user.groups[0].name)
+        setIsSelectingRole(false)
+      }
+    }
+  }, [user])
 
   const handleExit = () => {
     logout()
@@ -31,41 +41,41 @@ export default function Home({navigation}){
   }
 
   const selectRole = (rol) => {
-    console.log("Rol seleccionado: "+rol)
-    setIcon()
     setSelectedRole(rol)
+    setIcon(rol)
     setIsSelectingRole(false)
   }
 
-  const setIcon = () => {
-    console.log("genero: "+user.gender)
-    console.log("groups: "+user.groups)
-    console.log("selected rol"+selectedRole)
-    if(selectedRole == "Paciente"){
-      setIconSelectedRole((user.gender == "Femenino") ? paciente_f : paciente_m) 
-      // setIconSelectedRole((user.genero == "Femenino") ? 'imgUser/paciente_mujer.png' : 'imgUser/paciente_hombre.png') 
+  function setIcon(rol) {
+    if(rol == "Paciente"){
+      setIconSelectedRole((user.gender === "Femenino") ? paciente_f : paciente_m) 
     }
-    else if(selectedRole == "Profesional de Salud"){
-      setIconSelectedRole((user.gender == "Femenino") ? profds_f : profds_m) 
-      //setIconSelectedRole((user.genero == "Femenino") ? 'imgUser/pds_mujer.png' : 'imgUser/pds_hombre.png')
+    else if(rol == "Profesional de Salud"){
+      setIconSelectedRole((user.gender === "Femenino") ? profds_f : profds_m) 
     }
-    else if(selectedRole == "Promotor de Salud"){
-      setIconSelectedRole((user.gender == "Femenino") ? paciente_f : paciente_m) 
+    else if(rol == "Promotor de Salud"){
+      setIconSelectedRole((user.gender === "Femenino") ? paciente_f : paciente_m) 
     }
     else
       return setIconSelectedRole(corazon)
   }
 
   return(
-
     <View style={styles.container}>
     
-    {isSelectingRole && 
+    {isLoadingUser && 
     <>
-    <Text h2 style={styles.textoBienvenida}>Bienvenido!</Text>
-      {user &&<Text h2 style={styles.textoNombreUsuario}>{user.first_name+" "+user.last_name}</Text>}
-      {/* {user && <Text h2 style={styles.textoNombreUsuario}>{user.dni}</Text>}
-      {userToken && <Text h2 style={styles.textoNombreUsuario}>{userToken}</Text>} */}
+      <Image
+      style={{ width: 50, height: 50, margin:"2%"}}
+      source={require('recursos/cargando.gif')} 
+      />
+    </>
+    }
+
+    {!isLoadingUser && isSelectingRole && 
+    <>
+    {user && <Text h2 style={styles.textoBienvenida}>{user.gender === "Femenino" ? "Bienvenida!" : "Bienvenido!"}</Text>}
+      {user && <Text h2 style={styles.textoNombreUsuario}>{user.first_name+" "+user.last_name}</Text>}
     <Text h2 style={styles.textoBienvenida}>Seleccione un rol para continuar</Text>
     {user && user.groups.map(rol => 
       {return (<TouchableOpacity 
@@ -74,8 +84,8 @@ export default function Home({navigation}){
         onPress={() => selectRole(rol.name)}>
         <View style={styles.botonMenuHome}>
           <Image
-            style={{ width: 50, height: 50, margin:"2%"}}
-            // source={require('../assets/locationGeo.png')} 
+            style={{ width: 50, height: 50, margin:"2%", marginBottom:"3%"}}
+            source={require('recursos/cambiarRol.png')} 
           />
           <Text h2 style={styles.textoRol}>{rol.name}</Text> 
         </View>
@@ -84,30 +94,34 @@ export default function Home({navigation}){
     </>} 
     {!isSelectingRole && 
     <>
-    <View style={{flexDirection: 'row', alignSelf: 'center', width:"100%", backgroundColor: '#00a7ba'}}>
-          <Image
-            style={{ width: 70, height: 70, backgroundColor:"#00a7ba"}}
-            source={iconSelectedRole} 
-          />
-          <Text h2 style={styles.textoRol}>{selectedRole}</Text> 
-      </View>
-    <Text h2 style={styles.textoBienvenida}>Bienvenido!</Text>
-      {user &&<Text h2 style={styles.textoNombreUsuario}>{user.first_name+" "+user.last_name}</Text>}
-      {/* {user && <Text h2 style={styles.textoNombreUsuario}>{user.dni}</Text>}
-      {userToken && <Text h2 style={styles.textoNombreUsuario}>{userToken}</Text>} */}
-    <Text h2 style={styles.textoBienvenida}>Seleccione un rol para continuar</Text>
-      {/* <View>
-        <CheckBox
-          title={<Text>Cambiar vista: Paciente/Profesional</Text>}
-          checked={opcionesRol}
-          onPress={() => {
-            cambiarTextos()
-            cambiarVistaOPCRol(!opcionesRol)}}
+    <View style={{flexDirection: 'row', width:"100%", backgroundColor: '#00a7ba'}}>
+        <Image
+          style={{ width: 70, height: 70, backgroundColor:"#00a7ba"}}
+          source={iconSelectedRole} 
         />
-      </View> */}
-      <Divider style={styles.divisorInferior} />
-      {
-        selectedRole == "Profesional de Salud" && 
+        {selectedRole !== "Paciente" && <Text h2 style={styles.textoBarraSuperior}>{selectedRole}</Text> }
+        {selectedRole === "Paciente" && <Text h2 style={styles.textoBarraSuperiorPaciente}>{selectedRole}</Text> }
+        {user && user.groups.length > 1 &&
+        <TouchableOpacity 
+          style={{width:"30%", paddingTop:"5%"}}       
+          onPress={() => setIsSelectingRole(true)}>
+          <View style={styles.botonMenuHome}>
+            <Image
+              style={{ width: 30, height: 30, margin:"2%"}}
+              source={require('recursos/cambiarRol.png')} 
+            />
+            <Text h2 style={styles.textoCambiarRol}>Cambiar</Text> 
+          </View>
+        </TouchableOpacity>
+        }
+        
+    </View>
+      {user && <Text h2 style={styles.textoBienvenida}>{user.gender === "Femenino" ? "Bienvenida!" : "Bienvenido!"}</Text>}
+      {user && <Text h2 style={styles.textoNombreUsuario}>{user.first_name+" "+user.last_name}</Text>}
+    <Text h2 style={styles.textoBienvenida}>Seleccione una acción para continuar</Text>
+    <Divider style={styles.divisorInferior} />
+
+      {selectedRole == "Profesional de Salud" && 
         <>
         <TouchableOpacity 
           style={{width:"100%", padding: "2%"}}       
@@ -154,10 +168,10 @@ export default function Home({navigation}){
         style={{width:"100%", padding: "2%"}}       
         onPress={() => navigation.navigate('Perfil')}>
         <View style={styles.botonMenuHome}>
-          {/*<Image
+          <Image
             style={{ width: 60, height: 60, margin:"1%"}}
-            source={require('../assets/abuelos.png')} 
-          />*/}
+            source={iconSelectedRole} 
+          />
           <Text h2 style={styles.textoRol}>Perfil de usuario</Text> 
         </View>
       </TouchableOpacity>
@@ -246,6 +260,13 @@ const styles = StyleSheet.create({
       justifyContent: 'space-evenly',
     },
 
+    botonCambiarRol:{
+      width: '95%',
+      padding: '5%',
+      backgroundColor: '#5cc101',
+      justifyContent: 'space-evenly',
+    },
+
     botonTexto:{
       color: "white",
       fontSize: 30,
@@ -253,9 +274,33 @@ const styles = StyleSheet.create({
 
     textoRol:{
       paddingLeft:"5%",
-      paddingTop:"4%",
+      paddingTop:"5%",
       color: "white",
       fontSize: 30,
+    },
+
+    textoBarraSuperior:{
+      paddingLeft:"2%",
+      width:"50%",
+      paddingTop:"1%",
+      color: "white",
+      fontSize: 30,
+    },
+
+    textoBarraSuperiorPaciente:{
+      paddingLeft:"2%",
+      width:"50%",
+      paddingTop:"5%",
+      color: "white",
+      fontSize: 30,
+    },
+
+    textoCambiarRol:{
+      width: "100%",
+      paddingLeft:"5%",
+      paddingTop:"4%",
+      color: "white",
+      fontSize: 20,
     },
 
     textoBienvenida:{

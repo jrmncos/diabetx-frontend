@@ -6,7 +6,7 @@ import dniBordeScanner from 'recursos/dd.png'
 import dniEjemplo from 'recursos/dniScannerExample.png'
 import { RegistroContext } from 'context/RegistroContext'
 
-export default function DniScanner({ isScanning, validador }) {
+export default function DniScanner({ isScanning, setError }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
  
@@ -22,18 +22,17 @@ export default function DniScanner({ isScanning, validador }) {
   const handleBarCodeScanned = ({ type, data }) => {
     if(type == 2048){
         const datosDNI = data.split("@")
-        
-        console.log(datosDNI)
         setDni(datosDNI[4])
         setNombre(datosDNI[2])
         setApellido(datosDNI[1])
         setGenero(datosDNI[3] == 'F' ? 'Femenino' : 'Masculino')
         setBod(datosDNI[6])
-        setScanned(true);
         isScanning(false);
+        setError(false)
+        setScanned(true);
     }
     else{
-        Alert.alert("Debe escanear un DNI argentino.")
+        Alert.alert("Se debe escanear un DNI argentino")
         setScanned(true)
     }
 

@@ -13,6 +13,7 @@ export async function createUser(user, token)  {
         'bod':user.bod.split('/').reverse().join('-'),
         'expo_token':token
     }
+
     let res
     await fetch('http://'+DEV_IP+':8000/api/users/',{
         method: 'POST',
@@ -28,7 +29,6 @@ export async function createUser(user, token)  {
         }
         else{
             res = 201}
-        //return response.json();
     })
-    return res
+   return res
 }

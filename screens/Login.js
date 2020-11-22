@@ -1,5 +1,5 @@
 import React , { useState, useEffect, useRef } from 'react'
-import { StyleSheet, Text, TextInput, View, Image, Platform  } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Image, Platform, Alert  } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
 import { Button, Input, Icon, Header, Divider } from 'react-native-elements';
@@ -12,7 +12,6 @@ export default function Login({navigation}){
     const {status, login, isLoginLoading, hasLoginError} = useAuth()
     
     useEffect(() => {
-      console.log(status)
       if(status == "signIn"){
         navigation.navigate('Inicio')
       }
@@ -27,7 +26,7 @@ export default function Login({navigation}){
     
     return(
       <View style={styles.container}>
-        <Text style = {styles.textSubtitulo}> Sistema de seguimiento de Enfermdades Cronicas no transmisibles</Text>
+        <Text style = {styles.textSubtitulo}> Sistema de Seguimiento de Enfermdades Cronicas No Transmisibles</Text>
 
         <Text h2 style={styles.ingresar}>INGRESAR</Text> 
         
@@ -87,7 +86,7 @@ export default function Login({navigation}){
           </>
         }
         {
-          hasLoginError && error
+          hasLoginError && Alert.alert("Las credenciales no son correctas")
         }
       <Text style = {styles.textFirma}> Todos los derechos reservados 2020: Gerc0s, Dub.</Text>
       </View>
