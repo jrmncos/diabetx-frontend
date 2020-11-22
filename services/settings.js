@@ -22,4 +22,5 @@ export const PROFESIONAL_BY_DNI = 'api/profesionales/dni/'
 
 export const PACIENTE_ECNT = 'api/pacientes/ecnts/'
 
+export const NOTIFICACION = '/api/notification/'
 
