@@ -39,10 +39,10 @@ export default function DniScanner({ isScanning, setError }) {
   };
   
   if (hasPermission === null) {
-    return <Text>Solicitando permisos de cámara.</Text>;
+    return <Text style={styles.informacion}>Validando permisos</Text>
   }
   if (hasPermission === false) {
-    return <Text>No tengo acceso a la cámara, es necesario para escanear tu DNI.</Text>;
+    return <Text>Se han denegado los permisos de cámara, es necesario para escanear su DNI.</Text>
   }
 
   return (
@@ -55,7 +55,7 @@ export default function DniScanner({ isScanning, setError }) {
       
       <View style={styles.textoCam}>
         <Text h2 style={styles.informacion}>
-            Apuntá con tu cámara a tu DNI
+            Apunte con la cámara a su DNI
         </Text>
       </View>
       <View style={styles.ejemploCam}>
@@ -136,11 +136,18 @@ const styles = StyleSheet.create({
     top: '25%'
     },
   informacion: {
-    color: "white",
+    color: "gray",
     textAlign:'center',
     fontSize: 30,
     paddingTop: "5%",
     paddingBottom: "5%",
+    },
+    textoPermisos: {
+      color: "white",
+      textAlign:'center',
+      fontSize: 30,
+      paddingTop: "5%",
+      paddingBottom: "5%",
     },
   botonVolverAtras: {
     width:'90%',

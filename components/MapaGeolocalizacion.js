@@ -11,8 +11,6 @@ export default function Geolocalizacion({navigation}){
     const [checkDiabetes, setCheckDiabetes] = useState(false)
     const [checkEpoc, setCheckEpoc] = useState(false)
     const [checkHipertension, setCheckHipertension] = useState(false)
-    const [botonState, setBotonState ] = useState(false)
-
     const checks = [checkEpoc, checkHipertension, checkDiabetes]
 
     let  filterEcnt = new Map();
@@ -22,9 +20,9 @@ export default function Geolocalizacion({navigation}){
     filterEcnt.set('hipertension', checkHipertension);
 
     let colores = new Map();
-    colores.set('diabetes', '#50DC22');
-    colores.set('epoc', '#DC4D22');
-    colores.set('hipertension', '#D922DC');
+    colores.set('diabetes', 'rgba(250, 229, 127,0.7)');
+    colores.set('hipertension', 'rgba(0, 246, 252,0.7)');
+    colores.set('epoc', 'rgba(217, 77, 245, 0.7)');
     
     useEffect(()=>{
       fetch(URL_ROOT+USERS)
@@ -43,11 +41,11 @@ export default function Geolocalizacion({navigation}){
     return(
       <View>
         <Text h2 style={styles.registrarse}>
-          Mapa ECNTS
+          Mapa ECNT
         </Text>
 
         <Text h2 style={styles.textSubtitulo}>
-          Recuerda usar los filtros para ver los puntos en el mapa
+          Use los filtros para ver los pacientes en el mapa
         </Text>
         <View style={{margin:"1%", overflow: 'hidden' ,borderWidth:2, borderColor:"rgba(0, 204, 0, 0.5)", borderRadius: 10}}>
           <MapView style={styles.mapStyle} 
@@ -64,7 +62,8 @@ export default function Geolocalizacion({navigation}){
             return (<Circle
                     key={paciente.dni}
                     center = {{latitude: parseFloat(paciente.latitude), longitude: parseFloat(paciente.longitude)}}
-                    radius = { 150 }
+                    radius = { 80 }
+                    strokeColor={'rgba(0,0, 0)'}
                     strokeWidth = { 1 }
                     strokeColor = { '#0000' }
                     fillColor = { filterEcnt.get(paciente.ecnt) ? colores.get(paciente.ecnt) : 'rgba(0,0,0,0)'  }
@@ -83,7 +82,7 @@ export default function Geolocalizacion({navigation}){
             <View style={checkDiabetes ? styles.botonFiltroECNTActivado : styles.botonFiltroECNTDesactivado}>
               <Image
                 style={{ width: 30, height: 30, margin:"2%"}}
-                source={require('recursos/cambiarRol.png')} 
+                source={require('recursos/sqAmarillo.png')} 
               />
               <Text h2 style={styles.textoBotonFiltroECNT}>Diabetes</Text> 
             </View>
@@ -97,7 +96,7 @@ export default function Geolocalizacion({navigation}){
             <View style={checkHipertension ? styles.botonFiltroECNTActivado : styles.botonFiltroECNTDesactivado}>
               <Image
                 style={{ width: 30, height: 30, margin:"2%"}}
-                source={require('recursos/cambiarRol.png')} 
+                source={require('recursos/sqCian.png')} 
               />
               <Text h2 style={styles.textoBotonFiltroECNT}>Hipertensión</Text> 
             </View>
@@ -111,7 +110,7 @@ export default function Geolocalizacion({navigation}){
             <View style={checkEpoc ? styles.botonFiltroECNTActivado : styles.botonFiltroECNTDesactivado}>
               <Image
                 style={{ width: 30, height: 30, margin:"2%"}}
-                source={require('recursos/cambiarRol.png')} 
+                source={require('recursos/sqVioleta.png')} 
               />
               <Text h2 style={styles.textoBotonFiltroECNT}>Epoc</Text> 
             </View>

@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from 'react'
-import { StyleSheet, Text, View, Button} from 'react-native';
-import { Input, SearchBar, ListItem} from 'react-native-elements'
+import { StyleSheet, Text, View, Image} from 'react-native';
+import { Input, SearchBar, Button} from 'react-native-elements'
 import PacienteList from 'components/PacienteList'
 import { useUser } from 'hooks/useUser'
 import { useAuth } from 'hooks/useAuth'
 import getProfesional from 'services/getProfesional'
 import addPaciente from 'services/addPaciente'
+import busqueda from 'recursos/busqueda.png'
 
 export default function Panel({navigation}){
   const {user} = useUser()
@@ -41,27 +42,38 @@ export default function Panel({navigation}){
 
   return(
     <View>
-      <SearchBar
-        placeholder="Buscar por dni..."
-        onChangeText={(value) => handleSearchBar(value)}
-        value={search}
-        containerStyle={{backgroundColor: "#00a7ba"}}
-        inputContainerStyle={{backgroundColor: "#00a7ba"}}
-        inputStyle={{color:"white"}}
-        placeholderTextColor={"white"}
-        searchIcon={{color:"white"}}
-      />
+      <View style={{flexDirection: 'row', width:"100%", backgroundColor: '#00a7ba'}}>
+      <Image
+          style={{ width: 50, height: 50, backgroundColor:"#00a7ba", margin:"2%"}}
+          source={busqueda} 
+        />
+        <SearchBar
+          style={{width:"30%", paddingRight:"70%"}}
+          placeholder="Buscar por DNI"
+          onChangeText={(value) => handleSearchBar(value)}
+          value={search}
+          keyboardType="numeric"
+          containerStyle={{backgroundColor: "#00a7ba"}}
+          inputContainerStyle={{backgroundColor: "#00a7ba"}}
+          inputStyle={styles.textoFiltro}
+          searchIcon={null}
+          placeholderTextColor={"white"}
+        />
+      </View>
 
       <PacienteList pacientesFiltered={ pacientesFiltered }/>
 
-      <Text>Agregar Paciente</Text>
+      <Text style={styles.textSubtitulo}>Agregar Paciente</Text>
         <Input
             placeholder='DNI' 
             keyboardType = 'numeric'         
             onChangeText={(value) => setDni(value)}
             value={dni}
         />
-        <Button onPress={handleAddPaciente} title='Agregar'/>
+        <Button 
+          buttonStyle={styles.botonAzul} 
+          onPress={handleAddPaciente} 
+          title='Agregar'/>
     </View>
   )
 }
@@ -72,6 +84,48 @@ const styles = StyleSheet.create({
       backgroundColor: '#fff',
       alignItems: 'center',
       justifyContent: 'center',
+    },
+    textSubtitulo:{
+      fontSize: 30,
+      textAlign: "center",
+      marginTop: "5%",
+      marginBottom: "5%",
+      color: "#696969",
+    },
+    titulo: {
+      color:"#00a7ba",
+      fontSize: 40,
+      paddingTop:"2%",
+      paddingBottom:"2%",
+    },
+    textoFiltro:{
+      paddingLeft:"60%",
+      paddingTop:"5%",
+      fontSize: 30,
+    },
+
+    botonAzul: {
+      margin: "2%",
+      padding:"5%",
+      borderRadius:10, 
+      flexDirection: 'row', 
+      alignSelf: 'center', 
+      width:"97%", 
+      backgroundColor: '#00a7ba',
+      borderWidth: 1,
+      borderColor: "#00707d",
+      shadowColor: 'rgba(0, 0, 0, 1)',
+      shadowOpacity: 1,
+      elevation: 5,
+      shadowRadius: 15 ,
+      shadowOffset : { width: 1, height: 13},
+    },
+    botonTexto:{
+      padding:"5%",
+      width:"100%",
+      textAlign:"center",
+      color: "white",
+      fontSize: 35,
     },
   });
   

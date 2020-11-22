@@ -13,9 +13,6 @@ import profds_m from 'imgUsuario/pds_hombre.png'
 import corazon from 'recursos/corazon.png'
 
 export default function Home({navigation}){
-  // const [opcionesRol, cambiarVistaOPCRol] = useState(true)
-  // const [textoRol, setTextoRol] = useState("Profesional de la salud")
-  // const [imagenRol, setImagenRol] = useState()
   const {logout, userToken} = useAuth()
   const {user} = useUser()
 
@@ -42,22 +39,22 @@ export default function Home({navigation}){
 
   const selectRole = (rol) => {
     setSelectedRole(rol)
-    setIcon(rol)
+    setIconSelectedRole(getIcon(rol))
     setIsSelectingRole(false)
   }
 
-  function setIcon(rol) {
+  function getIcon(rol) {
     if(rol == "Paciente"){
-      setIconSelectedRole((user.gender === "Femenino") ? paciente_f : paciente_m) 
+      return ((user.gender === "Femenino") ? paciente_f : paciente_m) 
     }
     else if(rol == "Profesional de Salud"){
-      setIconSelectedRole((user.gender === "Femenino") ? profds_f : profds_m) 
+      return ((user.gender === "Femenino") ? profds_f : profds_m) 
     }
     else if(rol == "Promotor de Salud"){
-      setIconSelectedRole((user.gender === "Femenino") ? paciente_f : paciente_m) 
+      return((user.gender === "Femenino") ? paciente_f : paciente_m) 
     }
     else
-      return setIconSelectedRole(corazon)
+      return corazon
   }
 
   return(
@@ -74,8 +71,8 @@ export default function Home({navigation}){
 
     {!isLoadingUser && isSelectingRole && 
     <>
-    {user && <Text h2 style={styles.textoBienvenida}>{user.gender === "Femenino" ? "Bienvenida!" : "Bienvenido!"}</Text>}
-      {user && <Text h2 style={styles.textoNombreUsuario}>{user.first_name+" "+user.last_name}</Text>}
+    {user && <Text h2 style={styles.textoBienvenida}>{user.gender === "Femenino" ? "¡Bienvenida!" : "¡Bienvenido!"}</Text>}
+    {user && <Text h2 style={styles.textoNombreUsuario}>{user.first_name+" "+user.last_name}</Text>}
     <Text h2 style={styles.textoBienvenida}>Seleccione un rol para continuar</Text>
     {user && user.groups.map(rol => 
       {return (<TouchableOpacity 
@@ -85,7 +82,7 @@ export default function Home({navigation}){
         <View style={styles.botonMenuHome}>
           <Image
             style={{ width: 50, height: 50, margin:"2%", marginBottom:"3%"}}
-            source={require('recursos/cambiarRol.png')} 
+            source={getIcon(rol.name)} 
           />
           <Text h2 style={styles.textoRol}>{rol.name}</Text> 
         </View>
@@ -116,7 +113,7 @@ export default function Home({navigation}){
         }
         
     </View>
-      {user && <Text h2 style={styles.textoBienvenida}>{user.gender === "Femenino" ? "Bienvenida!" : "Bienvenido!"}</Text>}
+      {user && <Text h2 style={styles.textoBienvenida}>{user.gender === "Femenino" ? "¡Bienvenida!" : "¡Bienvenido!"}</Text>}
       {user && <Text h2 style={styles.textoNombreUsuario}>{user.first_name+" "+user.last_name}</Text>}
     <Text h2 style={styles.textoBienvenida}>Seleccione una acción para continuar</Text>
     <Divider style={styles.divisorInferior} />
@@ -274,7 +271,7 @@ const styles = StyleSheet.create({
 
     textoRol:{
       paddingLeft:"5%",
-      paddingTop:"5%",
+      paddingTop:"4%",
       color: "white",
       fontSize: 30,
     },
