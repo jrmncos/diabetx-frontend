@@ -1,4 +1,4 @@
-export const DEV_IP = '192.168.1.38'
+export const DEV_IP = '192.168.1.40'
 
 export const URL_ROOT = 'http://'+DEV_IP+':8000/'
 
@@ -19,4 +19,7 @@ export const LOGIN = '/o/token'
 export const PROFESIONAL = 'api/profesionales/'
 
 export const PROFESIONAL_BY_DNI = 'api/profesionales/dni/'
+
+export const PACIENTE_ECNT = 'api/pacientes/ecnts/'
+
 
