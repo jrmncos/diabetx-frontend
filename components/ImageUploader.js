@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Text, Button, Image, View, Platform } from 'react-native';
+import { Button, Image, View, Platform, Dimensions } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import Constants from 'expo-constants';
 
 export default function ImagePickerExample({setImageNotificacion}) {
   const [image, setImage] = useState(null);
@@ -20,7 +19,7 @@ export default function ImagePickerExample({setImageNotificacion}) {
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
+      //allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
     });
@@ -35,8 +34,8 @@ export default function ImagePickerExample({setImageNotificacion}) {
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Button title="Pick an image from camera roll" onPress={pickImage} />
-      {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+      <Button title="Elegir imagen desde el almacenamiento interno" onPress={pickImage} />
+      {image && <Image source={{ uri: image }} style={{ width: Dimensions.get('window').width, height:Dimensions.get('window').height }} />}
     </View>
   );
 }
