@@ -12,6 +12,8 @@ import profds_f from 'imgUsuario/pds_mujer.png'
 import profds_m from 'imgUsuario/pds_hombre.png'
 import corazon from 'recursos/corazon.png'
 
+import Alertas from 'components/Alertas'
+
 export default function Home({navigation}){
   const {logout, userToken} = useAuth()
   const {user} = useUser()
@@ -110,10 +112,12 @@ export default function Home({navigation}){
           </View>
         </TouchableOpacity>
         }
-        
     </View>
-      {user && <Text h2 style={styles.textoBienvenida}>{user.gender === "Femenino" ? "¡Bienvenida!" : "¡Bienvenido!"}</Text>}
-      {user && <Text h2 style={styles.textoNombreUsuario}>{user.first_name+" "+user.last_name}</Text>}
+
+    {selectedRole == "Paciente" && <Alertas/>}
+
+    {user && <Text h2 style={styles.textoBienvenida}>{user.gender === "Femenino" ? "¡Bienvenida!" : "¡Bienvenido!"}</Text>}
+    {user && <Text h2 style={styles.textoNombreUsuario}>{user.first_name+" "+user.last_name}</Text>}
     <Text h2 style={styles.textoBienvenida}>Seleccione una acción para continuar</Text>
     <Divider style={styles.divisorInferior} />
 
@@ -157,9 +161,8 @@ export default function Home({navigation}){
         </>
         
       }
-      {
-        selectedRole == "Paciente" &&
-        <>
+      {selectedRole == "Paciente" && 
+      <>
       <TouchableOpacity 
         style={{width:"100%", padding: "2%"}}       
         onPress={() => navigation.navigate('Perfil')}>
@@ -315,6 +318,7 @@ const styles = StyleSheet.create({
       backgroundColor: "#00a7ba",
       width: "95%",
       height: 1,
+      margin:"2%",
     }
 
   });
