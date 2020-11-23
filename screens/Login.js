@@ -28,7 +28,7 @@ export default function Login({navigation}){
     
     return(
       <View style={styles.container}>
-        <Text style = {styles.textSubtitulo}> Sistema de Seguimiento de Enfermdades Cronicas No Transmisibles</Text>
+        <Text style = {styles.textSubtitulo}> Sistema de Seguimiento de Enfermdades Crónicas No Transmisibles</Text>
 
         <Text h2 style={styles.ingresar}>INGRESAR</Text> 
         
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
       color:"#00a7ba",
       fontSize: 40,
       paddingTop:"2%",
-      paddingBottom:"2%",
+      paddingBottom:"5%",
     },
 
     textoFormulario: {
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
       fontSize: 15,
       textAlign: "center",
       marginTop: "10%",
-      marginBottom: "10%",
+      marginBottom: "5%",
       color: "#696969",
     },
 
