@@ -5,12 +5,14 @@ import { useUser } from 'hooks/useUser';
 import alerta from 'recursos/alertas.png'
 
 export default function Alerta(){
-  const {user} = useUser()
+  const { user } = useUser()
   const [ cargandoAlertas, setCargandoAlertas ] = useState(true)
   const [ alertas, setAlertas ] = useState([])
-  useEffect(() => {
 
-    setCargandoAlertas(false)
+  useEffect(() => {
+    if(alertas.length > 0){
+      setCargandoAlertas(false)
+    }
     return () => {
     }
   }, [])

@@ -12,7 +12,7 @@ import profds_f from 'imgUsuario/pds_mujer.png'
 import profds_m from 'imgUsuario/pds_hombre.png'
 import corazon from 'recursos/corazon.png'
 
-import Alertas from 'components/Alertas'
+import BarraAlerta from 'components/BarraAlerta'
 
 export default function Home({navigation}){
   const {logout, userToken} = useAuth()
@@ -67,6 +67,17 @@ export default function Home({navigation}){
       style={{ width: 50, height: 50, margin:"2%"}}
       source={require('recursos/cargando.gif')} 
       />
+      <TouchableOpacity
+        style={{width:"100%", padding: "2%"}}       
+        onPress={() => { handleExit()}}>
+        <View style={styles.botonSalir}>
+          <Image
+            style={{ width: 50, height: 50, margin:"2%"}}
+            source={require('../assets/cerrar-sesion.png')} 
+          />
+          <Text h2 style={styles.textoRol}>Salir</Text> 
+        </View>
+      </TouchableOpacity>
     </>
     }
 
@@ -114,7 +125,7 @@ export default function Home({navigation}){
         }
     </View>
 
-    {selectedRole == "Paciente" && <Alertas/>}
+    {selectedRole == "Paciente" && <BarraAlerta/>}
 
     {user && <Text h2 style={styles.textoBienvenida}>{user.gender === "Femenino" ? "¡Bienvenida!" : "¡Bienvenido!"}</Text>}
     {user && <Text h2 style={styles.textoNombreUsuario}>{user.first_name+" "+user.last_name}</Text>}

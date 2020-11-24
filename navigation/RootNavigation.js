@@ -39,7 +39,10 @@ export default function RootNavigation() {
       <Stack.Screen name="FormACDiabetes" component={FormACDiabetes} title="Formulario Autocontrol Diabetes" />
       </>
     ): (
+      <>
       <Stack.Screen name="Iniciar sesion" component={Login} title="Iniciar Sesión" />
+      <Stack.Screen name="Registro" component={Registro} title="Registrar Usuario" />
+      </>
     )}
     </Stack.Navigator>
   )
