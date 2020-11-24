@@ -7,15 +7,21 @@ import Geolocalizacion from 'screens/Geolocalizacion';
 import Panel from 'screens/Panel';
 import Registro from 'screens/Registro';
 import Perfil from 'screens/Perfil';
-import DniScanner from 'components/DniScanner';
 import Notificacion from 'screens/Notificacion';
+import NotificacionDetalle from 'screens/NotificacionDetalle'
 import FormACDiabetes from 'components/FormACDiabetes'
 import { useAuth } from 'hooks/useAuth'
-import Splash from 'screens/Splash'
 
 const Stack = createStackNavigator()
 
-export default function RootNavigation() {
+
+export const navigationRef = React.createRef();
+
+export function navigate(name, params) {
+  navigationRef.current?.navigate(name, params);
+}
+
+export function RootNavigation() {
   const {status} = useAuth()
 
   return (
@@ -37,6 +43,7 @@ export default function RootNavigation() {
       <Stack.Screen name="Perfil" component={Perfil} title="Perfil de Usuario" />
       <Stack.Screen name="Notificacion" component={Notificacion} title="Notificaciones" />
       <Stack.Screen name="FormACDiabetes" component={FormACDiabetes} title="Formulario Autocontrol Diabetes" />
+      <Stack.Screen name="NotificacionDetalle" component={NotificacionDetalle} title="NotificacionDetalle"/>
       </>
     ): (
       <>
