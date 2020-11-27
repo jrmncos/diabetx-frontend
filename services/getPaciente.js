@@ -7,7 +7,6 @@ const validate = apiResponse => {
 
 export default function getPaciente({dni, accessToken}){
     console.log("Voy a pedir el paciente con dni: " + String(dni))
-    console.log("El token: " + accessToken)
     const request = new Request(URL_ROOT+ PACIENTE_BY_DNI +String(dni), {
         method: 'GET',
         headers: new Headers({ 

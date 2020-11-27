@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, Image, Alert, ScrollView } from "react-native";
+import { StyleSheet, Text, View, Image, TextInput, ScrollView, Alert } from "react-native";
 
-import { Button, Input, Icon, Divider, CheckBox } from "react-native-elements";
+import { Button, Icon, Divider, CheckBox } from "react-native-elements";
+
+import addACDiabetes from 'services/addACDiabetes'
+import {useAuth} from 'hooks/useAuth'
+import getPaciente from 'services/getPaciente';
+import { useNavigation } from '@react-navigation/native';
+import {useUser} from 'hooks/useUser'
 
 import * as Network from 'expo-network';
 
-export default function FormECNT({ navigation }) {
+export default function FormACDiabetes() {
 
   const [ diabetesMatutino, setDiabetesMatutino ] = useState(false)
   const [ diabetesComida, setDiabetesComida ] = useState(false)
 
-  const [ diabetesMatutinoFalse, setDiabetesMatitunoFalse ] = useState(false)
+  const [ diabetesMatutinoFalse, setDiabetesMatutinoFalse ] = useState(false)
   const [ diabetesMatutinoTrue, setDiabetesMatutinoTrue ] = useState(false)
   const [ glucoMatutino, setGlucoMatutino ] = useState('')
 
@@ -18,22 +24,96 @@ export default function FormECNT({ navigation }) {
   const [ diabetesComidaTrue, setDiabetesComidaTrue ] = useState(false)
   const [ glucoComida, setGlucoComida ] = useState('')
 
-  useEffect(() => {
-    if(Network.getNetworkStateAsync() == Network.NetworkStateType.UNKNOWN || 
+  const {userToken} = useAuth()
+  const {dni, user} = useUser()
+  const [paciente, setPaciente] = useState()
+  const [loadingPaciente, setLoadingPaciente] = useState(true)   
+
+  const [ ACdelDia, setACdelDia ] = useState(null)
+  const navigation = useNavigation()
+
+  const acdiabetes = {
+    'id': null,
+    'paciente_id': null,
+    'glucemia_matutina': null,
+    'opcional_glucemia_matutina': null,
+    'glucemia_post_comida_principal': null,
+    'opcional_glucemia_comida_principal': null
+  }
+
+  function cargarACdelDia(autocontroles) {
+    let fecha_actual = new Date().toJSON().slice(0,10)
+    console.log("Fecha actual: "+fecha_actual)
+    autocontroles.map(ac => {  
+        let fecha_ac = new Date(Date.parse(ac.fecha_hora_registro)).toJSON().slice(0,10)
+        console.log("Fecha: "+fecha_ac)
+        if(fecha_ac == fecha_actual){
+          acdiabetes.id = ac.id
+          acdiabetes.paciente_id = ac.paciente_id
+          acdiabetes.glucemia_matutina = ac.glucemia_matutina
+          acdiabetes.opcional_glucemia_matutina= ac.opcional_glucemia_matutina
+          acdiabetes.glucemia_post_comida_principal = ac.glucemia_post_comida_principal
+          acdiabetes.opcional_glucemia_comida_principal= ac.opcional_glucemia_comida_principal
+          
+          cargarDatosFormularioAC()
+          setACdelDia(ac.id)
+          return
+        }
+      }) 
+  }
+
+  function cargarDatosFormularioAC() { 
+    (acdiabetes.glucemia_matutina) ? setDiabetesMatutinoTrue(true) : setDiabetesMatutinoFalse(true);
+    (acdiabetes.glucemia_post_comida_principal) ? setDiabetesComidaTrue(true) : setDiabetesComidaFalse(true);
+
+    setDiabetesMatutino(acdiabetes.glucemia_matutina)
+    setGlucoMatutino(acdiabetes.opcional_glucemia_matutina)
+    setDiabetesComida(acdiabetes.glucemia_post_comida_principal)
+    setGlucoComida(acdiabetes.opcional_glucemia_comida_principal)
+  }
+
+  useEffect(()=> {
+    console.log("Effect del Perfil")
+     async function fetchPaciente() {       
+       const paciente = await getPaciente({dni, accessToken:userToken})
+       setPaciente(paciente)
+       cargarACdelDia(paciente.autocontrol_diabetes)
+       setLoadingPaciente(false)
+
+      if(Network.getNetworkStateAsync() == Network.NetworkStateType.UNKNOWN || 
         Network.getNetworkStateAsync() == Network.NetworkStateType.NONE){
+      //hacer algo en caso de no tener internet
+      }
+      else{
+        //en este caso tengo acceso a internet
+      }
+     } 
+     fetchPaciente()
+   },[])
 
-        console.log("No tengo acceso a internet! :c")
-    }
-    else{
-      console.log("Tengo acceso a internet! c:")
-    }
-  })
-
+  const handleSubmitSave = () => { 
+    acdiabetes.id = ACdelDia
+    acdiabetes.paciente_id = paciente.id
+    acdiabetes.glucemia_matutina = diabetesMatutino
+    acdiabetes.opcional_glucemia_matutina= glucoMatutino
+    acdiabetes.glucemia_post_comida_principal = diabetesComida
+    acdiabetes.opcional_glucemia_comida_principal= glucoComida
+    
+    addACDiabetes({accessToken: userToken, acdiabetes: acdiabetes})
+    Alert.alert("Se ha cargado el autocontrol con satisfactoriamente")
+    navigation.navigate('Inicio')
+  }
 
   return (
-    
-    
-    <ScrollView style={styles.scrollView}>
+    <>
+    {loadingPaciente && 
+    <Image
+    style={{ width: 50, height: 50, margin:"2%"}}
+    source={require('recursos/cargando.gif')} 
+    />}
+
+    {!loadingPaciente && 
+      <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
         <Text style={styles.registrarse}>
           Autocontrol Diabetes
@@ -60,7 +140,7 @@ export default function FormECNT({ navigation }) {
                 setDiabetesMatutino(true);
 
                 setDiabetesMatutinoTrue(true)
-                setDiabetesMatitunoFalse(false)
+                setDiabetesMatutinoFalse(false)
               }}
             />
           </View> 
@@ -72,13 +152,28 @@ export default function FormECNT({ navigation }) {
                 setDiabetesMatutino(false)
 
                 setDiabetesMatutinoTrue(false)
-                setDiabetesMatitunoFalse(true)
+                setDiabetesMatutinoFalse(true)
               }}
             />
           </View> 
         </View>
 
-      <Input
+        <View style={styles.vistaTituloForm}>
+          <Image
+              style={{ marginLeft:"2%", width:40, height:40}}
+              source={require('recursos/glucometro.png')} 
+            />
+          <TextInput
+            placeholder='Medida Glucometro (opcional)'
+            style={styles.textoFormulario}
+            keyboardType='numeric'
+            onChangeText={value => { 
+              setGlucoMatutino(value)
+            }}
+            value={glucoMatutino}
+          />
+        </View>  
+      {/* <TextInput
             placeholder="Medida glucometro"
             style={styles.textoFormulario}
             keyboardType="numeric"
@@ -89,7 +184,7 @@ export default function FormECNT({ navigation }) {
               onChange(value);
               setGlucoMatutino(value)
             }}
-      />
+      /> */}
 
       <View style={{flexDirection: 'row', alignSelf: 'center', width:"100%", backgroundColor: '#00a7ba'}}>
         <Image
@@ -130,7 +225,22 @@ export default function FormECNT({ navigation }) {
         </View> 
       </View>
 
-      <Input
+      <View style={styles.vistaTituloForm}>
+          <Image
+              style={{ marginLeft:"2%", width:40, height:40}}
+              source={require('recursos/glucometro.png')} 
+            />
+          <TextInput
+            placeholder='Medida Glucometro (opcional)'
+            style={styles.textoFormulario}
+            keyboardType='numeric'
+            onChangeText={value => { 
+              setGlucoComida(value)
+            }}
+            value={glucoComida}
+          />
+        </View>  
+      {/* <TextInput
             placeholder="Medida glucometro"
             style={styles.textoFormulario}
             keyboardType="numeric"
@@ -141,19 +251,19 @@ export default function FormECNT({ navigation }) {
               onChange(value);
               setGlucoComida(value)
             }}
-      />
+      /> */}
      
       <Divider style={styles.divisorInferior} />
 
       <Button   
-          image={{ name: 'check-circle', color: '#fff' }}
           titleStyle={styles.botonTexto}    
           buttonStyle={styles.botonAzulMarino}
           title="Completar control" 
-          onPress={()=> Alert.alert("Matutino: "+diabetesMatutino+", Comida: "+diabetesComida)}/> 
+          onPress={()=> handleSubmitSave() }/> 
 
       </View></ScrollView>
- 
+    }
+    </>
   );
 }
 
@@ -171,6 +281,12 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 26,
   },
+
+  vistaTituloForm: {
+    width:"100%", 
+    flexDirection:"row",
+    marginBottom:"3%",
+    },
 
   scrollView: {
     backgroundColor:"#FFFFFF",
@@ -236,8 +352,14 @@ const styles = StyleSheet.create({
   },
 
   textoFormulario: {
+    width:"85%",
+    marginLeft:"1%",
     color: "#00a7ba",
-    fontSize: 30,
+    fontSize: 25,
+    textAlign: "left",
+    padding:"1%",
+    borderColor: 'rgba(0, 167, 186, 0.2)',
+    borderWidth: 1,
   },
 
   textoFormularioNA: {

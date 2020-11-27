@@ -4,7 +4,7 @@ import { useUser } from 'hooks/useUser';
 
 import alerta from 'recursos/alertas.png'
 
-export default function Alerta(){
+export default function BarraAlerta(){
   const { user } = useUser()
   const [ cargandoAlertas, setCargandoAlertas ] = useState(true)
   const [ alertas, setAlertas ] = useState([])
