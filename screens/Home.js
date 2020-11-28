@@ -80,6 +80,8 @@ export default function Home({navigation}){
       </TouchableOpacity>
     </>
     }
+    
+
 
     {!isLoadingUser && isSelectingRole && 
     <>
@@ -99,7 +101,7 @@ export default function Home({navigation}){
           <Text h2 style={styles.textoRol}>{rol.name}</Text> 
         </View>
       </TouchableOpacity>)})}
-      
+
     </>} 
     {!isSelectingRole && 
     <>
