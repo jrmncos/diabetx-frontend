@@ -4,15 +4,16 @@ import { useUser } from 'hooks/useUser';
 
 import alerta from 'recursos/alertas.png'
 
-export default function BarraAlerta(){
+export default function BarraAlerta({alertas}){
   const { user } = useUser()
   const [ cargandoAlertas, setCargandoAlertas ] = useState(true)
-  const [ alertas, setAlertas ] = useState([])
 
   useEffect(() => {
-    if(alertas.length > 0){
+    console.log("ALERTAS IN BARRA ALERTA:")
+    console.log(alertas)
+    // if(alertas.size > 0){
       setCargandoAlertas(false)
-    }
+    // }
     return () => {
     }
   }, [])
@@ -26,6 +27,7 @@ export default function BarraAlerta(){
           style={styles.imagen}
           source={alerta}
         />
+    <Text>{alertas} </Text>
 
     </View>
     </TouchableOpacity>

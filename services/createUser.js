@@ -1,4 +1,3 @@
-import { Alert } from 'react-native';
 import {DEV_IP} from 'services/settings'
 
 export async function createUser(user, token)  {

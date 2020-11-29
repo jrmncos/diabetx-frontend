@@ -45,10 +45,8 @@ export default function FormACDiabetes() {
 
   function cargarACdelDia(autocontroles) {
     let fecha_actual = new Date().toJSON().slice(0,10)
-    console.log("Fecha actual: "+fecha_actual)
     autocontroles.map(ac => {  
         let fecha_ac = new Date(Date.parse(ac.fecha_hora_registro)).toJSON().slice(0,10)
-        console.log("Fecha: "+fecha_ac)
         if(fecha_ac == fecha_actual){
           acdiabetes.id = ac.id
           acdiabetes.paciente_id = ac.paciente_id
@@ -75,7 +73,6 @@ export default function FormACDiabetes() {
   }
 
   useEffect(()=> {
-    console.log("Effect del Perfil")
      async function fetchPaciente() {       
        const paciente = await getPaciente({dni, accessToken:userToken})
        setPaciente(paciente)

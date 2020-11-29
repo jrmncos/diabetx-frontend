@@ -1,7 +1,6 @@
 import {URL_ROOT, USER_BY_DNI} from 'services/settings'
 
 const validate = apiResponse => {
-    console.log(apiResponse)
     return apiResponse
 }
 

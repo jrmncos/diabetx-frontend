@@ -5,8 +5,6 @@ const validate = apiResponse => {
 }
 
 export default async function getPacientesECNT({accessToken}){
-    console.log('hii')
-    console.log("El token: " + accessToken)
     const request = new Request(URL_ROOT+ PACIENTE_ECNT , {
         method: 'GET',
         headers: new Headers({ 
