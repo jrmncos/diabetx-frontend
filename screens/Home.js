@@ -199,6 +199,19 @@ export default function Home({navigation}){
           <Text h2 style={styles.textoRol}>Autocontrol</Text> 
         </View>
       </TouchableOpacity>
+      
+      <TouchableOpacity
+        style={{width:"100%", padding: "2%"}}       
+        onPress={() => navigation.navigate('Notificaciones')}>
+          <View style={styles.botonMenuHome}>
+          <Image
+            style={{ width: 50, height: 50, margin:"2%"}}
+            source={require('../assets/archivo-medico.png')} 
+          />
+          <Text h2 style={styles.textoRol}>Notificaciones</Text> 
+        </View>
+      </TouchableOpacity>
+
       </>
       }
 

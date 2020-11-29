@@ -9,6 +9,7 @@ import Registro from 'screens/Registro';
 import Perfil from 'screens/Perfil';
 import Notificacion from 'screens/Notificacion';
 import NotificacionDetalle from 'screens/NotificacionDetalle'
+import Notificaciones from 'screens/Notificaciones'
 import FormACDiabetes from 'components/FormACDiabetes'
 import { useAuth } from 'hooks/useAuth'
 
@@ -44,6 +45,7 @@ export function RootNavigation() {
       <Stack.Screen name="Notificacion" component={Notificacion} title="Notificaciones" />
       <Stack.Screen name="FormACDiabetes" component={FormACDiabetes} title="Formulario Autocontrol Diabetes" />
       <Stack.Screen name="NotificacionDetalle" component={NotificacionDetalle} title="NotificacionDetalle"/>
+      <Stack.Screen name="Notificaciones" component={Notificaciones} title="Notificaciones"/>
       </>
     ): (
       <>
