@@ -7,9 +7,6 @@ const validate = apiResponse => {
 }
 
 export default function getProfesional({dni, accessToken}){
-    console.log("Voy a pedir el paciente con dni: " + String(dni))
-    console.log("El token: " + accessToken)
-    console.log(URL_ROOT+ PROFESIONAL_BY_DNI +String(dni)+"/")
     const request = new Request(URL_ROOT+ PROFESIONAL_BY_DNI +String(dni)+"/", {
         method: 'GET',
         headers: new Headers({ 

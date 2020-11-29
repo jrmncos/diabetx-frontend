@@ -18,7 +18,6 @@ export default function Login({navigation}){
     }, [status])
     */
     const handleSubmit = () => {
-      console.log('asd')
       login({dni, password})
     }
     

@@ -5,6 +5,8 @@ import { StatusBar } from 'expo-status-bar';
 import { Divider } from 'react-native-elements';
 import {useAuth} from 'hooks/useAuth'
 import { useUser } from 'hooks/useUser';
+import getPaciente from 'services/getPaciente';
+import getAlertas from 'services/getAlertas';
 
 import paciente_f from 'imgUsuario/paciente_mujer.png'
 import paciente_m from 'imgUsuario/paciente_hombre.png'
@@ -16,22 +18,45 @@ import BarraAlerta from 'components/BarraAlerta'
 
 export default function Home({navigation}){
   const {logout, userToken} = useAuth()
-  const {user} = useUser()
+  const {user, dni} = useUser()
+  const [paciente, setPaciente] = useState(null)
 
   const [ isSelectingRole, setIsSelectingRole ] = useState(true)
   const [ selectedRole, setSelectedRole ] = useState()
   const [ iconSelectedRole, setIconSelectedRole ] = useState(corazon) 
+  const [ alertas, setAlertas ] = useState()
+  
   const [ isLoadingUser, setLoadingUser ] = useState(true)
-
+  const [ isLoadingPaciente, setLoadingPaciente ] = useState(true)
+  const [ isLoadingAlertas, setLoadingAlertas ] = useState(true)
+  
   useEffect(() => {
-    if(user !== null && user.groups !== undefined){
-      setLoadingUser(false)
-      if(user.groups.length == 1){
-        selectRole(user.groups[0].name)
-        setSelectedRole(user.groups[0].name)
-        setIsSelectingRole(false)
-      }
+    async function inicializar() {    
+      if(user !== null && user.groups !== undefined){
+        setLoadingUser(false)
+        if(user.groups.length == 1){
+          selectRole(user.groups[0].name)
+          setSelectedRole(user.groups[0].name)
+          setIsSelectingRole(false)
+        }
+        if(isLoadingPaciente){
+          const pacienteObtenido = await getPaciente({dni: user.dni, accessToken:userToken})
+          setPaciente(pacienteObtenido)
+          setLoadingPaciente(false)
+          console.log("Tengo el paciente?")
+          console.log(pacienteObtenido)
+        }
+        if(isLoadingAlertas){
+          const alertaObtenida = await getAlertas({id: paciente.id, accessToken:userToken})
+          setAlerta(alertaObtenida)
+          setLoadingAlertas(false)
+          console.log("Tengo las alertas?")
+          console.log(alertaObtenida)
+        }
     }
+    
+  }
+    inicializar()
   }, [user])
 
   const handleExit = () => {
@@ -127,7 +152,7 @@ export default function Home({navigation}){
         }
     </View>
 
-    {selectedRole == "Paciente" && <BarraAlerta/>}
+    {selectedRole == "Paciente" && !isLoadingAlertas && <BarraAlerta alertas={alertas}/>}
 
     {user && <Text h2 style={styles.textoBienvenida}>{user.gender === "Femenino" ? "¡Bienvenida!" : "¡Bienvenido!"}</Text>}
     {user && <Text h2 style={styles.textoNombreUsuario}>{user.first_name+" "+user.last_name}</Text>}
