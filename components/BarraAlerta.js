@@ -1,34 +1,32 @@
-import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
-import React, { useState, useEffect } from 'react'
-import { useUser } from 'hooks/useUser';
+import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
+import React from 'react'
+
+import MarqueeText from 'react-native-marquee';
 
 import alerta from 'recursos/alertas.png'
 
-export default function BarraAlerta({alertas}){
-  const { user } = useUser()
-  const [ cargandoAlertas, setCargandoAlertas ] = useState(true)
-
-  useEffect(() => {
-    console.log("ALERTAS IN BARRA ALERTA:")
-    console.log(alertas)
-    // if(alertas.size > 0){
-      setCargandoAlertas(false)
-    // }
-    return () => {
-    }
-  }, [])
+export default function BarraAlerta({alertas=[]}){
+  
   return(
   <>
+  {alertas.map((aler) => console.log(aler))}
    <TouchableOpacity 
-   onPress={(() => console.log("alertas"))}
    style={styles.barraAlerta}>      
     <View style={styles.barraAlerta}>
         <Image
           style={styles.imagen}
           source={alerta}
         />
-    <Text>{alertas} </Text>
-
+        <MarqueeText
+          style={{paddingTop:10, marginLeft:5, fontSize: 30, color:"#FFFFFF", width:"80%"}}
+          duration={16000}
+          marqueeOnStart
+          loop
+          marqueeDelay={1000}
+          marqueeResetDelay={1500}
+        >
+          {alertas.length > 0 && alertas[alertas.length-1].detalles}
+        </MarqueeText>
     </View>
     </TouchableOpacity>
   </> 
@@ -44,6 +42,14 @@ const styles = StyleSheet.create({
     '#fcad03', 
     borderWidth:1,
     borderColor:'#bf8300'
+  },
+
+  textoUltimaAlerta:{
+    paddingLeft:"5%",
+    paddingTop:"4%",
+    paddingBottom:"10%",
+    color: "white",
+    fontSize: 35,
   },
 
   imagen:{

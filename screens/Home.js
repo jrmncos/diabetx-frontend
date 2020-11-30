@@ -24,7 +24,7 @@ export default function Home({navigation}){
   const [ isSelectingRole, setIsSelectingRole ] = useState(true)
   const [ selectedRole, setSelectedRole ] = useState()
   const [ iconSelectedRole, setIconSelectedRole ] = useState(corazon) 
-  const [ alertas, setAlertas ] = useState()
+  const [ alertas, setAlertas ] = useState([])
   
   const [ isLoadingUser, setLoadingUser ] = useState(true)
   const [ isLoadingPaciente, setLoadingPaciente ] = useState(true)
@@ -39,19 +39,14 @@ export default function Home({navigation}){
           setSelectedRole(user.groups[0].name)
           setIsSelectingRole(false)
         }
-        if(isLoadingPaciente){
+        if(isLoadingPaciente && isLoadingAlertas){
           const pacienteObtenido = await getPaciente({dni: user.dni, accessToken:userToken})
           setPaciente(pacienteObtenido)
           setLoadingPaciente(false)
-          console.log("Tengo el paciente?")
-          console.log(pacienteObtenido)
-        }
-        if(isLoadingAlertas){
-          const alertaObtenida = await getAlertas({id: paciente.id, accessToken:userToken})
-          setAlerta(alertaObtenida)
+
+          const alertaObtenida = await getAlertas({id: pacienteObtenido.id, accessToken:userToken})
+          setAlertas(alertaObtenida)
           setLoadingAlertas(false)
-          console.log("Tengo las alertas?")
-          console.log(alertaObtenida)
         }
     }
     
@@ -105,8 +100,6 @@ export default function Home({navigation}){
       </TouchableOpacity>
     </>
     }
-    
-
 
     {!isLoadingUser && isSelectingRole && 
     <>
@@ -135,8 +128,8 @@ export default function Home({navigation}){
           style={{ width: 70, height: 70, backgroundColor:"#00a7ba"}}
           source={iconSelectedRole} 
         />
-        {selectedRole !== "Paciente" && <Text h2 style={styles.textoBarraSuperior}>{selectedRole}</Text> }
-        {selectedRole === "Paciente" && <Text h2 style={styles.textoBarraSuperiorPaciente}>{selectedRole}</Text> }
+        {selectedRole !== "Paciente" && selectedRole !== "Administrador" && <Text h2 style={styles.textoBarraSuperior}>{selectedRole}</Text> }
+        {(selectedRole === "Paciente" || selectedRole === "Administrador") && <Text h2 style={styles.textoBarraSuperiorPaciente}>{selectedRole}</Text> }
         {user && user.groups.length > 1 &&
         <TouchableOpacity 
           style={{width:"30%", paddingTop:"5%"}}       
@@ -152,7 +145,7 @@ export default function Home({navigation}){
         }
     </View>
 
-    {selectedRole == "Paciente" && !isLoadingAlertas && <BarraAlerta alertas={alertas}/>}
+    {selectedRole == "Paciente" && !isLoadingAlertas && alertas.length > 0 &&  <BarraAlerta alertas={alertas}/>}
 
     {user && <Text h2 style={styles.textoBienvenida}>{user.gender === "Femenino" ? "¡Bienvenida!" : "¡Bienvenido!"}</Text>}
     {user && <Text h2 style={styles.textoNombreUsuario}>{user.first_name+" "+user.last_name}</Text>}
@@ -179,7 +172,7 @@ export default function Home({navigation}){
           <View style={styles.botonMenuHome}>
             <Image
               style={{ width: 50, height: 50, margin:"2%"}}
-              source={require('../assets/campana.png')} 
+              source={require('recursos/campana.png')} 
             />
             <Text h2 style={styles.textoRol}>Notificaciones</Text> 
           </View>
@@ -231,12 +224,28 @@ export default function Home({navigation}){
           <View style={styles.botonMenuHome}>
           <Image
             style={{ width: 50, height: 50, margin:"2%"}}
-            source={require('../assets/archivo-medico.png')} 
+            source={require('recursos/campana.png')} 
           />
           <Text h2 style={styles.textoRol}>Notificaciones</Text> 
         </View>
       </TouchableOpacity>
 
+      </>
+      }
+
+      {selectedRole == "Administrador" && 
+      <>
+      <TouchableOpacity 
+        style={{width:"100%", padding: "2%"}}       
+        onPress={() => navigation.navigate('AsignarRoles')}>
+        <View style={styles.botonMenuHome}>
+          <Image
+            style={{ width: 60, height: 60, margin:"1%"}}
+            source={require('recursos/paneldecontrol.png')} 
+          />
+          <Text h2 style={styles.textoRol}>Asignar roles</Text> 
+        </View>
+      </TouchableOpacity>
       </>
       }
 

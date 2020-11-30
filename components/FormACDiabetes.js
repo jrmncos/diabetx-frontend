@@ -157,16 +157,16 @@ export default function FormACDiabetes() {
         {paciente.autocontrol_diabetes.map((ac) => 
         {return(
         <>
-          <Text style={(new Date(Date.parse(ac.fecha_hora_registro)).toJSON().slice(8,10))%2==0 ? styles.encabezado_uno : styles.encabezado_dos}> 
+          <Text key={ac.fecha_hora_registro} style={(new Date(Date.parse(ac.fecha_hora_registro)).toJSON().slice(8,10))%2==0 ? styles.encabezado_uno : styles.encabezado_dos}> 
             {" • Fecha: "+new Date(Date.parse(ac.fecha_hora_registro)).toJSON().slice(0,10).split('-').reverse().join('-')} 
           </Text>
-          <Text style={styles.textoCheckBox}> 
+          <Text key={ac.fecha_hora_registro} style={styles.textoCheckBox}> 
             {" Matutino: "+(ac.glucemia_matutina ? "✔" : "✘")+(ac.opcional_glucemia_matutina != null ? ", Glucometro:"+ac.opcional_glucemia_matutina : "")+"\n"+
             " Post comida: "+(ac.glucemia_post_comida_principal ? "✔" : "✘")+(ac.opcional_glucemia_comida_principal != null ? ", Glucometro:"+ac.opcional_glucemia_comida_principal : "")
             } 
           </Text>
 
-          <Divider style={{marginBottom:"1%"}}/>
+          <Divider key={ac.fecha_hora_registro} style={{marginBottom:"1%"}}/>
         </>)}
        )}
       </ScrollView>
