@@ -1,13 +1,14 @@
 import React from 'react'
 import {Card, CardItem, Text, Body } from 'native-base';
 import { Image } from 'react-native'
+
 export default function NotificacionItem({notificacion}){
     return(
         <Card onPress={()=>alert("Dale que va")}>
             <CardItem >
               {console.log('plastic love')}
               {console.log(notificacion)}
-              <Body>
+              <Body o1nPress={()=>alert("Dale que va")}>
                 <Text>
                   {notificacion.fecha_creacion}
                 </Text>
@@ -17,7 +18,6 @@ export default function NotificacionItem({notificacion}){
                 <Image source={{ uri: notificacion.imagen }} style={{ width: 100, height:100}} />
               </Body>
             </CardItem>
-
-         </Card>
+        </Card>
     )
 }

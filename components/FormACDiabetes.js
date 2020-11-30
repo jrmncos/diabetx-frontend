@@ -99,7 +99,7 @@ export default function FormACDiabetes() {
     acdiabetes.opcional_glucemia_comida_principal= glucoComida
     
     addACDiabetes({accessToken: userToken, acdiabetes: acdiabetes})
-    Alert.alert("Se ha cargado el autocontrol con satisfactoriamente")
+    Alert.alert("Se ha cargado el autocontrol satisfactoriamente")
     navigation.navigate('Inicio')
   }
 
