@@ -7,6 +7,7 @@ import Geolocalizacion from 'screens/Geolocalizacion';
 import Panel from 'screens/Panel';
 import Registro from 'screens/Registro';
 import Perfil from 'screens/Perfil';
+import PanelRol from 'screens/PanelRol'
 import Notificacion from 'screens/Notificacion';
 import NotificacionDetalle from 'screens/NotificacionDetalle'
 import Notificaciones from 'screens/Notificaciones'
@@ -46,6 +47,8 @@ export function RootNavigation() {
       <Stack.Screen name="FormACDiabetes" component={FormACDiabetes} title="Formulario Autocontrol Diabetes" />
       <Stack.Screen name="NotificacionDetalle" component={NotificacionDetalle} title="NotificacionDetalle"/>
       <Stack.Screen name="Notificaciones" component={Notificaciones} title="Notificaciones"/>
+      <Stack.Screen name="PanelRol" component={PanelRol} title="PanelRol"/>
+      
       </>
     ): (
       <>

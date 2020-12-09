@@ -237,13 +237,13 @@ export default function Home({navigation}){
       <>
       <TouchableOpacity 
         style={{width:"100%", padding: "2%"}}       
-        onPress={() => navigation.navigate('AsignarRoles')}>
+        onPress={() => navigation.navigate('PanelRol')}>
         <View style={styles.botonMenuHome}>
           <Image
             style={{ width: 60, height: 60, margin:"1%"}}
             source={require('recursos/paneldecontrol.png')} 
           />
-          <Text h2 style={styles.textoRol}>Asignar roles</Text> 
+          <Text h2 style={styles.textoRol}>Panel roles</Text> 
         </View>
       </TouchableOpacity>
       </>
