@@ -12,7 +12,7 @@ export const PACIENTE = 'api/pacientes/'
 
 export const PACIENTE_BY_DNI = 'api/pacientes/dni/'
 
-export const CLIENT_ID = 'jDDc6AOPe3hAvv02lGQ5smNCXgizTX3zqg2NmTA5'
+export const CLIENT_ID = 'wusN7De3XKeGFYNG18evy7GtYIFwEDw1BCUL8Xew'
 
 export const LOGIN = '/o/token'
 

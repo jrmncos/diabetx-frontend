@@ -48,12 +48,12 @@ export default function Panel({navigation}){
           source={busqueda} 
         />
         <SearchBar
-          style={{width:"30%", paddingRight:"70%"}}
+          style={{alignSelf:'flex-start', marginRight:"70%"}}
           placeholder="Buscar por DNI"
           onChangeText={(value) => handleSearchBar(value)}
           value={search}
           keyboardType="numeric"
-          containerStyle={{backgroundColor: "#00a7ba"}}
+          containerStyle={{backgroundColor: "#aaaaaa"}}
           inputContainerStyle={{backgroundColor: "#00a7ba"}}
           inputStyle={styles.textoFiltro}
           searchIcon={null}
@@ -99,8 +99,7 @@ const styles = StyleSheet.create({
       paddingBottom:"2%",
     },
     textoFiltro:{
-      paddingLeft:"60%",
-      paddingTop:"5%",
+      width:'100%',
       fontSize: 30,
     },
 
