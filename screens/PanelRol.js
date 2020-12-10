@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import {Button, SearchBar} from 'react-native-elements';
 import getUser from 'services/getUser';
+import getGroups from 'services/getGroups';
+import addUsertoGroup from 'services/addUsertoGroup';
 
 import FormECNT from 'components/FormECNT'
 import {useUser} from 'hooks/useUser'
@@ -15,14 +17,61 @@ import profds_f from 'imgUsuario/pds_mujer.png'
 import profds_m from 'imgUsuario/pds_hombre.png'
 import corazon from 'recursos/corazon.png'
 
-export default function PanelRol({navigation}){
-  const {dni, user} = useUser()
-  const {userToken} = useAuth()
-  const [search, setSearch] = useState('')
-  const [ usuarioACambiar, setUsuarioACambiar ] = useState(null)
-  const [isLoadingSearch, setLoadingSearch ] = useState(false)
-  const [ noEncontrado, setNoEncontrado ] = useState(false)
 
+
+export default function PanelRol({navigation}){
+  const { dni, user } = useUser()
+  const { userToken } = useAuth()
+  const [ search, setSearch ] = useState('')
+  const [ usuarioACambiar, setUsuarioACambiar ] = useState(null)
+  const [ isLoadingSearch, setLoadingSearch ] = useState(false)
+  const [ noEncontrado, setNoEncontrado ] = useState(false)
+  const [ isLoadingGroups, setLoadingGroups ] = useState(true)
+  
+  const [ groups, setGroups ] = useState([])
+  const [ mapGroups, setMapGroups ] = useState([])
+
+  function pertenece(nombre, grupos) {
+    let x
+    grupos.forEach(gr => {
+    if(gr.name == nombre.name){ x = true }})
+
+    return x
+  }
+
+  useEffect(()=> {
+    async function fetchGroups() {       
+      const obtenido = await getGroups()
+      setGroups(obtenido)
+      
+      setLoadingGroups(false)
+    } 
+    fetchGroups()
+  },[])
+
+  useEffect (()  => {
+    if(usuarioACambiar != null && usuarioACambiar.dni != undefined) {
+      setNoEncontrado(false)
+      groups.forEach(gr => {
+        if(pertenece(gr, usuarioACambiar.groups)){
+          setMapGroups(prevState => [...prevState, {
+            "name": gr.name,
+            "state": true,
+          }])
+        }
+        else{
+          setMapGroups(prevState => [...prevState, {
+          "name": gr.name,
+          "state": false,
+        }])
+        }
+      })
+    }
+    else{
+      setNoEncontrado(true)
+    }
+    setLoadingSearch(false)
+  }, [usuarioACambiar])
 
   function getIcon(rol) {
     if(rol == "Paciente"){
@@ -38,23 +87,24 @@ export default function PanelRol({navigation}){
       return corazon
   }
 
-  const handleAddPaciente = async ()=> {
+  const handleAssignRol = (value) => {
+    let val = value
+    console.log(mapGroups[1].state)
+    mapGroups[1].state = !val.state
+  }
 
+  const handlePatchUser = () => {
+    addUsertoGroup({dni: usuarioACambiar.dni, data: mapGroups, accessToken: userToken})
+  }
+
+  const handleSearch = () => {
     setUsuarioACambiar(null)
     setLoadingSearch(true)
-    console.log("ENVIO: "+search)
-    const searchResult = await getUser({dni: search, accessToken: userToken }) 
-    console.log("SERARCH RESULT: "+searchResult)
-    if(searchResult != null && searchResult.dni != undefined){
-      setUsuarioACambiar(searchResult)
-      console.log(searchResult.dni)
-      setLoadingSearch(false)
-      setNoEncontrado(false)
-    }
-    else{
-      setNoEncontrado(true)
-      setLoadingSearch(false)
-    }
+    
+    getUser({dni: search, accessToken: userToken })
+      .then(setUsuarioACambiar)
+
+   
   }
 
   const usuarioNoEncontrado = 
@@ -76,61 +126,64 @@ export default function PanelRol({navigation}){
     setSearch(value)
   }
    return(
+     <>
+    <SearchBar
+      placeholder="Buscar por DNI"
+      onChangeText={(value) => handleSearchBar(value)}
+      value={search}
+      keyboardType="numeric"
+      containerStyle={{backgroundColor: "#00707d"}}
+      inputContainerStyle={{backgroundColor: "#FFFFFF"}}
+      inputStyle={styles.textfilter}
+      placeholderTextColor={"gray"}
+    />
       <View style={styles.container}>
-        <View style={{flexDirection: 'row', width:"100%", backgroundColor: '#00a7ba'}}>
-          <Image
-            style={{ width: 50, height: 50, backgroundColor:"#00a7ba", marginRight:"2%"}}
-            source={busqueda} 
-          />
-        <SearchBar
-            style={{ marginRight:"70%"}}
-            placeholder="Buscar por DNI"
-            onChangeText={(value) => handleSearchBar(value)}
-            value={search}
-            keyboardType="numeric"
-            containerStyle={{backgroundColor: "#00a7ba"}}
-            inputContainerStyle={{backgroundColor: "#FFFFFF",}}
-            inputStyle={styles.textfilter}
-            searchIcon={null}
-            placeholderTextColor={"gray"}
-          />
-      </View>
-
       {isLoadingSearch && spinnerPaciente}
      
-      {usuarioACambiar != null && usuarioACambiar != undefined &&
-      <View style={{borderWidth:1, borderColor: '#5cc101', width:"100%"}}>
+      {usuarioACambiar != null && usuarioACambiar != undefined && isLoadingGroups == false &&
+      <View style={{borderWidth:1, borderColor: '#00707d', width:"100%", marginBottom:"5%"}}>
         <Text h2 style={styles.textoDatosDNI}>{usuarioACambiar.last_name}, {usuarioACambiar.first_name} </Text> 
         <Text h2 style={styles.textoDatos}>DNI: {usuarioACambiar.dni}</Text> 
         <Text h2 style={styles.textoDatos}>Nacimiento: {usuarioACambiar.bod}</Text> 
         <Text h2 style={styles.textoDatos}>Género: {usuarioACambiar.gender}</Text> 
         <Text h2 style={styles.textoDatos}>Roles: </Text> 
-        {usuarioACambiar && usuarioACambiar.groups.map(rol => 
-        {return (<TouchableOpacity 
+
+        {usuarioACambiar && mapGroups.map(rol => {
+        return <TouchableOpacity 
           key={rol.name}
           style={{width:"100%", padding: "1%", paddingLeft:"10%", paddingRight:"5%"}}       
-          onPress={() => selectRole(rol.name)}>
-          <View style={styles.rolEncendido}>
+          onPress={() => handleAssignRol(rol)}
+          >
+          <View style={rol.state ? styles.rolEncendido: styles.rolApagado}>
             <Image
+            //style={[styles.text, touched && invalid ? styles.textinvalid : styles.textvalid]}
               style={{ width: 25, height: 25, margin:"2%", marginBottom:"3%"}}
               source={getIcon(rol.name)} 
             />
             <Text h2 style={styles.textoRol}>{rol.name}</Text> 
           </View>
-        </TouchableOpacity>)})}
+        </TouchableOpacity> 
+        })}
+        <Button 
+          buttonStyle={styles.botonMenuHomeAzul} 
+          onPress={handlePatchUser} 
+          titleStyle={styles.botonTexto}
+          title='Guardar cambios'/>
       </View>
       }
 
       {noEncontrado && !isLoadingSearch && usuarioNoEncontrado}
-      
+     
       {!isLoadingSearch && 
-      <Button 
-        buttonStyle={styles.botonMenuHomeAzul} 
-        onPress={handleAddPaciente} 
-        titleStyle={styles.botonTexto}
-        title='Buscar'/>}
+        <Button 
+          buttonStyle={styles.botonMenuHomeAzul} 
+          onPress={handleSearch} 
+          titleStyle={styles.botonTexto}
+          title='Buscar'/>
+      }
       
     </View>
+    </>
     )
 }
 
@@ -161,9 +214,9 @@ const styles = StyleSheet.create({
       flexDirection: 'row', 
       alignSelf: 'center', 
       width:"100%", 
-      backgroundColor: '#5cc101',
+      backgroundColor:"#fcad03",
       borderWidth: 1,
-      borderColor: "#479801",
+      borderColor: "#ad7600",
       shadowColor: 'rgba(0, 0, 0, 1)',
       shadowOpacity: 1,
       elevation: 5,
@@ -172,10 +225,13 @@ const styles = StyleSheet.create({
     },
 
     botonMenuHomeAzul: {
+      marginLeft:"5%",
+      marginRight:"5%",
+      margin:"2%",
       borderRadius:10, 
       flexDirection: 'row', 
       alignSelf: 'center', 
-      width:"100%", 
+      width:"95%", 
       backgroundColor: '#00a7ba',
       borderWidth: 1,
       borderColor: "#00707d",
@@ -191,13 +247,12 @@ const styles = StyleSheet.create({
       width:"100%",
       textAlign:"center",
       color: "white",
-      fontSize: 35,
+      fontSize: 30,
     },
 
     textfilter:{
-      width:'50%',
       color: "black",
-      fontSize: 20,
+      fontSize: 25,
     },
 
     textoRol:{
