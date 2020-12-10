@@ -25,3 +25,5 @@ export const PACIENTE_ECNT = 'api/pacientes/ecnts/'
 export const NOTIFICACION = 'api/notification/'
 
 export const ACDIABETES = 'api/acdiabetes/'
+
+export const GROUPS = 'api/groups/'
