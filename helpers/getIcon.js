@@ -13,6 +13,10 @@ import cAmarillo from 'recursos/sqAmarillo.png'
 import cCian from 'recursos/sqCian.png'
 import cVioleta from 'recursos/sqVioleta.png'
 
+import hipertension from 'recursos/presion-sanguinea.png'
+import diabetes from 'recursos/glucometro.png'
+import epoc from 'recursos/pulmon.png'
+
 const helpers = {
     getIconPerson: function(genero, rol){
         if(rol == "Paciente"){
@@ -44,15 +48,28 @@ const helpers = {
         else
             return corazon
     },
-    getIconECNT:function(ecnt){
+    getSquareECNT:function(ecnt){
         if(ecnt == "Diabetes"){
             return cVioleta 
         }
-        else if(ecnt == "Epoc"){
+        else if(ecnt == "EPOC"){
             return cAmarillo
         }
         else if(ecnt == "Hipertensión"){
             return cCian
+        }
+        else
+            return corazon
+    },
+    getIconECNT:function(ecnt){
+        if(ecnt == "Diabetes"){
+            return diabetes 
+        }
+        else if(ecnt == "EPOC"){
+            return epoc
+        }
+        else if(ecnt == "Hipertensión"){
+            return hipertension
         }
         else
             return corazon

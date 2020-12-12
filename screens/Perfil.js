@@ -51,7 +51,7 @@ export default function Perfil({navigation}){
 
         <TouchableOpacity 
           style={{width:"100%", marginBottom:"5%"}}>
-          {paciente && <FormECNT idPaciente={paciente.id}/>}
+          {paciente && <FormECNT paciente={paciente}/>}
         </TouchableOpacity>
 
       </View>

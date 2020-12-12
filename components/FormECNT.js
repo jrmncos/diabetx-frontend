@@ -1,25 +1,45 @@
 import React, { useState, useEffect} from "react";
-import { StyleSheet, Text, View, Image, Alert } from "react-native";
+import { StyleSheet, Text, View, Image, Alert, TouchableOpacity } from "react-native";
 import { CheckBox, Button } from "react-native-elements";
 
 import {useAuth} from 'hooks/useAuth'
 import getECNTS from 'services/getECNTS';
-import addECNT from 'services/addECNT'
+import patchECNTS from 'services/patchECNTS'
+import helpers from '../helpers/getIcon'
 
-export default function FormECNT(idPaciente) {
+
+export default function FormECNT(paciente) {
   const [ checkedMap, setCheckedMap ] = useState([]);
   const [ loadingECNT, setLoadingECNT ] = useState(true)
-  const {userToken} = useAuth()
+  const { userToken } = useAuth()
+ 
+  function pertenece(ec, ecnts) { 
+    let x
+    ecnts.forEach(ecnt => {
+    if(ecnt.nombre == ec.nombre){ x = true }})
+
+    return x
+  }
 
   useEffect(()=> {
     async function fetchECNT() {
       const ecnts = await getECNTS()
-      ecnts.map((ecnt) => {  
+      setCheckedMap([])
+      ecnts.map((ecnt) => {   
+        if(pertenece(ecnt, paciente.paciente.ecnts)){
         setCheckedMap(prevState => [...prevState, {
           "id": ecnt.id,
-          "checked": false,
+          "checked": true,
           "nombre": ecnt.nombre,
         }])
+        }
+        else{
+          setCheckedMap(prevState => [...prevState, {
+            "id": ecnt.id,
+            "checked": false,
+            "nombre": ecnt.nombre,
+          }])
+        }
       })
       setLoadingECNT(false)
     } 
@@ -33,9 +53,25 @@ export default function FormECNT(idPaciente) {
     setCheckedMap(newArray)
   }
 
+  const handleResponse = res => {
+    if(res.ok) {
+      return res.json()
+    }
+    throw new Error('Network response was not ok.')
+  }
+
   const handleSubmitSave = () => { 
     let ecnts = checkedMap.filter(ecnt=>ecnt.checked).map((ecnt) => {return {id: ecnt.id, nombre: ecnt.nombre}})
-    addECNT( {id:idPaciente['idPaciente'], accessToken: userToken, ecnts: ecnts})
+    patchECNTS( {id:paciente.paciente.id, accessToken: userToken, ecnts: ecnts})
+    .then(handleResponse)
+    .then((responseJson) => {
+      if (responseJson.status === 500) {
+          Alert.alert(responseJson.message);
+      } else{
+        Alert.alert("Se han modificado las ECNT satisfactoriamente")
+      }
+  })      
+    .catch(err => console.error(err))
   }
   
   return (
@@ -50,15 +86,21 @@ export default function FormECNT(idPaciente) {
       
       <>
         {!loadingECNT && checkedMap.map(ecnt => 
-          <View key={ecnt.id} style={styles.cajaCheckBox}>
-            <CheckBox
-              name={ecnt.id}
-              title={<Text style={styles.textoCheckBox}>{ecnt.nombre}</Text>}
-              checked={ecnt.checked}
-              onPress={() => handleChange(ecnt.id, ecnt.nombre, ecnt.checked)}
-            />
-          </View>)
-        }
+         <TouchableOpacity 
+         key={ecnt.id}
+         style={{width:"100%", padding: "1%", paddingLeft:"5%", paddingRight:"5%"}}       
+         onPress={() => handleChange(ecnt.id)}
+         >
+         <View style={ecnt.checked ? styles.rolEncendido: styles.rolApagado}>
+           <Image 
+             style={{ width: 25, height: 25, margin:"2%", marginBottom:"3%"}}
+             source={helpers.getIconECNT(ecnt.nombre)} 
+           />
+           <Text h2 style={styles.textoRol}>{ecnt.nombre}</Text> 
+         </View>
+       </TouchableOpacity> 
+    
+        )}
       </>
 
       <View style={{alignContent:'center'}}>
@@ -100,6 +142,7 @@ const styles = StyleSheet.create({
     marginBottom: "2%",
   },
   textoRol:{
+    paddingTop:"1%",
     paddingLeft:"3%",
     color: "white",
     fontSize: 30,
@@ -157,4 +200,35 @@ const styles = StyleSheet.create({
     width: "95%",
     height: 1,
   },
+
+  rolEncendido: {
+    borderRadius:10, 
+    flexDirection: 'row', 
+    alignSelf: 'center', 
+    width:"100%", 
+    backgroundColor: '#5cc101',
+    borderWidth: 1,
+    borderColor: "#479801",
+    shadowColor: 'rgba(0, 0, 0, 1)',
+    shadowOpacity: 1,
+    elevation: 5,
+    shadowRadius: 15 ,
+    shadowOffset : { width: 1, height: 13},
+  },
+
+  rolApagado: {
+    borderRadius:10, 
+    flexDirection: 'row', 
+    alignSelf: 'center', 
+    width:"100%", 
+    backgroundColor:"#fcad03",
+    borderWidth: 1,
+    borderColor: "#ad7600",
+    shadowColor: 'rgba(0, 0, 0, 1)',
+    shadowOpacity: 1,
+    elevation: 5,
+    shadowRadius: 15 ,
+    shadowOffset : { width: 1, height: 13},
+  },
+
 });

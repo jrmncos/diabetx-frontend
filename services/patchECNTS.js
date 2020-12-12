@@ -4,8 +4,8 @@ const validate = apiResponse => {
     return apiResponse
 }
 
-export default function addECNT({id, accessToken, ecnts}){
-    const request = new Request(URL_ROOT+ PACIENTE +id+"/", {
+export default function patchECNTS({id, accessToken, ecnts}){
+    const request = new Request(URL_ROOT+ PACIENTE +id+"/ecnts/", {
         method: 'PATCH',
         headers: new Headers({ 
             'Content-Type': 'application/json',
@@ -15,6 +15,4 @@ export default function addECNT({id, accessToken, ecnts}){
     })
 
     return fetch(request)
-    .then(res =>res.json())
-    .then(validate)
 }
