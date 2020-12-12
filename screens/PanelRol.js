@@ -5,17 +5,10 @@ import getUser from 'services/getUser';
 import getGroups from 'services/getGroups';
 import patchGroups from 'services/patchGroups';
 
-import FormECNT from 'components/FormECNT'
 import {useUser} from 'hooks/useUser'
 import {useAuth} from 'hooks/useAuth'
-import {usePaciente} from 'hooks/usePaciente'
-import busqueda from 'recursos/busqueda.png'
 
-import paciente_f from 'imgUsuario/paciente_mujer.png'
-import paciente_m from 'imgUsuario/paciente_hombre.png'
-import profds_f from 'imgUsuario/pds_mujer.png'
-import profds_m from 'imgUsuario/pds_hombre.png'
-import corazon from 'recursos/corazon.png'
+import helpers from '../helpers/getIcon'
 
 export default function PanelRol({navigation}){
   const { dni, user } = useUser()
@@ -97,8 +90,6 @@ export default function PanelRol({navigation}){
   }
 
   const handlePatchUser = () => {
-    console.log("USERAC: "+usuarioACambiar.dni)
-    console.log(mapGroups)
     patchGroups({user: usuarioACambiar, groups: mapGroups})
   }
 
@@ -120,20 +111,6 @@ export default function PanelRol({navigation}){
     style={{ width: 50, height: 50, margin:"2%"}}
     source={require('recursos/cargando.gif')} 
   />
-
-  function getIcon(rol) {
-    if(rol == "Paciente"){
-      return ((usuarioACambiar.gender === "Femenino") ? paciente_f : paciente_m) 
-    }
-    else if(rol == "Profesional de Salud"){
-      return ((usuarioACambiar.gender === "Femenino") ? profds_f : profds_m) 
-    }
-    else if(rol == "Promotor de Salud"){
-      return((usuarioACambiar.gender === "Femenino") ? paciente_f : paciente_m) 
-    }
-    else
-      return corazon
-  }
 
    return(
     <ScrollView>
@@ -168,7 +145,7 @@ export default function PanelRol({navigation}){
             <Image 
             //style={[styles.text, touched && invalid ? styles.textinvalid : styles.textvalid]}
               style={{ width: 25, height: 25, margin:"2%", marginBottom:"3%"}}
-              source={getIcon(rol.name)} 
+              source={helpers.getIconRol(rol.name)} 
             />
             <Text h2 style={styles.textoRol}>{rol.name}</Text> 
           </View>
