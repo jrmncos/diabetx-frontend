@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from 'react-native';
 import {Button, SearchBar} from 'react-native-elements';
 import getUser from 'services/getUser';
 import getGroups from 'services/getGroups';
-import addUsertoGroup from 'services/addUsertoGroup';
+import patchGroups from 'services/patchGroups';
 
 import FormECNT from 'components/FormECNT'
 import {useUser} from 'hooks/useUser'
@@ -17,8 +17,6 @@ import profds_f from 'imgUsuario/pds_mujer.png'
 import profds_m from 'imgUsuario/pds_hombre.png'
 import corazon from 'recursos/corazon.png'
 
-
-
 export default function PanelRol({navigation}){
   const { dni, user } = useUser()
   const { userToken } = useAuth()
@@ -27,11 +25,12 @@ export default function PanelRol({navigation}){
   const [ isLoadingSearch, setLoadingSearch ] = useState(false)
   const [ noEncontrado, setNoEncontrado ] = useState(false)
   const [ isLoadingGroups, setLoadingGroups ] = useState(true)
-  
+  const [ ultimoDNIBuscado, setUltimoDNIBuscado ] = useState("")
+
   const [ groups, setGroups ] = useState([])
   const [ mapGroups, setMapGroups ] = useState([])
 
-  function pertenece(nombre, grupos) {
+  function pertenece(nombre, grupos) { 
     let x
     grupos.forEach(gr => {
     if(gr.name == nombre.name){ x = true }})
@@ -43,7 +42,6 @@ export default function PanelRol({navigation}){
     async function fetchGroups() {       
       const obtenido = await getGroups()
       setGroups(obtenido)
-      
       setLoadingGroups(false)
     } 
     fetchGroups()
@@ -51,27 +49,77 @@ export default function PanelRol({navigation}){
 
   useEffect (()  => {
     if(usuarioACambiar != null && usuarioACambiar.dni != undefined) {
+      let idMG = 0
+      setMapGroups([])
       setNoEncontrado(false)
       groups.forEach(gr => {
+        let id = idMG
         if(pertenece(gr, usuarioACambiar.groups)){
           setMapGroups(prevState => [...prevState, {
+            "id": id, 
             "name": gr.name,
             "state": true,
           }])
         }
         else{
           setMapGroups(prevState => [...prevState, {
+          "id": id,
           "name": gr.name,
           "state": false,
         }])
         }
+        idMG++
       })
     }
-    else{
+    else if(ultimoDNIBuscado != ""){
       setNoEncontrado(true)
     }
     setLoadingSearch(false)
   }, [usuarioACambiar])
+
+  const handleAssignRol = (value) => {
+    setMapGroups(mapGroups.map(item => 
+      item.id === value.id 
+      ? {...item, state : !value.state}
+      : item))
+  }
+
+  const handleSearch  = async () => {
+    if(search == ""){
+      setNoEncontrado(false)
+    }
+    setUsuarioACambiar(null)
+    setLoadingSearch(true)
+    setUltimoDNIBuscado(search)
+
+    await getUser({dni: search, accessToken: userToken })
+      .then(setUsuarioACambiar)
+  }
+
+  const handlePatchUser = () => {
+    console.log("USERAC: "+usuarioACambiar.dni)
+    console.log(mapGroups)
+    patchGroups({user: usuarioACambiar, groups: mapGroups})
+  }
+
+  const handleSearchBar = (value) => {
+    setSearch(value)
+  }
+
+  const gifCat404 = 
+  <>
+    <Image
+      style={{ width: 100, height: 100, margin:"2%"}}
+      source={require('recursos/404.gif')} 
+    />
+    <Text>DNI: {ultimoDNIBuscado} no encontrado!</Text>
+  </>
+
+  const spinnerLoading = 
+  <Image
+    style={{ width: 50, height: 50, margin:"2%"}}
+    source={require('recursos/cargando.gif')} 
+  />
 
   function getIcon(rol) {
     if(rol == "Paciente"){
@@ -87,46 +135,8 @@ export default function PanelRol({navigation}){
       return corazon
   }
 
-  const handleAssignRol = (value) => {
-    let val = value
-    console.log(mapGroups[1].state)
-    mapGroups[1].state = !val.state
-  }
-
-  const handlePatchUser = () => {
-    addUsertoGroup({dni: usuarioACambiar.dni, data: mapGroups, accessToken: userToken})
-  }
-
-  const handleSearch = () => {
-    setUsuarioACambiar(null)
-    setLoadingSearch(true)
-    
-    getUser({dni: search, accessToken: userToken })
-      .then(setUsuarioACambiar)
-
-   
-  }
-
-  const usuarioNoEncontrado = 
-  <>
-    <Image
-      style={{ width: 100, height: 100, margin:"2%"}}
-      source={require('recursos/404.gif')} 
-    />
-    <Text>DNI: {search} no encontrado!</Text>
-  </>
-
-  const spinnerPaciente = 
-  <Image
-    style={{ width: 50, height: 50, margin:"2%"}}
-    source={require('recursos/cargando.gif')} 
-  />
-
-  const handleSearchBar = (value) => {
-    setSearch(value)
-  }
    return(
-     <>
+    <ScrollView>
     <SearchBar
       placeholder="Buscar por DNI"
       onChangeText={(value) => handleSearchBar(value)}
@@ -138,24 +148,24 @@ export default function PanelRol({navigation}){
       placeholderTextColor={"gray"}
     />
       <View style={styles.container}>
-      {isLoadingSearch && spinnerPaciente}
-     
-      {usuarioACambiar != null && usuarioACambiar != undefined && isLoadingGroups == false &&
-      <View style={{borderWidth:1, borderColor: '#00707d', width:"100%", marginBottom:"5%"}}>
+          
+      {!noEncontrado && usuarioACambiar != null && usuarioACambiar != undefined && isLoadingGroups == false &&
+      <View style={{borderWidth:1, borderColor: '#00707d', width:"100%", marginBottom:"1%"}}>
         <Text h2 style={styles.textoDatosDNI}>{usuarioACambiar.last_name}, {usuarioACambiar.first_name} </Text> 
         <Text h2 style={styles.textoDatos}>DNI: {usuarioACambiar.dni}</Text> 
         <Text h2 style={styles.textoDatos}>Nacimiento: {usuarioACambiar.bod}</Text> 
         <Text h2 style={styles.textoDatos}>Género: {usuarioACambiar.gender}</Text> 
         <Text h2 style={styles.textoDatos}>Roles: </Text> 
+ 
 
-        {usuarioACambiar && mapGroups.map(rol => {
+        {mapGroups.map(rol => {
         return <TouchableOpacity 
           key={rol.name}
-          style={{width:"100%", padding: "1%", paddingLeft:"10%", paddingRight:"5%"}}       
+          style={{width:"100%", padding: "1%", paddingLeft:"5%", paddingRight:"5%"}}       
           onPress={() => handleAssignRol(rol)}
           >
-          <View style={rol.state ? styles.rolEncendido: styles.rolApagado}>
-            <Image
+          <View style={mapGroups[rol.id].state ? styles.rolEncendido: styles.rolApagado}>
+            <Image 
             //style={[styles.text, touched && invalid ? styles.textinvalid : styles.textvalid]}
               style={{ width: 25, height: 25, margin:"2%", marginBottom:"3%"}}
               source={getIcon(rol.name)} 
@@ -168,12 +178,16 @@ export default function PanelRol({navigation}){
           buttonStyle={styles.botonMenuHomeAzul} 
           onPress={handlePatchUser} 
           titleStyle={styles.botonTexto}
-          title='Guardar cambios'/>
+          title='Guardar'/>
       </View>
       }
 
-      {noEncontrado && !isLoadingSearch && usuarioNoEncontrado}
-     
+      {isLoadingSearch && spinnerLoading} 
+      {!isLoadingSearch && noEncontrado && gifCat404}
+      {!isLoadingSearch && noEncontrado &&
+        <Text h2 style={styles.textSubtitulo}>
+        Ingrese un DNI para empezar </Text>
+      }
       {!isLoadingSearch && 
         <Button 
           buttonStyle={styles.botonMenuHomeAzul} 
@@ -183,7 +197,7 @@ export default function PanelRol({navigation}){
       }
       
     </View>
-    </>
+    </ScrollView>
     )
 }
 
@@ -192,6 +206,15 @@ const styles = StyleSheet.create({
       backgroundColor: '#fff',
       alignItems: 'center',
       justifyContent: 'center',
+    },
+
+    textSubtitulo:{
+      color: "#00a7ba",
+      fontSize: 35,
+      paddingTop: "1%",
+      paddingBottom: "1%",
+      padding:'5%',
+      textAlign: 'center',
     },
 
     rolEncendido: {
