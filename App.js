@@ -33,10 +33,6 @@ export default function App() {
       }
     }
     
-    useEffect(()=>{
-      console.log(notification)
-    }, [notification])
-
     useEffect(() => {
         registerForPushNotificationsAsync().then(token => {
           setExpoPushToken(token)
@@ -45,7 +41,6 @@ export default function App() {
         
         // This listener is fired whenever a notification is received while the app is foregrounded
         notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-          console.log('Llego una notification')
           setNotification(notification);
         });
 

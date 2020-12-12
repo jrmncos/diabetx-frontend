@@ -32,8 +32,8 @@
       },
       "useNextNotificationsApi": true
     },
-    "web": {
-      "favicon": "./assets/favicon.png"
+    "notification": {
+      "icon" : "./assets/pulmon-principal.png"
     }
   }
 }
