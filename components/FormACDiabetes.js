@@ -94,10 +94,11 @@ export default function FormACDiabetes() {
     acdiabetes.id = ACdelDia
     acdiabetes.paciente_id = paciente.id
     acdiabetes.glucemia_matutina = diabetesMatutino
-    acdiabetes.opcional_glucemia_matutina= glucoMatutino
+    acdiabetes.opcional_glucemia_matutina = (glucoMatutino == "") ?  0 : glucoMatutino
     acdiabetes.glucemia_post_comida_principal = diabetesComida
-    acdiabetes.opcional_glucemia_comida_principal= glucoComida
-    
+    acdiabetes.opcional_glucemia_comida_principal= (glucoComida == "") ?  0 : glucoComida
+
+    console.log(acdiabetes)
     addACDiabetes({accessToken: userToken, acdiabetes: acdiabetes})
     Alert.alert("Se ha cargado el autocontrol con satisfactoriamente")
     navigation.navigate('Inicio')
