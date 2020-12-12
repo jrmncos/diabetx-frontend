@@ -15,7 +15,7 @@ export default function Geolocalizacion({ navigation }) {
 
   let colores = new Map();
   colores.set('Diabetes', 'rgba(217, 77, 245, 0.5)');
-  colores.set('Epoc', 'rgba(255, 230, 121, 0.5)#');
+  colores.set('EPOC', 'rgba(255, 230, 121, 0.5)#');
   colores.set('Hipertensión', 'rgba(0, 246, 252, 0.5)');
 
   useEffect(() => {
