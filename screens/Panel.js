@@ -42,7 +42,7 @@ export default function Panel({navigation}){
 
   return(
     <View>
-      <View style={{flexDirection: 'row', width:"100%", backgroundColor: '#00a7ba'}}>
+      {/* <View style={{flexDirection: 'row', width:"100%", backgroundColor: '#00a7ba'}}>
       <Image
           style={{ width: 50, height: 50, backgroundColor:"#00a7ba", margin:"2%"}}
           source={busqueda} 
@@ -59,8 +59,17 @@ export default function Panel({navigation}){
           searchIcon={null}
           placeholderTextColor={"white"}
         />
-      </View>
-
+      </View> */}
+      <SearchBar
+          placeholder="Buscar por DNI"
+          onChangeText={(value) => handleSearchBar(value)}
+          value={search}
+          keyboardType="numeric"
+          containerStyle={{backgroundColor: "#00707d"}}
+          inputContainerStyle={{backgroundColor: "#FFFFFF"}}
+          inputStyle={styles.textfilter}
+          placeholderTextColor={"gray"}
+      />
       <PacienteList pacientesFiltered={ pacientesFiltered }/>
 
       <Text style={styles.textSubtitulo}>Agregar Paciente</Text>
@@ -71,7 +80,8 @@ export default function Panel({navigation}){
             value={dni}
         />
         <Button 
-          buttonStyle={styles.botonAzul} 
+          titleStyle={styles.botonTexto}
+          buttonStyle={styles.botonMenuHomeAzul} 
           onPress={handleAddPaciente} 
           title='Agregar'/>
     </View>
@@ -86,11 +96,12 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
     },
     textSubtitulo:{
-      fontSize: 30,
-      textAlign: "center",
-      marginTop: "5%",
-      marginBottom: "5%",
-      color: "#696969",
+      color: "#00a7ba",
+      fontSize: 35,
+      paddingTop: "1%",
+      paddingBottom: "1%",
+      padding:'5%',
+      textAlign: 'center',
     },
     titulo: {
       color:"#00a7ba",
@@ -103,13 +114,14 @@ const styles = StyleSheet.create({
       fontSize: 30,
     },
 
-    botonAzul: {
-      margin: "2%",
-      padding:"5%",
+    botonMenuHomeAzul: {
+      marginLeft:"5%",
+      marginRight:"5%",
+      margin:"2%",
       borderRadius:10, 
       flexDirection: 'row', 
       alignSelf: 'center', 
-      width:"97%", 
+      width:"95%", 
       backgroundColor: '#00a7ba',
       borderWidth: 1,
       borderColor: "#00707d",
@@ -119,12 +131,13 @@ const styles = StyleSheet.create({
       shadowRadius: 15 ,
       shadowOffset : { width: 1, height: 13},
     },
+    
     botonTexto:{
       padding:"5%",
       width:"100%",
       textAlign:"center",
       color: "white",
-      fontSize: 35,
+      fontSize: 30,
     },
   });
   

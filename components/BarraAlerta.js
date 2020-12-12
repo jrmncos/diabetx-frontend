@@ -9,7 +9,6 @@ export default function BarraAlerta({alertas=[]}){
   
   return(
   <>
-  {alertas.map((aler) => console.log(aler))}
    <TouchableOpacity 
    style={styles.barraAlerta}>      
     <View style={styles.barraAlerta}>

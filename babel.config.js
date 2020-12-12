@@ -20,6 +20,7 @@ module.exports = function(api) {
             hooks: './hooks',
             services: './services',
             validator: './validator',
+            helpers: './helpers',
           },
         },
       ],

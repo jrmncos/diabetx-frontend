@@ -8,11 +8,19 @@ import { useUser } from 'hooks/useUser';
 import getPaciente from 'services/getPaciente';
 import getAlertas from 'services/getAlertas';
 
-import paciente_f from 'imgUsuario/paciente_mujer.png'
-import paciente_m from 'imgUsuario/paciente_hombre.png'
-import profds_f from 'imgUsuario/pds_mujer.png'
-import profds_m from 'imgUsuario/pds_hombre.png'
-import corazon from 'recursos/corazon.png'
+// import paciente from 'recursos/latido-del-corazon.png'
+// import profesional from 'recursos/medico.png'
+// import promotor from 'recursos/consultor.png'
+// import admin from 'recursos/admin.png'
+
+// import paciente_f from 'imgUsuario/paciente_mujer.png'
+// import paciente from 'recursos/latido-del-corazon.png'
+// import paciente_m from 'imgUsuario/paciente_hombre.png'
+// import profds_f from 'imgUsuario/pds_mujer.png'
+// import profds_m from 'imgUsuario/pds_hombre.png'
+// import corazon from 'recursos/corazon.png'
+
+import helpers from '../helpers/getIcon' 
 
 import BarraAlerta from 'components/BarraAlerta'
 
@@ -23,7 +31,7 @@ export default function Home({navigation}){
 
   const [ isSelectingRole, setIsSelectingRole ] = useState(true)
   const [ selectedRole, setSelectedRole ] = useState()
-  const [ iconSelectedRole, setIconSelectedRole ] = useState(corazon) 
+  const [ iconSelectedRole, setIconSelectedRole ] = useState(helpers.getIconRol("")) 
   const [ alertas, setAlertas ] = useState([])
   
   const [ isLoadingUser, setLoadingUser ] = useState(true)
@@ -60,23 +68,23 @@ export default function Home({navigation}){
 
   const selectRole = (rol) => {
     setSelectedRole(rol)
-    setIconSelectedRole(getIcon(rol))
+    setIconSelectedRole(helpers.getIconRol(rol))
     setIsSelectingRole(false)
   }
 
-  function getIcon(rol) {
-    if(rol == "Paciente"){
-      return ((user.gender === "Femenino") ? paciente_f : paciente_m) 
-    }
-    else if(rol == "Profesional de Salud"){
-      return ((user.gender === "Femenino") ? profds_f : profds_m) 
-    }
-    else if(rol == "Promotor de Salud"){
-      return((user.gender === "Femenino") ? paciente_f : paciente_m) 
-    }
-    else
-      return corazon
-  }
+  // function getIconByRG(rol) {
+  //   if(rol == "Paciente"){
+  //     return ((user.gender === "Femenino") ? paciente_f : paciente_m) 
+  //   }
+  //   else if(rol == "Profesional de Salud"){
+  //     return ((user.gender === "Femenino") ? profds_f : profds_m) 
+  //   }
+  //   else if(rol == "Promotor de Salud"){
+  //     return((user.gender === "Femenino") ? paciente_f : paciente_m) 
+  //   }
+  //   else
+  //     return corazon
+  // }
 
   return(
     <View style={styles.container}>
@@ -114,7 +122,7 @@ export default function Home({navigation}){
         <View style={styles.botonMenuHome}>
           <Image
             style={{ width: 50, height: 50, margin:"2%", marginBottom:"3%"}}
-            source={getIcon(rol.name)} 
+            source={helpers.getIconRol(rol.name)} 
           />
           <Text h2 style={styles.textoRol}>{rol.name}</Text> 
         </View>

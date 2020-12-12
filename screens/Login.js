@@ -21,9 +21,15 @@ export default function Login({navigation}){
       login({dni, password})
     }
     
-
-    const loading = (<Text style = {styles.textSubtitulo}> Validando dni y password.... </Text>)
-    const error = (<Text style = {styles.textSubtitulo}> Los datos ingresados no son correctos.... </Text>)
+    const loading = 
+    <>
+      <Text style = {styles.textCargando}>Verificando datos, aguarde.. </Text>
+      <Image
+      style={{ width: 50, height: 50, margin:"2%"}}
+      source={require('recursos/cargando.gif')} 
+    />
+    </>
+    const error = <Text style = {styles.textError}>El DNI o la contraseña son incorrectos </Text>
     
     return(
       <View style={styles.container}>
@@ -31,6 +37,8 @@ export default function Login({navigation}){
 
         <Text h2 style={styles.ingresar}>INGRESAR</Text> 
         
+        {hasLoginError && error}
+
         <Input
           placeholder='DNI' 
           style={styles.textoFormulario}
@@ -85,9 +93,6 @@ export default function Login({navigation}){
             title="Recuperar Clave" 
           /> 
           </>
-        }
-        {
-          hasLoginError && error
         }
       <Text style = {styles.textFirma}> Todos los derechos reservados 2020: Gerc0s, Dub.</Text>
       </View>
@@ -147,6 +152,17 @@ const styles = StyleSheet.create({
       fontSize: 40,
     },
 
+    textCargando:{
+      fontSize: 22,
+      textAlign: "center",
+      marginBottom: "5%",
+      backgroundColor:"#00a7ba",
+      borderRadius:2,
+      padding:"1%",
+      color: "#FFFFFF",
+    },
+    
+
     textSubtitulo:{
       fontSize: 15,
       textAlign: "center",
@@ -155,6 +171,16 @@ const styles = StyleSheet.create({
       color: "#696969",
     },
 
+    textError:{
+      fontSize: 22,
+      textAlign: "center",
+      marginBottom: "5%",
+      backgroundColor:"#fa6039",
+      borderRadius:2,
+      padding:"1%",
+      color: "#FFFFFF",
+    },
+    
     textFirma:{
       fontSize: 12,
       textAlign: "center",
