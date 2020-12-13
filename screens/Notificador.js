@@ -9,7 +9,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import getECNTS from 'services/getECNTS';
 import sendNotificacion from 'services/sendNotificacion'
 
-export default function Notificacion({ navigation }) {
+export default function Notificador({ navigation }) {
 
   const [title, setTitle] = useState('')
 

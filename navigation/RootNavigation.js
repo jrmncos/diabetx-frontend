@@ -8,7 +8,7 @@ import Panel from 'screens/Panel';
 import Registro from 'screens/Registro';
 import Perfil from 'screens/Perfil';
 import PanelRol from 'screens/PanelRol'
-import Notificacion from 'screens/Notificacion';
+import Notificador from 'screens/Notificador';
 import NotificacionDetalle from 'screens/NotificacionDetalle'
 import Notificaciones from 'screens/Notificaciones'
 import FormACDiabetes from 'components/FormACDiabetes'
@@ -43,11 +43,11 @@ export function RootNavigation() {
       <Stack.Screen name="Panel" component={Panel} title="Panel de Control" />
       <Stack.Screen name="Registro" component={Registro} title="Registrar Usuario" />
       <Stack.Screen name="Perfil" component={Perfil} title="Perfil de Usuario" />
-      <Stack.Screen name="Notificacion" component={Notificacion} title="Notificaciones" />
-      <Stack.Screen name="FormACDiabetes" component={FormACDiabetes} title="Formulario Autocontrol Diabetes" />
-      <Stack.Screen name="NotificacionDetalle" component={NotificacionDetalle} title="NotificacionDetalle"/>
+      <Stack.Screen name="Notificador" component={Notificador} options={{title:"Notificador"}} />
+      <Stack.Screen name="FormACDiabetes" component={FormACDiabetes} options= {{title:"Autocontrol"}} />
+      <Stack.Screen name="NotificacionDetalle" component={NotificacionDetalle} options= {{title:"Notificacion"}}/>
       <Stack.Screen name="Notificaciones" component={Notificaciones} title="Notificaciones"/>
-      <Stack.Screen name="PanelRol" component={PanelRol} title="PanelRol"/>
+      <Stack.Screen name="PanelRol" component={PanelRol} options={{title:"Panel roles"}}/>
       
       </>
     ): (

@@ -7,10 +7,6 @@ const validate = apiResponse => {
 }
 
 export default function sendNotificacion({notificacion, accessToken}){
-    console.log("Voy a enviar una notificacion")
-    console.log(notificacion)
-    console.log(URL_ROOT+ NOTIFICACION)
-    
     const request = new Request(URL_ROOT + NOTIFICACION, {
         method: 'POST',
         body: notificacion,
@@ -21,6 +17,6 @@ export default function sendNotificacion({notificacion, accessToken}){
     })
 
     return fetch(request)
-    .then(res =>res.json())
+    .then(res => res.ok)
     .then(validate)
 }
