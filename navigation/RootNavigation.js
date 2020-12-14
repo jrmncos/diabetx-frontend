@@ -39,20 +39,20 @@ export function RootNavigation() {
     {status == "signIn" ? (
       <>
       <Stack.Screen name="Inicio" component={Home} title="Página Principal" />
-      <Stack.Screen name="Geolocalizacion" component={Geolocalizacion} title="Mapa ECNT" />
-      <Stack.Screen name="Panel" component={Panel} title="Panel de Control" />
+      <Stack.Screen name="Geolocalizacion" component={Geolocalizacion} options={{title:"Geolocalización"}} />
+      <Stack.Screen name="Panel" component={Panel} options={{title:"Panel de control"}} />
       <Stack.Screen name="Registro" component={Registro} title="Registrar Usuario" />
-      <Stack.Screen name="Perfil" component={Perfil} title="Perfil de Usuario" />
+      <Stack.Screen name="Perfil" component={Perfil} options= {{title:"Perfil de Usuario"}} />
       <Stack.Screen name="Notificador" component={Notificador} options={{title:"Notificador"}} />
       <Stack.Screen name="FormACDiabetes" component={FormACDiabetes} options= {{title:"Autocontrol"}} />
-      <Stack.Screen name="NotificacionDetalle" component={NotificacionDetalle} options= {{title:"Notificacion"}}/>
+      <Stack.Screen name="NotificacionDetalle" component={NotificacionDetalle} options= {{title:"Notificación"}}/>
       <Stack.Screen name="Notificaciones" component={Notificaciones} title="Notificaciones"/>
       <Stack.Screen name="PanelRol" component={PanelRol} options={{title:"Panel roles"}}/>
       
       </>
     ): (
       <>
-      <Stack.Screen name="Iniciar sesion" component={Login} title="Iniciar Sesión" />
+      <Stack.Screen name="Iniciar sesion" component={Login} options={{title:"Iniciar Sesión"}} />
       <Stack.Screen name="Registro" component={Registro} title="Registrar Usuario" />
       </>
     )}

@@ -50,7 +50,6 @@ export default function Notificaciones({navigation}){
             { next!=null && 
                 <Button title="Siguiente" onPress={()=>{paginaSiguiente()}}/>
             }
-            <Text>Separador</Text>
             { previous!=null && 
                 <Button title="Atras" onPress={()=>paginaAnterior()}/> 
             }

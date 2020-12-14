@@ -15,8 +15,7 @@ export default function sendNotificacion({notificacion, accessToken}){
             'Authorization': 'Bearer '+ accessToken
         }), 
     })
-
     return fetch(request)
-    .then(res => res.ok)
-    .then(validate)
+    //.then(res => res.ok)
+    //.then(validate)
 }

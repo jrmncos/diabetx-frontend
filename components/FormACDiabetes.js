@@ -188,7 +188,7 @@ export default function FormACDiabetes() {
       </View>
 
         <Text style={styles.pregunta}>
-          Su glucosa se encuentra entre 70 y 130?
+          ¿Su glucosa se encuentra entre 70 y 130?
         </Text>
 
         <View style={{ flexDirection: "row", alignSelf: "baseline", width: "50%" }}>
@@ -243,7 +243,7 @@ export default function FormACDiabetes() {
       </View>
 
       <Text style={styles.pregunta}>
-        Su glucosa se encuentra entre 70 y 180?
+        ¿Su glucosa se encuentra entre 70 y 180?
       </Text>
 
       <View style={{ flexDirection: "row", alignSelf: "baseline", width: "50%" }}>
