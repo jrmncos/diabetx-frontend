@@ -170,19 +170,19 @@ export default function Home({navigation}){
               style={{ width: 50, height: 50, margin:"2%"}}
               source={require('../assets/locationGeo.png')} 
             />
-            <Text h2 style={styles.textoRol}>Mapa Interactivo</Text> 
+            <Text h2 style={styles.textoRol}>Mapa interactivo</Text> 
           </View>
         </TouchableOpacity>
         
         <TouchableOpacity 
           style={{width:"100%", padding: "2%"}}       
-          onPress={() => navigation.navigate('Notificacion')}>
+          onPress={() => navigation.navigate('Notificador')}>
           <View style={styles.botonMenuHome}>
             <Image
               style={{ width: 50, height: 50, margin:"2%"}}
               source={require('recursos/campana.png')} 
             />
-            <Text h2 style={styles.textoRol}>Notificaciones</Text> 
+            <Text h2 style={styles.textoRol}>Notificador</Text> 
           </View>
         </TouchableOpacity>
   

@@ -12,7 +12,6 @@ export default function Notificaciones({navigation}){
     const {userToken} = useAuth()
     const scrollRef = React.useRef(null);
 
-
     useEffect(()=>{
         obtenerNotificaciones(page)
     }, [page])
@@ -30,7 +29,7 @@ export default function Notificaciones({navigation}){
         scrollRef.current?.scrollTo({
             y: 0,
             animated: true,
-        });
+        })
  }
     const paginaSiguiente = () => {
         getNotificaciones({page: page +1, accessToken: userToken})
@@ -51,7 +50,6 @@ export default function Notificaciones({navigation}){
             { next!=null && 
                 <Button title="Siguiente" onPress={()=>{paginaSiguiente()}}/>
             }
-            <Text>Separador</Text>
             { previous!=null && 
                 <Button title="Atras" onPress={()=>paginaAnterior()}/> 
             }

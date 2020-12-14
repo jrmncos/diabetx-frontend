@@ -99,7 +99,7 @@ export default function FormACDiabetes() {
     acdiabetes.opcional_glucemia_comida_principal= (glucoComida == "") ?  0 : glucoComida
 
     addACDiabetes({accessToken: userToken, acdiabetes: acdiabetes})
-    Alert.alert("Se ha cargado el autocontrol con satisfactoriamente")
+    Alert.alert("Se ha cargado el autocontrol satisfactoriamente")
     navigation.navigate('Inicio')
   }
 
@@ -194,7 +194,11 @@ export default function FormACDiabetes() {
       </View>
 
         <Text style={styles.pregunta}>
+<<<<<<< HEAD
         ¿Su glucosa se encuentra entre 70 y 130?
+=======
+          ¿Su glucosa se encuentra entre 70 y 130?
+>>>>>>> 7ec27afb37ee861f4d3043d10fb0ac822559e503
         </Text>
 
         <View style={{ flexDirection: "row", alignSelf: "baseline", width: "50%" }}>
@@ -249,7 +253,11 @@ export default function FormACDiabetes() {
       </View>
 
       <Text style={styles.pregunta}>
+<<<<<<< HEAD
       ¿Su glucosa se encuentra entre 70 y 180?
+=======
+        ¿Su glucosa se encuentra entre 70 y 180?
+>>>>>>> 7ec27afb37ee861f4d3043d10fb0ac822559e503
       </Text>
 
       <View style={{ flexDirection: "row", alignSelf: "baseline", width: "50%" }}>

@@ -5,6 +5,8 @@ const validate = apiResponse => {
 }
 
 export default function addPaciente({id, accessToken, dni}){
+    console.log("Add paciente")
+    console.log(id)
     const request = new Request(URL_ROOT+ PROFESIONAL +String(id)+ "/dni/"+String(dni) + "/", {
         method: 'PATCH',
         headers: new Headers({ 

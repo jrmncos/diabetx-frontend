@@ -33,7 +33,7 @@ export default function Login({navigation}){
     
     return(
       <View style={styles.container}>
-        <Text style = {styles.textSubtitulo}> Sistema de Seguimiento de Enfermdades Crónicas No Transmisibles</Text>
+        <Text style = {styles.textSubtitulo}> Sistema de Seguimiento de Enfermedades Crónicas No Transmisibles</Text>
 
         <Text h2 style={styles.ingresar}>INGRESAR</Text> 
         

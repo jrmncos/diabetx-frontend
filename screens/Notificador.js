@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { Button } from 'react-native-elements'
 import ImageUploader from 'components/ImageUploader'
 import { Input, Icon } from "react-native-elements";
 import RangeSlider from 'react-native-range-slider-expo';
@@ -9,7 +10,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import getECNTS from 'services/getECNTS';
 import sendNotificacion from 'services/sendNotificacion'
 
-export default function Notificacion({ navigation }) {
+export default function Notificador({ navigation }) {
 
   const [title, setTitle] = useState('')
 
@@ -88,7 +89,7 @@ export default function Notificacion({ navigation }) {
       <ScrollView>
         <View style={{ flexDirection: "row", alignSelf: "baseline" }}>
           <Input
-            placeholder="Ingrese el titulo de la notificacion"
+            placeholder="Ingrese el título de la notificación"
             style={styles.textoFormularioNA}
             leftIcon={
               <Icon name="user" type="font-awesome" color="#00a7ba" />
@@ -99,7 +100,7 @@ export default function Notificacion({ navigation }) {
             value={title}
           />
         </View>
-
+      {/*
         <Text>Edad</Text>
         <CheckBox 
           title={"Seleccionar rango de edad"}
@@ -156,13 +157,16 @@ export default function Notificacion({ navigation }) {
                 onPress={() => handleChange(ecnt.id, ecnt.nombre, ecnt.checked)}
               />
         )}
-
+        */}
         <View style={{ flexDirection: "row", alignSelf: "baseline" }}>
           <ImageUploader setImageNotificacion={setImageNotificacion} />
         </View>
         
-        <Text>Separador...</Text>
-        <Button title='Enviar notificacion'onPress={()=>onSubmit()}/>
+        <Button 
+          titleStyle={styles.botonTexto}
+          buttonStyle={styles.botonMenuHomeAzul} 
+          onPress={onSubmit} 
+          title='Enviar notificación'/>
       </ScrollView>
     </View>
     
@@ -173,5 +177,36 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
   },
-
+  textSubtitulo:{
+    color: "#00a7ba",
+    fontSize: 35,
+    paddingTop: "1%",
+    paddingBottom: "1%",
+    padding:'5%',
+    textAlign: 'center',
+  },
+  botonMenuHomeAzul: {
+    marginLeft:"5%",
+    marginRight:"5%",
+    margin:"2%",
+    borderRadius:10, 
+    flexDirection: 'row', 
+    alignSelf: 'center', 
+    width:"95%", 
+    backgroundColor: '#00a7ba',
+    borderWidth: 1,
+    borderColor: "#00707d",
+    shadowColor: 'rgba(0, 0, 0, 1)',
+    shadowOpacity: 1,
+    elevation: 5,
+    shadowRadius: 15 ,
+    shadowOffset : { width: 1, height: 13},
+  },
+  botonTexto:{
+    padding:"5%",
+    width:"100%",
+    textAlign:"center",
+    color: "white",
+    fontSize: 30,
+  }
 });
