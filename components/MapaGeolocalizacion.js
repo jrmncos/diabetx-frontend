@@ -113,7 +113,7 @@ export default function Geolocalizacion({ navigation }) {
               <View style={checkbox.checked ? styles.rolEncendido: styles.rolApagado}>
                 <Image 
                   style={{ width: 25, height: 25, margin:"2%", marginBottom:"3%"}}
-                  source={helpers.getIconECNT(checkbox.nombre)} 
+                  source={helpers.getSquareECNT(checkbox.nombre)} 
                 />
                 <Text h2 style={styles.textoRol}>{checkbox.nombre}</Text> 
               </View>

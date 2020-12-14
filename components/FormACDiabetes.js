@@ -175,9 +175,15 @@ export default function FormACDiabetes() {
     {!loadingPaciente && accionSeleccionada == "cargar_autocontrol" &&
       <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
-        <Text style={styles.registrarse}>
+      <View style={{flexDirection: 'row', width:"100%", backgroundColor: '#00a7ba', marginBottom:"1%"}}>
+      <Image
+            style={{ width: 60, height: 60, margin:"1%"}}
+            source={require('../assets/archivo-medico.png')} 
+          />
+        <Text style={styles.textoBarraSuperior}>
           Autocontrol Diabetes ({new Date().toJSON().slice(0,10).split('-').reverse().join('-')})
         </Text>
+        </View>
         
         <View style={{flexDirection: 'row', alignSelf: 'center', width:"100%", backgroundColor: '#5cc101'}}>
         <Image
@@ -188,7 +194,7 @@ export default function FormACDiabetes() {
       </View>
 
         <Text style={styles.pregunta}>
-          Su glucosa se encuentra entre 70 y 130?
+        ¿Su glucosa se encuentra entre 70 y 130?
         </Text>
 
         <View style={{ flexDirection: "row", alignSelf: "baseline", width: "50%" }}>
@@ -243,7 +249,7 @@ export default function FormACDiabetes() {
       </View>
 
       <Text style={styles.pregunta}>
-        Su glucosa se encuentra entre 70 y 180?
+      ¿Su glucosa se encuentra entre 70 y 180?
       </Text>
 
       <View style={{ flexDirection: "row", alignSelf: "baseline", width: "50%" }}>
@@ -384,7 +390,6 @@ const styles = StyleSheet.create({
   textoBarraSuperior:{
     paddingLeft:"2%",
     width:"100%",
-    paddingTop:"5%",
     color: "white",
     fontSize: 30,
   },
